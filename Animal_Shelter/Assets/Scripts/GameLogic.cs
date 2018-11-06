@@ -30,44 +30,79 @@ public class GameLogic : MonoBehaviour {
     void Start() {
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
         StartVariables();
+        currentEventIndex = 0;
     }
 
     void Update() {
-        switch (gameState) {
-            case GameState.WEEKSTART:
-                gameState = GameState.WEEK;
-                break;
-            case GameState.WEEK:
 
-                //Here we'd set the entrance and management of clients
+        if (CanvasScript.canvasScript != null) {
 
-                break;
-            case GameState.EVENT:
-                if (currentEventIndex < incomingEvents.Count) {
-                    if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
-                        DisplayCurrentEvent();
+            switch (gameState) {
+                case GameState.WEEKSTART:
+                    gameState = GameState.WEEK;
+                    break;
+                case GameState.WEEK:
+                    //Here we'd set the entrance and management of clients
+                    break;
+                case GameState.EVENT:
+                    if (currentEventIndex < incomingEvents.Count) {
+                        if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
+                            DisplayCurrentEvent();
+                        } else {
+                        }
+                    } else {
+                        CanvasScript.canvasScript.StopEvent();
+                        gameState = GameState.WEEKSTART;
+                        currentEventIndex = 0;
+                        incomingEvents.Clear();
                     }
-                } else {
-                    gameState = GameState.WEEKSTART;
-                    currentEventIndex = 0;
-                }
 
+                    break;
+                case GameState.ENDWEEK:
+                    ApplyWeekExpenses();
+                    NewEvents();
+                    gameState = GameState.EVENT;
+                    break;
+            }
+        }
+    }
+
+    void NewEvents() {
+        Event random = new AnonymousDonerEvent();
+        instance.incomingEvents.Add(random);
+
+
+        switch (currentWeek) {
+            case 0:
                 break;
-            case GameState.ENDWEEK:
-                ApplyWeekExpenses();
-                gameState = GameState.EVENT;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                int randomInt = Random.Range(0,10);
+                switch (randomInt) {
+                    case 0:
+                        //Event random = new AnonymousDonerEvent();
+                        //instance.incomingEvents.Add(random);
+                        break;
+                }
                 break;
         }
     }
 
     void DisplayCurrentEvent() {
         //Here we need a reference to the CanvasScript, to set the current event to incomingEvents[currentIndex]
-
+        CanvasScript.canvasScript.DisplayEvent(incomingEvents[currentEventIndex]);
     }
 
     bool IsDisplayingCurrentEvent(Event e) {
         //Here we need a reference to the CanvasScript, to check wether the current event is the one in the parameter
-        return false;
+        return CanvasScript.canvasScript.currentDisplayedEvent==e;
     }
 
     //This method apply the total amount of food and money expenses to the resources

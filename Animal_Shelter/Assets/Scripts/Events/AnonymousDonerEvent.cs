@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TownHallMoneyEvent : Event {
+public class AnonymousDonerEvent : Event {
     float randomAmountOfMoney;
-    public TownHallMoneyEvent() {
+    public AnonymousDonerEvent() {
         float amountOfMoney = Random.Range(50, 200);
-        description = "The local elections are near and the town hall wants to make a good impresion, so they decide to donate " + amountOfMoney + " euros to your shelter";
-        title = "Town Hall Donation";
+        description = "A mysterious figure dropped a bag on the entrance of the Shelter with " + amountOfMoney + " dollars inside";
+        title = "Anonymous Donation";
         canBeDenied = false;
         randomAmountOfMoney = amountOfMoney;
+        acceptMessage = "Pick up the money";
+        declineMessage = "Give money to the authorities";
+
     }
 
     public override void OnAccept() {
