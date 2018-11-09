@@ -12,21 +12,33 @@ public class CanvasScript : MonoBehaviour {
     public Text eventDescription;
     public Text eventTitle;
     public Event currentDisplayedEvent;
-    public enum CanvasState { IDLE,DISPLAYEVENT,DISPLAYANIMALLIST};
+    public enum CanvasState { IDLE, DISPLAYEVENT, DISPLAYANIMALLIST };
     public CanvasState canvasState;
+    public GameObject incomingAnimalListObject;
+    public GameObject gridObject;
+
+    public GameObject tempAnimalParent;
+
+    GameObject animalElementPrefab;
+
     public int numAnimals;
-	// Use this for initialization
-	void Start () {
+    public List<AnimalElementList> animalElements;
+    // Use this for initialization
+    void Start() {
+        animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
         canvasScript = this;
         endWeekButtonObject.SetActive(true);
         eventHandlerObject.SetActive(false);
+        incomingAnimalListObject.SetActive(false);
+        tempAnimalParent = new GameObject();
+        tempAnimalParent.name = "tempAnimalParent";
         canvasState = CanvasState.IDLE;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     private void OnDestroy() {
         canvasScript = null;
@@ -36,23 +48,43 @@ public class CanvasScript : MonoBehaviour {
         //Aquí hay que hacer que canvas haga un display de una lista de animales que entran con botones
         //Que hagan que dichos animales se acepten/rechacen, tenemos que montar una de esas sliderLists
         //De android que no recuerdo como se llaman
+        incomingAnimalListObject.SetActive(true);
 
-        //if (canvasState == CanvasState.DISPLAYANIMALLIST){
+        if (canvasState == CanvasState.DISPLAYANIMALLIST) {
 
-        //} else {
-        //    numAnimals = Random.Range(0, 10);
+        } else {
+            numAnimals = Random.Range(0, 10);
 
+            for (int i = 0; i < numAnimals; i++) {
+                GameObject anAnimalElement = Instantiate<GameObject>(animalElementPrefab);
+                anAnimalElement.transform.SetParent(gridObject.transform);
+                animalElements.Add(anAnimalElement.GetComponent<AnimalElementList>());
 
+                GameObject animalObject = new GameObject();
+                Animal animal = animalObject.AddComponent<Animal>();
+                animalObject.transform.SetParent(tempAnimalParent.transform);
+                animal.StartStats();
+                animalObject.name = animal.nombre;
+                anAnimalElement.GetComponent<AnimalElementList>().AssociateAnimal(animal);
+            }
+            canvasState = CanvasState.DISPLAYANIMALLIST;
+        }
 
-        //}
+        animalElements.RemoveAll(IsNull);
 
-        //if (numAnimals == 0) {
-           GameLogic.instance.gameState = GameLogic.GameState.WEEK;
-        //}
+        if (animalElements.Count==0) {
+            GameLogic.instance.gameState = GameLogic.GameState.WEEK;
+            endWeekButtonObject.SetActive(true);
+            incomingAnimalListObject.SetActive(false);
+        }
 
     }
 
-    public void DisableAcceptButton(){
+    bool IsNull(AnimalElementList g) {
+       return  g == null;
+    }
+
+    public void DisableAcceptButton() {
         acceptButton.GetComponent<Image>().color = Color.grey;
         acceptButton.onClick.RemoveAllListeners();
         Debug.Log("Disable");
@@ -68,7 +100,8 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void DisplayEvent(Event e) {
-        if (currentDisplayedEvent!=e) {
+        endWeekButtonObject.SetActive(false);
+        if (currentDisplayedEvent != e) {
             canvasState = CanvasState.DISPLAYEVENT;
             ReEnableButtons();
             eventHandlerObject.SetActive(true);
