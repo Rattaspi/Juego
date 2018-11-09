@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-public class Event{
+public class Event {
     protected string title;
     protected string description;
     protected string acceptMessage;
     protected string declineMessage;
+
+    protected bool canBeAccepted;
     protected bool canBeDenied;
     protected Texture2D associatedTexture;
 
@@ -16,6 +18,8 @@ public class Event{
     public Event() {
         acceptMessage = "Accept";
         declineMessage = "Decline";
+        canBeAccepted = true;
+        canBeDenied = true;
     }
 
     public string GetTitle() {
@@ -28,6 +32,14 @@ public class Event{
 
     public string GetDescription() {
         return description;
+    }
+
+    public bool GetCanBeAccepted() {
+        return canBeAccepted;
+    }
+
+    public void SetCanBeAccepted(bool b) {
+        canBeAccepted = b;
     }
 
     public bool GetCanBeDenied() {
