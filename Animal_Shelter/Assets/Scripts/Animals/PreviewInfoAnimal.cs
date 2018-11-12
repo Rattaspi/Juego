@@ -8,7 +8,7 @@ public class PreviewInfoAnimal : MonoBehaviour {
     [SerializeField] Text displayName;
     [SerializeField] Image happiness;
     [SerializeField] Image injured;
-    public Sprite[] faces;
+    Sprite[] faces;
 
     void Awake () {
         animalInfo = GetComponentInParent<Animal>();
@@ -19,14 +19,12 @@ public class PreviewInfoAnimal : MonoBehaviour {
         for(int i = 0; i<3; i++) {
             faces[i] = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_" + i);
         }
+    }
 
+    private void OnEnable() {
         displayName.text = animalInfo.nombre;
         happiness.sprite = faces[(int)animalInfo.confort];
         if (animalInfo.estado != Animal.ESTADO.SALUDABLE) injured.gameObject.SetActive(true);
         else injured.gameObject.SetActive(false);
     }
-
-    void Update () {
-		
-	}
 }
