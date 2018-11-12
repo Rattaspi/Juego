@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameLogic : MonoBehaviour {
     //Singleton
-    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART };
+    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART,MINIGAME };
     public static GameLogic instance;
     public GameState gameState;
     public float money, reputation, publicityInversion;
