@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ShowInfoAnimal : MonoBehaviour {
     Animal animalInfo;
+    AnimalGraphics graphics;
     [SerializeField] Text name;
     [SerializeField] Image cara;
     [SerializeField] Image salud;
@@ -16,12 +17,13 @@ public class ShowInfoAnimal : MonoBehaviour {
         animalInfo = GetComponentInParent<Animal>();
         if (animalInfo == null) Debug.LogError("Animal script not found");
 
+        graphics = GetComponentInParent<AnimalGraphics>();
+
         //Get the faces sprites
         faces = new Sprite[3];
         for (int i = 0; i < 3; i++) {
             faces[i] = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_" + i);
         }
-
     }
 
     void OnEnable () {
@@ -30,5 +32,14 @@ public class ShowInfoAnimal : MonoBehaviour {
         salud.fillAmount =  1 - Mathf.InverseLerp(0, (int)Animal.ESTADO.LENGHT - 1, (int)animalInfo.estado);
         comida.fillAmount = 0.8f;
         edad.fillAmount = 0.1f + Mathf.InverseLerp(0, (int)Animal.EDAD.LENGHT - 1, (int)animalInfo.edad);
+    }
+
+    public void UpdateInfo() {
+        print("update");
+        OnEnable();
+    }
+
+    public void ActivateChangeName() {
+        graphics.changeName.SetActive(true);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class Animal : MonoBehaviour {
-    [SerializeField] GameObject graphics;
+    public GameObject graphics;
 
     public enum SIZE { SMALL, MEDIUM, BIG, LENGHT }
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGHT }
@@ -39,7 +39,7 @@ public class Animal : MonoBehaviour {
     }
 
     private void Start() {
-        StartStats();
+        //StartStats();
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
         //ME DABA PEREZA HACERLO A MANO :D
         //string s = "Firulais Beethoven Hachiko Laika Pongo Scooby Rex Pluto Odie Snooppy Lassie Niebla Goofy Brian Idefix Pancho Kaiser Valkiria Odín Thor Katrina Wilma Igor Aquiles Troya Atreo Goku Akira Sayuri Chiyo Hiroki Kayoko Mitsuki Eros Laska Malak Maitea Adonis Beauty Linda Sinatra Madonna Jackson Cesar Elvis R2D2 Auro Bruc Chester Larry Lambert Milu Morgan Newman Noah Paco Dingo Casper Kira Blanca Indio Aria";
