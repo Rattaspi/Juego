@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class Animal : MonoBehaviour {
-    [SerializeField] GameObject graphics;
+    public GameObject graphics;
 
     public enum SIZE { SMALL, MEDIUM, BIG, LENGHT }
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGHT }
