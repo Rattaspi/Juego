@@ -8,7 +8,7 @@ public class RunnerLogic : MonoBehaviour {
     bool run;
     float gameTimer;
     public enum DIFFICULTY { EASY, NORMAL, HARD};
-    enum STATE { START, GAME, END};
+    public enum STATE { START, GAME, END};
     STATE state;
     ObstaclesManager om;
     RunnerAvatarController rac;

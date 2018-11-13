@@ -27,16 +27,25 @@ public class PouAvatarController : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         if (horizontal != 0) {
             if (horizontal > 0) {
+                if (rb.velocity.x < 0) {
+                    rb.velocity = new Vector2(0, 0);
+                }
+
                 rb.AddForce(Vector2.right * movementForce, ForceMode2D.Impulse);
-            } else{ 
+            } else{
+
+                if (rb.velocity.x > 0) {
+                    rb.velocity = new Vector2(0, 0);
+                }
                 rb.AddForce(Vector2.left * movementForce, ForceMode2D.Impulse);
             }
         } else {
-            if (Mathf.Abs(rb.velocity.x) > 0.3f) {
-                rb.AddForce(new Vector2(-rb.velocity.x * 0.5f, 0), ForceMode2D.Impulse);
-            } else {
-                rb.velocity = new Vector2(0, 0);
-            }
+            rb.velocity = new Vector2(0, 0);
+            //if (Mathf.Abs(rb.velocity.x) > 0.3f) {
+            //    rb.AddForce(new Vector2(-rb.velocity.x * 0.5f, 0), ForceMode2D.Impulse);
+            //} else {
+            //    rb.velocity = new Vector2(0, 0);
+            //}
         }
     }
 

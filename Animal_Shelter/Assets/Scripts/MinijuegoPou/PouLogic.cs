@@ -1,41 +1,88 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PouLogic : MonoBehaviour {
+    bool play;
     public float difficultyMultiplier;
     public int lives;
     public int totalScore;
     public float spawnTimer;
     public float spawnTime;
+    public float gameTimer;
+    public float maxTime;
     public GameObject itemPrefabObject;
     public List<GameObject> currentItems;
     public PouAvatarController pouAvatar;
+    //public RunnerLogic.DIFFICULTY difficulty;
+    public RunnerLogic.STATE state;
+    public GameObject startCanvas;
+    public Text timeText;
     // Use this for initialization
     void Start() {
         lives = 3;
         totalScore = 0;
-        difficultyMultiplier=1.0f;
         spawnTime = 2.5f;
         spawnTimer = 0;
         itemPrefabObject = Resources.Load<GameObject>("Prefabs/PouObjectPrefab");
         currentItems = new List<GameObject>();
+        startCanvas.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
-        if (spawnTimer > spawnTime) {
-            spawnTimer = 0;
-            int isGoodRandom = Random.Range(0, 3);
-            if (isGoodRandom == 0) {
-                currentItems.Add(SpawnItem(false));
-            } else {
-                currentItems.Add(SpawnItem(true));
+        if (!play) return;
+        else {
+            switch (state) {
+                case RunnerLogic.STATE.START:
+                    pouAvatar.transform.position = pouAvatar.spawn;
+                    state = RunnerLogic.STATE.GAME;
+                    break;
+                case RunnerLogic.STATE.GAME:
+                    if (spawnTimer > spawnTime) {
+                        spawnTimer = 0;
+                        int isGoodRandom = Random.Range(0, 3);
+                        if (isGoodRandom == 0) {
+                            currentItems.Add(SpawnItem(false));
+                        } else {
+                            currentItems.Add(SpawnItem(true));
+                        }
+                    }
+                    spawnTimer += Time.deltaTime;
+                    currentItems.RemoveAll(isNull);
+
+                    if (gameTimer > maxTime) {
+                        state = RunnerLogic.STATE.END;
+                    }
+
+                    break;
+                case RunnerLogic.STATE.END:
+                    Restart();
+                    startCanvas.SetActive(false);
+                    play = false;
+                    break;
             }
         }
-        spawnTimer += Time.deltaTime;
-        currentItems.RemoveAll(isNull);
     }
+
+    public void Play(RunnerLogic.DIFFICULTY diff) {
+        play = true;
+        state = RunnerLogic.STATE.START;
+        gameTimer = 0;
+        timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
+        startCanvas.SetActive(true);
+        //difficulty = diff;
+        difficultyMultiplier = 2.0f * ((int)diff + 1);
+        spawnTime = 2.5f - (int)diff;
+
+    }
+
+    public void Stop() {
+        play = false;
+        pouAvatar.SetInputBlocked(true);
+    }
+
 
     void Restart() {
         foreach(GameObject g in currentItems) {
@@ -72,6 +119,7 @@ public class PouLogic : MonoBehaviour {
         lives--;
         if (CheckGameOver()) {
             //Acaba la partida
+            state = RunnerLogic.STATE.END;
         } else {
             Restart();
         }
