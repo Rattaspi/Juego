@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL};
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS};
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -32,6 +32,14 @@ public class ButtonScripts : MonoBehaviour {
                 myselfButton.onClick.AddListener(() => HealAnimal());
                 break;
 
+            case ButtonFunction.DISPLAYEXPENSES:
+                myselfButton.onClick.AddListener(() => DisplayExpenses());
+                break;
+
+            case ButtonFunction.DISPLAYANIMALS:
+                myselfButton.onClick.AddListener(() => DisplayAnimals());
+                break;
+
             default:
                 break;
         }
@@ -54,5 +62,17 @@ public class ButtonScripts : MonoBehaviour {
 
     void HealAnimal() {
         throw new NotImplementedException();
+    }
+
+    void DisplayExpenses() {
+        if (CanvasScript.canvasScript != null) {
+            CanvasScript.canvasScript.DisplayExpenses();
+        }
+    }
+
+    void DisplayAnimals() {
+        if (CanvasScript.canvasScript != null) {
+            CanvasScript.canvasScript.DisplayShelterAnimals();
+        }
     }
 }

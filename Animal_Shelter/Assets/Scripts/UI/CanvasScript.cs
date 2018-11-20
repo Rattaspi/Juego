@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour {
     public static CanvasScript canvasScript;
-    public GameObject endWeekButtonObject;
+    public GameObject UIManagementGameObject;
     public GameObject eventHandlerObject;
     public Button acceptButton;
     public Button declineButton;
@@ -16,8 +16,11 @@ public class CanvasScript : MonoBehaviour {
     public CanvasState canvasState;
     public GameObject incomingAnimalListObject;
     public GameObject gridObject;
-
+    public GameObject amountOfAnimalsFeedBack;
+    public Text amountOfAnimalsFeedBackText;
     public GameObject tempAnimalParent;
+    public GameObject expensesWindow;
+    public GameObject animalsWindow;
 
     GameObject animalElementPrefab;
 
@@ -27,9 +30,11 @@ public class CanvasScript : MonoBehaviour {
     void Start() {
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
         canvasScript = this;
-        endWeekButtonObject.SetActive(true);
+        UIManagementGameObject.SetActive(true);
         eventHandlerObject.SetActive(false);
         incomingAnimalListObject.SetActive(false);
+        expensesWindow.SetActive(false);
+        animalsWindow.SetActive(false);
         tempAnimalParent = new GameObject();
         tempAnimalParent.name = "tempAnimalParent";
         canvasState = CanvasState.IDLE;
@@ -44,14 +49,23 @@ public class CanvasScript : MonoBehaviour {
         canvasScript = null;
     }
 
+    public void DisplayShelterAnimals() {
+        animalsWindow.SetActive(true);
+    }
+
+    public void DisplayExpenses() {
+        expensesWindow.SetActive(true);
+    }
+
     public void DisplayIncomingAnimals() {
         //Aquí hay que hacer que canvas haga un display de una lista de animales que entran con botones
         //Que hagan que dichos animales se acepten/rechacen, tenemos que montar una de esas sliderLists
         //De android que no recuerdo como se llaman
         incomingAnimalListObject.SetActive(true);
+        amountOfAnimalsFeedBack.SetActive(true);
 
         if (canvasState == CanvasState.DISPLAYANIMALLIST) {
-
+            amountOfAnimalsFeedBackText.text = "Espacio: " + GameLogic.instance.shelterAnimals.Count + "/" + GameLogic.instance.currentAnimalCapacity;
         } else {
             numAnimals = Random.Range(0, 10);
 
@@ -74,8 +88,9 @@ public class CanvasScript : MonoBehaviour {
 
         if (animalElements.Count==0) {
             GameLogic.instance.gameState = GameLogic.GameState.WEEK;
-            endWeekButtonObject.SetActive(true);
+            UIManagementGameObject.SetActive(true);
             incomingAnimalListObject.SetActive(false);
+            amountOfAnimalsFeedBack.SetActive(false);
         }
 
     }
@@ -100,7 +115,7 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void DisplayEvent(Event e) {
-        endWeekButtonObject.SetActive(false);
+        UIManagementGameObject.SetActive(false);
         if (currentDisplayedEvent != e) {
             canvasState = CanvasState.DISPLAYEVENT;
             ReEnableButtons();
