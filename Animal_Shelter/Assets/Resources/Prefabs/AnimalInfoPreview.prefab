@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114849806106648986}
   m_Layer: 0
   m_Name: ComidaIcon
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114425960508094612}
   m_Layer: 0
   m_Name: Sacrificar
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114805643982048716}
   m_Layer: 0
   m_Name: Preview
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114609492490395490}
   m_Layer: 0
   m_Name: EdadBarBG
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4615647167410532}
   m_Layer: 0
   m_Name: AnimalInfoPreview
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 114222214255606042}
   m_Layer: 5
   m_Name: BG
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 114628729662668232}
   m_Layer: 0
   m_Name: Injured
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 114717967889451942}
   m_Layer: 0
   m_Name: Cara
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 114634501392598158}
   m_Layer: 0
   m_Name: EdadBar
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 114935712004574826}
   m_Layer: 0
   m_Name: ComidaBarBG
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 114668655436338578}
   m_Layer: 0
   m_Name: SaludBar
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 114781926506579996}
   m_Layer: 0
   m_Name: EdadIcon
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 114527958940428684}
   m_Layer: 0
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 114434412453520574}
   m_Layer: 0
   m_Name: BG
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 114500142285733256}
   m_Layer: 0
   m_Name: SaludIcon
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 114080229245958924}
   m_Layer: 0
   m_Name: Name
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 114416581523017410}
   m_Layer: 0
   m_Name: ComidaBar
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 114005866079212446}
   m_Layer: 0
   m_Name: Happiness
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 114504452241752658}
   m_Layer: 0
   m_Name: Info
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 114358483487975482}
   m_Layer: 0
   m_Name: DarComida
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 114745645274134618}
   m_Layer: 0
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 114797107521298588}
   m_Layer: 0
   m_Name: Curar
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 114485481853831004}
   m_Layer: 0
   m_Name: Text
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 114779366147495622}
   m_Layer: 0
   m_Name: Name
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 224545935031024838}
   m_Layer: 0
   m_Name: Edad
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 224622197734647952}
   m_Layer: 0
   m_Name: Salud
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 224016432801040580}
   m_Layer: 0
   m_Name: Comida
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 114658801134198386}
   m_Layer: 0
   m_Name: SaludBarBG
-  m_TagString: Untagged
+  m_TagString: animal_info
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

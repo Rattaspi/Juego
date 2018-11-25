@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Sample_Animals : MonoBehaviour {
 
+    public int animalsToGenerate;
+
 	void Start () {
-        GameObject g = new GameObject();
-        Instantiate(g);
-        g.transform.parent = this.transform;
-        g.gameObject.name = "Animal";
-        g.AddComponent<Animal>();
+        for (int i = 0; i < animalsToGenerate; i++) {
+            GameObject g = new GameObject();
+            g.transform.parent = this.transform;
+            g.transform.position = new Vector3(400, 400);
+            g.gameObject.name = "Animal"+i;
+            g.AddComponent<Animal>();
+        }
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ShowInfoAnimal : MonoBehaviour {
     Animal animalInfo;
@@ -13,7 +14,16 @@ public class ShowInfoAnimal : MonoBehaviour {
     [SerializeField] Image edad;
     Sprite[] faces;
 
-	void Awake () {
+    GraphicRaycaster graphicRaycaster;
+    EventSystem eventSystem;
+    PointerEventData pointerEvent;
+
+    void Awake () {
+        graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
+        if (graphicRaycaster == null) Debug.LogError("Graphic raycaster not found from ShowInfoAnimal.cs");
+        eventSystem = FindObjectOfType<EventSystem>();
+        if (eventSystem == null) Debug.LogError("EventSystem not found from ShowInfoAnimal.cs");
+
         animalInfo = GetComponentInParent<Animal>();
         if (animalInfo == null) Debug.LogError("Animal script not found");
 
@@ -29,9 +39,9 @@ public class ShowInfoAnimal : MonoBehaviour {
     void OnEnable () {
         name.text = animalInfo.nombre;
         cara.sprite = faces[(int)animalInfo.confort];
-        salud.fillAmount =  1 - Mathf.InverseLerp(0, (int)Animal.ESTADO.LENGHT - 1, (int)animalInfo.estado);
+        salud.fillAmount =  1 - Mathf.InverseLerp(0, (int)Animal.ESTADO.LENGTH - 1, (int)animalInfo.estado);
         comida.fillAmount = 0.8f;
-        edad.fillAmount = 0.1f + Mathf.InverseLerp(0, (int)Animal.EDAD.LENGHT - 1, (int)animalInfo.edad);
+        edad.fillAmount = 0.1f + Mathf.InverseLerp(0, (int)Animal.EDAD.LENGTH - 1, (int)animalInfo.edad);
     }
 
     public void UpdateInfo() {
