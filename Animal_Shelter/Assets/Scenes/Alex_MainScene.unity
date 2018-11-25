@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428f0eb45a3352a49a8bb1f12e9c1864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animalsToGenerate: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

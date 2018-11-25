@@ -7,6 +7,9 @@ TagManager:
   - ground
   - kill
   - food
+  - graphic_background
+  - animal_info
+  - animal
   layers:
   - Default
   - TransparentFX
