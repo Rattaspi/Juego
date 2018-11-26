@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class TempleRunAvatar : MonoBehaviour {
     [SerializeField] Transform[] positions;
     int currentPos;
-    public bool play;
+    public bool inputBlocked;
+    TempleRunLogic templeLogic;
 
 	void Awake () {
         currentPos = 1;
         this.transform.position = positions[currentPos].position;
-        play = false;
+        inputBlocked = false;
 	}
-	
-	void Update () {
-        if (!play) return;
+
+    private void Start() {
+        templeLogic = GetComponentInParent<TempleRunLogic>();
+        if (templeLogic == null) Debug.LogError("TempleRunLogic not found from TempleRunAvatar");
+    }
+
+    void Update () {
+        if (inputBlocked) return;
+
         //MOVEMENT
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
             currentPos--;
@@ -27,14 +35,13 @@ public class TempleRunAvatar : MonoBehaviour {
             this.transform.position = positions[currentPos].position;
         }
     }
-
-    public void Play() {
-        play = true;
-
-        print("Avatar PLAY");
+    public void SetInputBlocked(bool b) {
+        inputBlocked = b;
     }
 
-    public void Stop() {
-        play = false;
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.gameObject.tag == "kill") {
+            templeLogic.Restart();
+        }
     }
 }
