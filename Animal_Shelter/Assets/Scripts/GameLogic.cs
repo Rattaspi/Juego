@@ -6,15 +6,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameLogic : MonoBehaviour {
     //Singleton
-    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART,MINIGAME };
+    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME };
     public static GameLogic instance;
     public GameState gameState;
-    public float money, reputation, publicityInversion;
+    public float money, reputation;
     public int currentWeek, amountOfFood, foodCapacity, maxAnimalCapacity, currentAnimalCapacity;
     public List<Animal> shelterAnimals;
     public List<Event> incomingEvents;
     public int currentEventIndex;
     public GameObject animalObjectParent;
+    public float foodPrice;
+    public float publictyPrice;
+    public float cleanUpCost;
+
+    public ToggleScript.ToggleType foodToBuy;
+    public ToggleScript.ToggleType expensesToPay;
+    public ToggleScript.ToggleType publicityToInvest;
+    public ToggleScript.ToggleType cleanupToDo;
 
     [SerializeField]
     List<Instalation> instalations;
@@ -34,7 +42,9 @@ public class GameLogic : MonoBehaviour {
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
         StartVariables();
         currentEventIndex = 0;
-        
+        foodPrice = 1.0f;
+        publictyPrice = 1.0f;
+        cleanUpCost = 1.0f;
     }
 
     void Update() {
@@ -43,8 +53,8 @@ public class GameLogic : MonoBehaviour {
 
             switch (gameState) {
                 case GameState.WEEKSTART:
-                        CanvasScript.canvasScript.DisplayIncomingAnimals();
-                    
+                    CanvasScript.canvasScript.DisplayIncomingAnimals();
+
                     break;
                 case GameState.WEEK:
                     //Here we'd set the entrance and management of clients
@@ -89,7 +99,7 @@ public class GameLogic : MonoBehaviour {
             case 4:
                 break;
             default:
-                int randomInt = Random.Range(0,10);
+                int randomInt = Random.Range(0, 10);
                 switch (randomInt) {
                     case 0:
                         //Event random = new AnonymousDonerEvent();
@@ -107,15 +117,68 @@ public class GameLogic : MonoBehaviour {
 
     bool IsDisplayingCurrentEvent(Event e) {
         //Here we need a reference to the CanvasScript, to check wether the current event is the one in the parameter
-        return CanvasScript.canvasScript.currentDisplayedEvent==e;
+        return CanvasScript.canvasScript.currentDisplayedEvent == e;
+    }
+
+    public float GetToggleOptionsMoney() {
+        float totalExpense = 0;
+        switch (foodToBuy) {
+            case ToggleScript.ToggleType.NONE:
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                totalExpense += foodPrice * 50.0f;
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                totalExpense += foodPrice * 100.0f;
+
+                break;
+            case ToggleScript.ToggleType.BIG:
+                totalExpense += foodPrice * 150.0f;
+
+                break;
+        }
+
+        switch (publicityToInvest) {
+            case ToggleScript.ToggleType.NONE:
+
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                totalExpense += publictyPrice * 150.0f;
+
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                totalExpense += publictyPrice * 150.0f;
+
+                break;
+            case ToggleScript.ToggleType.BIG:
+                totalExpense += publictyPrice * 150.0f;
+
+                break;
+        }
+
+        switch (cleanupToDo) {
+            case ToggleScript.ToggleType.NONE:
+                totalExpense += cleanUpCost;
+                break;
+            default:
+                break;
+        }
+
+        switch (expensesToPay) {
+            case ToggleScript.ToggleType.NONE:
+                break;
+            default:
+                totalExpense += GetInstalationsUpKeep();
+                break;
+        }
+
+        return totalExpense;
     }
 
     //This method apply the total amount of food and money expenses to the resources
     public void ApplyWeekExpenses() {
-        float moneyExpense = GetInstalationsUpKeep();
-        int foodExpense = 0;
-        money -= (moneyExpense + publicityInversion);
-        amountOfFood -= (foodExpense);
+        float moneyExpense = GetToggleOptionsMoney();
+        money -= (moneyExpense);
     }
 
     //This method changes the GameState
@@ -143,7 +206,7 @@ public class GameLogic : MonoBehaviour {
         PlayerData data = new PlayerData();
         data.money = money;
         data.reputation = reputation;
-        data.publicityInversion = publicityInversion;
+        //data.publicityInversion = publicityInversion;
         data.currentWeek = currentWeek;
         data.amountOfFood = amountOfFood;
         data.foodCapacity = foodCapacity;
@@ -164,7 +227,7 @@ public class GameLogic : MonoBehaviour {
             file.Close();
             money = data.money;
             reputation = data.reputation;
-            publicityInversion = data.publicityInversion;
+            //publicityInversion = data.publicityInversion;
             currentWeek = data.currentWeek;
             amountOfFood = data.amountOfFood;
             foodCapacity = data.foodCapacity;
@@ -182,7 +245,7 @@ public class GameLogic : MonoBehaviour {
     void StartVariables() {
         money = 1000;
         reputation = 0;
-        publicityInversion = 0;
+        //publicityInversion = 0;
         currentWeek = 0;
         amountOfFood = 100;
         foodCapacity = 300;

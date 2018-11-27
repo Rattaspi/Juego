@@ -19,6 +19,11 @@ public class PouLogic : MonoBehaviour {
     public RunnerLogic.STATE state;
     public GameObject startCanvas;
     public Text timeText;
+    public Text startGameText;
+    public Text instructionsText;
+    public Text finalScore;
+    public Text gameOverText;
+    public Text continueText;
     // Use this for initialization
     void Start() {
         lives = 3;
@@ -28,6 +33,15 @@ public class PouLogic : MonoBehaviour {
         itemPrefabObject = Resources.Load<GameObject>("Prefabs/PouObjectPrefab");
         currentItems = new List<GameObject>();
         startCanvas.SetActive(false);
+        instructionsText.text = "Pulsa A para moverte a la izquierda y D para moverte a la derecha";
+        startGameText.text = "Pulsa A o D para comenzar";
+        gameOverText.text = "Fin de partida";
+        finalScore.text = "Puntuación final " + totalScore;
+        continueText.text = "Pulsa Espacio para continuar";
+        //Play(0);
+        gameOverText.gameObject.SetActive(false);
+        finalScore.gameObject.SetActive(false);
+        continueText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -36,17 +50,44 @@ public class PouLogic : MonoBehaviour {
         else {
             switch (state) {
                 case RunnerLogic.STATE.START:
+                    startGameText.gameObject.SetActive(true);
+                    instructionsText.gameObject.SetActive(true);
                     pouAvatar.transform.position = pouAvatar.spawn;
-                    state = RunnerLogic.STATE.GAME;
+                    if (Input.GetAxis("Horizontal") != 0) {
+                        startGameText.gameObject.SetActive(false);
+                        instructionsText.gameObject.SetActive(false);
+
+                        state = RunnerLogic.STATE.GAME;
+                    }
                     break;
                 case RunnerLogic.STATE.GAME:
                     if (spawnTimer > spawnTime) {
                         spawnTimer = 0;
-                        int isGoodRandom = Random.Range(0, 3);
-                        if (isGoodRandom == 0) {
-                            currentItems.Add(SpawnItem(false));
-                        } else {
-                            currentItems.Add(SpawnItem(true));
+                        int isGoodRandom = Random.Range(0, 9);
+                        switch ((int)difficultyMultiplier) {
+                            case 1:
+                                if (isGoodRandom < 2) {
+                                    currentItems.Add(SpawnItem(false));
+                                } else {
+                                    currentItems.Add(SpawnItem(true));
+                                }
+                                break;
+                            case 3:
+                                if (isGoodRandom <4) {
+                                    currentItems.Add(SpawnItem(false));
+                                } else {
+                                    currentItems.Add(SpawnItem(true));
+                                }
+                                break;
+                            case 5:
+                                if (isGoodRandom <6) {
+                                    currentItems.Add(SpawnItem(false));
+                                } else {
+                                    currentItems.Add(SpawnItem(true));
+                                }
+                                break;
+                            default:
+                                break;
                         }
                     }
                     spawnTimer += Time.deltaTime;
@@ -59,8 +100,18 @@ public class PouLogic : MonoBehaviour {
                     break;
                 case RunnerLogic.STATE.END:
                     Restart();
-                    startCanvas.SetActive(false);
-                    play = false;
+                    gameOverText.gameObject.SetActive(true);
+                    finalScore.gameObject.SetActive(true);
+                    continueText.gameObject.SetActive(true);
+
+                    if (Input.GetAxis("Continue")>0) {
+                        startCanvas.SetActive(false);
+                        play = false;
+                        gameOverText.gameObject.SetActive(false);
+                        finalScore.gameObject.SetActive(false);
+                        continueText.gameObject.SetActive(false);
+                        state = RunnerLogic.STATE.START;
+                    }
                     break;
             }
         }

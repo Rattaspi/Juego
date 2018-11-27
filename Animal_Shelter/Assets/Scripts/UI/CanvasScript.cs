@@ -57,7 +57,14 @@ public class CanvasScript : MonoBehaviour {
         expensesWindow.SetActive(true);
     }
 
-    public void DisplayIncomingAnimals() {
+    //public void DisplayAllAnimals() {
+    //    if (canvasState == CanvasState.DISPLAYANIMALLIST) {
+    //        amountOfAnimalsFeedBackText.text = "Espacio: " + GameLogic.instance.shelterAnimals.Count + "/" + GameLogic.instance.currentAnimalCapacity;
+
+    //    }
+    //}
+
+        public void DisplayIncomingAnimals() {
         //Aquí hay que hacer que canvas haga un display de una lista de animales que entran con botones
         //Que hagan que dichos animales se acepten/rechacen, tenemos que montar una de esas sliderLists
         //De android que no recuerdo como se llaman
