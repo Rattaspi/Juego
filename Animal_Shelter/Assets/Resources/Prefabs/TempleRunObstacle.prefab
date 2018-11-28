@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114606649823395450}
   - component: {fileID: 61574840902824448}
   m_Layer: 0
-  m_Name: obstacle
+  m_Name: TempleRunObstacle
   m_TagString: kill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 60, y: 100}
+  m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
 --- !u!114 &114606649823395450
 MonoBehaviour:
