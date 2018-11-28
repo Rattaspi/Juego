@@ -11,6 +11,23 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1404643537672658}
   m_IsPrefabAsset: 1
+--- !u!1 &1075824253332330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224783370379290336}
+  - component: {fileID: 222228830176068314}
+  - component: {fileID: 114691724915766082}
+  m_Layer: 5
+  m_Name: TimeCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1092387272644382
 GameObject:
   m_ObjectHideFlags: 1
@@ -219,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224053231255736224}
   - component: {fileID: 114051892212669102}
+  - component: {fileID: 114503848597307014}
   m_Layer: 5
   m_Name: ObjectGenerator
   m_TagString: Untagged
@@ -299,7 +317,7 @@ GameObject:
   - component: {fileID: 222415335821030454}
   - component: {fileID: 114065387943380686}
   m_Layer: 5
-  m_Name: TimeCounter
+  m_Name: CoinCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -514,13 +532,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 6
     m_MaxSize: 80
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 60
+  m_Text: 'Monedas: 0'
 --- !u!114 &114077734780299214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -649,6 +667,25 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114503848597307014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670395875993226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dcc7d4100952634787aebb2a16c41ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  price: {fileID: 1239101946839678, guid: 599167afad8f3d842a92c6a8ddc07e23, type: 2}
+  positions:
+  - {fileID: 224241579218522164}
+  - {fileID: 224193035226888042}
+  - {fileID: 224559375460122888}
+  objects: []
+  min: 0.7
+  max: 1.7
 --- !u!114 &114607832744475060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -729,6 +766,39 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114691724915766082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075824253332330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 80
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 6
+    m_MaxSize: 80
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 60
 --- !u!114 &114720060811018828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -740,9 +810,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538ed248fe16b59479b7903b9d0ed69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monedas: 0
+  priceGen: {fileID: 0}
   difficulty: 2
   maxTime: 60
-  timeText: {fileID: 114065387943380686}
+  timeText: {fileID: 114691724915766082}
+  monedasText: {fileID: 114065387943380686}
   startCanvas: {fileID: 1193999791241876}
 --- !u!114 &114779222654542952
 MonoBehaviour:
@@ -810,6 +883,13 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!222 &222228830176068314
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075824253332330}
+  m_CullTransparentMesh: 0
 --- !u!222 &222314713521638874
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1053,17 +1133,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852040860338556}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224466842926310478}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43, y: 486}
-  m_SizeDelta: {x: 160, y: 99.8}
+  m_AnchoredPosition: {x: -526.6, y: 486}
+  m_SizeDelta: {x: 682.8, y: 99.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224399830259338260
 RectTransform:
@@ -1098,6 +1178,7 @@ RectTransform:
   - {fileID: 224286235030716140}
   - {fileID: 224978164404858118}
   - {fileID: 224053231255736224}
+  - {fileID: 224783370379290336}
   - {fileID: 224298364347358958}
   - {fileID: 224893418499592538}
   m_Father: {fileID: 0}
@@ -1217,6 +1298,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 1963.2, y: 175.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224783370379290336
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075824253332330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224466842926310478}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 43, y: 486}
+  m_SizeDelta: {x: 160, y: 99.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224825818018654764
 RectTransform:
   m_ObjectHideFlags: 1
@@ -1286,7 +1385,7 @@ RectTransform:
   - {fileID: 224865857177208786}
   - {fileID: 224727057507628676}
   m_Father: {fileID: 224466842926310478}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

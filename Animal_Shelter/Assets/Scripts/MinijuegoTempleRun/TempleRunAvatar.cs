@@ -25,13 +25,15 @@ public class TempleRunAvatar : MonoBehaviour {
 
         //MOVEMENT
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            print("UP");
             currentPos--;
-            if (currentPos < 0) currentPos = 2;
+            if (currentPos < 0) currentPos = 0;
             this.transform.position = positions[currentPos].position;
-            print(currentPos);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            currentPos = ++currentPos % 3;
+            print("DOWN");
+            currentPos++;
+            if (currentPos > 2) currentPos = 2;
             this.transform.position = positions[currentPos].position;
         }
     }
@@ -40,7 +42,12 @@ public class TempleRunAvatar : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.tag == "kill") {
+        if(collision.gameObject.tag == "food") {
+            templeLogic.monedas++;
+            templeLogic.priceGen.DestroyFromList(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.tag == "kill") {
             templeLogic.Restart();
         }
     }

@@ -9,26 +9,34 @@ public class TempleRunLogic : MonoBehaviour {
     public enum DIFFICULTY { EASY, NORMAL, HARD };
     public enum STATE { START, GAME, END };
     STATE state;
+    public int monedas;
 
     TempleRunAvatar avatar;
     TempleRunObstacleGen obstacleGen;
+    [HideInInspector] public TempleRunPriceGenerator priceGen;
     [SerializeField] DIFFICULTY difficulty;
     [SerializeField] float maxTime;
     [SerializeField] Text timeText;
+    [SerializeField] Text monedasText;
     [SerializeField] GameObject startCanvas;
 
-
-    void Start () {
-        run = false;
-        gameTimer = 0;
-        state = STATE.START;
-        startCanvas.SetActive(true);
-
+    private void Awake() {
         avatar = GetComponentInChildren<TempleRunAvatar>();
         if (avatar == null) Debug.LogError("TempleRunAvatar not found from TempleRunLogic");
 
         obstacleGen = GetComponentInChildren<TempleRunObstacleGen>();
         if (obstacleGen == null) Debug.LogError("TempleRunObstacleGen not found from TempleRunLogic");
+
+        priceGen = GetComponentInChildren<TempleRunPriceGenerator>();
+        if (priceGen == null) Debug.LogError("TempleRunPriceGen not found from TempleRunLogic");
+    }
+
+    void Start () {
+        run = false;
+        gameTimer = 0;
+        monedas = 0;
+        state = STATE.START;
+        startCanvas.SetActive(true);
 
         Play(difficulty);
     }
@@ -42,6 +50,7 @@ public class TempleRunLogic : MonoBehaviour {
                     state = STATE.GAME;
                     avatar.SetInputBlocked(false);
                     obstacleGen.Play();
+                    priceGen.Play();
                     gameTimer = 0;
                     startCanvas.SetActive(false);
                 }
@@ -49,7 +58,8 @@ public class TempleRunLogic : MonoBehaviour {
 
             case STATE.GAME:
                 timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
-                if (gameTimer > maxTime) Stop();
+                monedasText.text = "Monedas: " + monedas;
+                if (gameTimer > maxTime) Restart();
 
                 gameTimer += (Time.deltaTime / Time.timeScale);
                 break;
@@ -84,6 +94,7 @@ public class TempleRunLogic : MonoBehaviour {
     public void Stop() {
         run = false;
         obstacleGen.Stop();
+        priceGen.Stop();
         avatar.SetInputBlocked(true);
     }
 

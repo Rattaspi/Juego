@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 224071441095605966}
   - component: {fileID: 222000602793999794}
   - component: {fileID: 114691011303194966}
-  - component: {fileID: 114606649823395450}
   - component: {fileID: 61574840902824448}
+  - component: {fileID: 114857187833558188}
   m_Layer: 0
-  m_Name: obstacle
-  m_TagString: kill
+  m_Name: TempleRunPrice
+  m_TagString: food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,20 +53,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 60, y: 100}
+  m_Size: {x: 200, y: 100}
   m_EdgeRadius: 0
---- !u!114 &114606649823395450
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1239101946839678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d9c9361792aa64d805a8c1b68d0d0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 500
 --- !u!114 &114691011303194966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,20 +67,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: c92b1ad35408e4e40bdd9c6bdc2f4e28, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
     height: 1
+--- !u!114 &114857187833558188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1239101946839678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b9fc46a666ac654e802f9cd81eeceee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 500
 --- !u!222 &222000602793999794
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -108,7 +108,7 @@ RectTransform:
   m_GameObject: {fileID: 1239101946839678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -116,5 +116,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1206, y: -268}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 204, y: 247}
   m_Pivot: {x: 0.5, y: 0.5}
