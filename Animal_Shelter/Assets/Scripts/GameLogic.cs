@@ -30,12 +30,20 @@ public class GameLogic : MonoBehaviour {
     void Awake() {
         if (instance == null) {
             instance = this;
-            animalObjectParent = new GameObject();
-            animalObjectParent.name = "Animals";
+            StartCoroutine(SetAnimalObjectParentToCanvas());
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator SetAnimalObjectParentToCanvas() {
+        while (CanvasScript.canvasScript == null) {
+            yield return null;
+        }
+        animalObjectParent = new GameObject();
+        animalObjectParent.name = "Animals";
+        animalObjectParent.transform.parent = CanvasScript.canvasScript.transform;
     }
 
     void Start() {
@@ -53,7 +61,7 @@ public class GameLogic : MonoBehaviour {
 
             switch (gameState) {
                 case GameState.WEEKSTART:
-                    CanvasScript.canvasScript.DisplayIncomingAnimals();
+                    //CanvasScript.canvasScript.DisplayIncomingAnimals();
 
                     break;
                 case GameState.WEEK:

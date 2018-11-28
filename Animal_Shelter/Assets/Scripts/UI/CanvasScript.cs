@@ -14,7 +14,7 @@ public class CanvasScript : MonoBehaviour {
     public Event currentDisplayedEvent;
     public enum CanvasState { IDLE, DISPLAYEVENT, DISPLAYANIMALLIST };
     public CanvasState canvasState;
-    public GameObject incomingAnimalListObject;
+    //public GameObject incomingAnimalListObject;
     public GameObject gridObject;
     public GameObject amountOfAnimalsFeedBack;
     public Text amountOfAnimalsFeedBackText;
@@ -32,11 +32,12 @@ public class CanvasScript : MonoBehaviour {
         canvasScript = this;
         UIManagementGameObject.SetActive(true);
         eventHandlerObject.SetActive(false);
-        incomingAnimalListObject.SetActive(false);
+        //incomingAnimalListObject.SetActive(false);
         expensesWindow.SetActive(false);
         animalsWindow.SetActive(false);
         tempAnimalParent = new GameObject();
         tempAnimalParent.name = "tempAnimalParent";
+        tempAnimalParent.transform.parent = gameObject.transform;
         canvasState = CanvasState.IDLE;
     }
 
@@ -50,11 +51,30 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void DisplayShelterAnimals() {
+        CreateAnimalList();
         animalsWindow.SetActive(true);
     }
 
     public void DisplayExpenses() {
         expensesWindow.SetActive(true);
+    }
+
+    public void CreateAnimalList() {
+        if (animalElements.Count > 0) {
+            foreach (AnimalElementList a in animalElements) {
+                Destroy(a.gameObject);
+            }
+            animalElements.RemoveAll(IsNull);
+        }
+        animalElements.Clear();
+
+        for (int i = 0; i < GameLogic.instance.shelterAnimals.Count; i++) {
+            GameObject anAnimalElement = Instantiate<GameObject>(animalElementPrefab);
+            anAnimalElement.transform.SetParent(gridObject.transform);
+            animalElements.Add(anAnimalElement.GetComponent<AnimalElementList>());
+            anAnimalElement.GetComponent<AnimalElementList>().AssociateAnimal(GameLogic.instance.shelterAnimals[i]);
+        }
+
     }
 
     //public void DisplayAllAnimals() {
@@ -64,46 +84,46 @@ public class CanvasScript : MonoBehaviour {
     //    }
     //}
 
-        public void DisplayIncomingAnimals() {
-        //Aquí hay que hacer que canvas haga un display de una lista de animales que entran con botones
-        //Que hagan que dichos animales se acepten/rechacen, tenemos que montar una de esas sliderLists
-        //De android que no recuerdo como se llaman
-        incomingAnimalListObject.SetActive(true);
-        amountOfAnimalsFeedBack.SetActive(true);
+    //    public void DisplayIncomingAnimals() {
+    //    //Aquí hay que hacer que canvas haga un display de una lista de animales que entran con botones
+    //    //Que hagan que dichos animales se acepten/rechacen, tenemos que montar una de esas sliderLists
+    //    //De android que no recuerdo como se llaman
+    //    incomingAnimalListObject.SetActive(true);
+    //    amountOfAnimalsFeedBack.SetActive(true);
 
-        if (canvasState == CanvasState.DISPLAYANIMALLIST) {
-            amountOfAnimalsFeedBackText.text = "Espacio: " + GameLogic.instance.shelterAnimals.Count + "/" + GameLogic.instance.currentAnimalCapacity;
-        } else {
-            numAnimals = Random.Range(0, 10);
+    //    if (canvasState == CanvasState.DISPLAYANIMALLIST) {
+    //        amountOfAnimalsFeedBackText.text = "Espacio: " + GameLogic.instance.shelterAnimals.Count + "/" + GameLogic.instance.currentAnimalCapacity;
+    //    } else {
+    //        numAnimals = Random.Range(0, 10);
 
-            for (int i = 0; i < numAnimals; i++) {
-                GameObject anAnimalElement = Instantiate<GameObject>(animalElementPrefab);
-                anAnimalElement.transform.SetParent(gridObject.transform);
-                animalElements.Add(anAnimalElement.GetComponent<AnimalElementList>());
+    //        for (int i = 0; i < numAnimals; i++) {
+    //            GameObject anAnimalElement = Instantiate<GameObject>(animalElementPrefab);
+    //            anAnimalElement.transform.SetParent(gridObject.transform);
+    //            animalElements.Add(anAnimalElement.GetComponent<AnimalElementList>());
 
-                GameObject animalObject = new GameObject();
-                Animal animal = animalObject.AddComponent<Animal>();
-                animalObject.transform.SetParent(tempAnimalParent.transform);
-                animal.StartStats();
-                animalObject.name = animal.nombre;
-                anAnimalElement.GetComponent<AnimalElementList>().AssociateAnimal(animal);
-            }
-            canvasState = CanvasState.DISPLAYANIMALLIST;
-        }
+    //            GameObject animalObject = new GameObject();
+    //            Animal animal = animalObject.AddComponent<Animal>();
+    //            animalObject.transform.SetParent(tempAnimalParent.transform);
+    //            animal.StartStats();
+    //            animalObject.name = animal.nombre;
+    //            anAnimalElement.GetComponent<AnimalElementList>().AssociateAnimal(animal);
+    //        }
+    //        canvasState = CanvasState.DISPLAYANIMALLIST;
+    //    }
 
-        animalElements.RemoveAll(IsNull);
+    //    animalElements.RemoveAll(IsNull);
 
-        if (animalElements.Count==0) {
-            GameLogic.instance.gameState = GameLogic.GameState.WEEK;
-            UIManagementGameObject.SetActive(true);
-            incomingAnimalListObject.SetActive(false);
-            amountOfAnimalsFeedBack.SetActive(false);
-        }
+    //    if (animalElements.Count==0) {
+    //        GameLogic.instance.gameState = GameLogic.GameState.WEEK;
+    //        UIManagementGameObject.SetActive(true);
+    //        incomingAnimalListObject.SetActive(false);
+    //        amountOfAnimalsFeedBack.SetActive(false);
+    //    }
 
-    }
+    //}
 
     bool IsNull(AnimalElementList g) {
-       return  g == null;
+        return g == null;
     }
 
     public void DisableAcceptButton() {
@@ -150,6 +170,7 @@ public class CanvasScript : MonoBehaviour {
         currentDisplayedEvent = null;
         eventHandlerObject.SetActive(false);
         canvasState = CanvasState.IDLE;
+        UIManagementGameObject.SetActive(true);
     }
 
 }

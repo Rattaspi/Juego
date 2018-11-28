@@ -59,6 +59,17 @@ public class CardMiniGame_Logic : MonoBehaviour {
 
 
     void SetUpCards() {
+
+        if ((cards)!= null){
+            if (cards.Length > 0) {
+                for(int i = 0; i < cards.Length; i++) {
+                    if (cards[i] != null) {
+                        Destroy(cards[0].gameObject);
+                    }
+                }
+            }
+        }
+
         cards = new CardMiniGame_Card[numOfCards];
 
         for (int i = 0; i < numOfCards; i++) {

@@ -10,8 +10,8 @@ public class AnimalElementList : MonoBehaviour {
     public Text statusText;
     public Text sizeText;
     public Text speciesText;
-    public Button adoptButton;
-    public Button rejectButton;
+    //public Button adoptButton;
+    //public Button rejectButton;
     public Animal associatedAnimal;
 
     public void AssociateAnimal(Animal animal) {
@@ -21,8 +21,8 @@ public class AnimalElementList : MonoBehaviour {
         statusText.text = animal.estado.ToString();
         sizeText.text = animal.size.ToString();
         speciesText.text = animal.especie.ToString();
-        adoptButton.onClick.AddListener(() => AddAnimal(animal));
-        rejectButton.onClick.AddListener(() => RejectAnimal(animal));
+        //adoptButton.onClick.AddListener(() => AddAnimal(animal));
+        //rejectButton.onClick.AddListener(() => RejectAnimal(animal));
     }
 
     void RejectAnimal(Animal a) {
@@ -36,7 +36,7 @@ public class AnimalElementList : MonoBehaviour {
             GameLogic.instance.shelterAnimals.Add(a);
             Destroy(gameObject);
         } else {
-            adoptButton.GetComponentInChildren<Text>().text = "No hay sitio";
+            //adoptButton.GetComponentInChildren<Text>().text = "No hay sitio";
         }
     }
 
