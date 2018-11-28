@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CardMiniGame_Logic : MonoBehaviour {
     [HideInInspector]
     public static CardMiniGame_Logic cardLogic;
@@ -18,12 +18,20 @@ public class CardMiniGame_Logic : MonoBehaviour {
     bool play;
     RunnerLogic.STATE state;
     RunnerLogic.DIFFICULTY difficulty;
-    public Canvas canvas;
+    public Canvas overallCanvas;
+    public Canvas personalCanvas;
+    public bool playButton;
+    bool wasSetUp;
+    public Text triesText;
     // Use this for initialization
 
     public void Play(RunnerLogic.DIFFICULTY diff) {
+        wasSetUp = false;
         state = RunnerLogic.STATE.START;
         difficulty = diff;
+        play = true;
+        personalCanvas.gameObject.SetActive(true);
+        overallCanvas.gameObject.SetActive(false);
     }
 
     private void Awake() {
@@ -33,6 +41,7 @@ public class CardMiniGame_Logic : MonoBehaviour {
             Destroy(this);
         }
     }
+
 
     void FindFreeId(CardMiniGame_Card card) {
         bool found = false;
@@ -127,21 +136,23 @@ public class CardMiniGame_Logic : MonoBehaviour {
         backMaterial = Resources.Load<Material>("Materials/CardBackMaterial");
 
         cardPrefab = Resources.Load<GameObject>("Prefabs/CardPrefab");
-
     }
 
     void CheckCards() {
+        tries++;
         if (card1.sister == card2) {
             score += card1.cardValue;
-            if (IsGameOver()) {
-                state = RunnerLogic.STATE.END;
-            }
         } else {
             card1.clicked = card1.highlighted = false;
             card2.clicked = card1.highlighted = false;
         }
-        card1 = card2 = null;
-        tries++;
+        card1 = null;
+        card2 = null;
+
+        if (IsGameOver()) {
+            state = RunnerLogic.STATE.END;
+        }
+
     }
 
     bool IsGameOver() {
@@ -156,34 +167,48 @@ public class CardMiniGame_Logic : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        if (playButton) {
+            playButton = false;
+            Play(RunnerLogic.DIFFICULTY.EASY);
+
+        }
         if (!play) return;
         else {
             switch (state) {
                 case RunnerLogic.STATE.START:
-                    if (canvas != null) {
-                        canvas.gameObject.SetActive(false);
+                    if (!wasSetUp) {
+                        if (overallCanvas != null) {
+                            overallCanvas.gameObject.SetActive(false);
+                        }
+                        tries = 0;
+                        score = 0;
+                        score = tries = 0;
+                        numOfCards = 12;
+                        cardsPerRow = 6;
+                        SetUpCards();
+                        wasSetUp = true;
                     }
-                    play = true;
-                    tries = 0;
-                    score = 0;
-                    state = RunnerLogic.STATE.GAME;
-                    score = tries = 0;
-                    numOfCards = 12;
-                    cardsPerRow = 6;
-                    SetUpCards();
-                    switch (difficulty) {
-                        case RunnerLogic.DIFFICULTY.EASY:
-                            maxTries = 10;
-                            break;
-                        case RunnerLogic.DIFFICULTY.NORMAL:
-                            maxTries = 8;
-                            break;
-                        case RunnerLogic.DIFFICULTY.HARD:
-                            maxTries = 6;
-                            break;
+
+                    if (Input.GetMouseButtonDown(0)) {
+                        state = RunnerLogic.STATE.GAME;
+
+                        switch (difficulty) {
+                            case RunnerLogic.DIFFICULTY.EASY:
+                                maxTries = 10;
+                                break;
+                            case RunnerLogic.DIFFICULTY.NORMAL:
+                                maxTries = 8;
+                                break;
+                            case RunnerLogic.DIFFICULTY.HARD:
+                                maxTries = 6;
+                                break;
+                        }
                     }
+
                     break;
                 case RunnerLogic.STATE.GAME:
+                    triesText.text = "Intentos: " + tries + "/" + maxTries;
                     if (card2 != null) {
                         if (card2.rotated) {
                             CheckCards();
@@ -208,7 +233,9 @@ public class CardMiniGame_Logic : MonoBehaviour {
 
                     break;
                 case RunnerLogic.STATE.END:
-                    canvas.gameObject.SetActive(true);
+                    overallCanvas.gameObject.SetActive(true);
+                    GameLogic.instance.gameState = GameLogic.GameState.WEEKSTART;
+                    personalCanvas.gameObject.SetActive(false);
                     break;
             }
         }
