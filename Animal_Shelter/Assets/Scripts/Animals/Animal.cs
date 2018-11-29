@@ -15,8 +15,8 @@ public class Animal : MonoBehaviour {
     public int gastoComida;
     public int gastoMedico; //en caso de tener que tratarlo
     public int salud;
-    int confortValue;
-    int hambre;
+    public int confortValue;
+    public int hambre;
     public string nombre;
     public string descripcion;
     public Color color;

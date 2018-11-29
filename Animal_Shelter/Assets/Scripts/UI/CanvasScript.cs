@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CanvasScript : MonoBehaviour {
     public static CanvasScript canvasScript;
+    public SelectedAnimalDisplayer selectedAnimalDisplayer;
     public GameObject UIManagementGameObject;
     public GameObject eventHandlerObject;
     public Button acceptButton;
@@ -24,6 +25,8 @@ public class CanvasScript : MonoBehaviour {
 
     GameObject animalElementPrefab;
 
+    public Animal animalOnListClickedOnto;
+
     public int numAnimals;
     public List<AnimalElementList> animalElements;
     // Use this for initialization
@@ -41,17 +44,41 @@ public class CanvasScript : MonoBehaviour {
         canvasState = CanvasState.IDLE;
     }
 
+    public void SelectAnimal(AnimalElementList animal) {
+        //if (selectedAnimalDisplayer != null) {
+        //    selectedAnimalDisplayer.selectedAnimalInList = animal.associatedAnimal;
+        //}
+        animalOnListClickedOnto = animal.associatedAnimal;
+    }
+
     // Update is called once per frame
     void Update() {
+        switch (canvasState) {
+            case CanvasState.DISPLAYANIMALLIST:
+                if (selectedAnimalDisplayer != null) {
+                    if (selectedAnimalDisplayer.selectedAnimalInList != animalOnListClickedOnto) {
+                        selectedAnimalDisplayer.SetInfo(animalOnListClickedOnto);
+                    }
+                }
+                break;
+            default:
+                break;
 
+        }
     }
 
     private void OnDestroy() {
         canvasScript = null;
     }
 
+    public void StopDisplayingShelterAnimals() {
+        canvasScript.canvasState = CanvasState.IDLE;
+        animalsWindow.SetActive(false);
+    }
+
     public void DisplayShelterAnimals() {
         CreateAnimalList();
+        canvasScript.canvasState = CanvasState.DISPLAYANIMALLIST;
         animalsWindow.SetActive(true);
     }
 
