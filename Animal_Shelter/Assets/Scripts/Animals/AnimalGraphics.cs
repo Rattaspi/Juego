@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,6 @@ public class AnimalGraphics : MonoBehaviour {
 
     [SerializeField] PreviewInfoAnimal previewInfo;
     [SerializeField] ShowInfoAnimal showInfo;
-    RawImage baseBody;
 
     GraphicRaycaster graphicRaycaster;
     EventSystem eventSystem;
@@ -34,11 +34,55 @@ public class AnimalGraphics : MonoBehaviour {
         animalInfo = GetComponentInParent<Animal>();
         if (animalInfo == null) Debug.LogError("Animal.cs not found from AnimalGraphics.cs");
 
-        baseBody = GetComponent<RawImage>();
-        baseBody.color = animalInfo.color;
-
         info.SetActive(false);
         changeName.SetActive(false);
+
+        GenerateAnimal();
+    }
+
+    private void GenerateAnimal() {
+        GameObject g;
+        switch (animalInfo.especie) {
+            case Animal.ESPECIE.GATO:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Gato");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.HAMSTER:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Hamster");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.KOALA:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Koala");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.NARVAL:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Narval");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.PALOMA:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Paloma");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.PERRO:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
+                Instantiate(g, this.transform);
+                break;
+
+            case Animal.ESPECIE.TIGRE:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Tigre");
+                Instantiate(g, this.transform);
+                break;
+
+            default:
+                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
+                Instantiate(g, this.transform);
+                break;
+        }
     }
 
     private void Update() {
