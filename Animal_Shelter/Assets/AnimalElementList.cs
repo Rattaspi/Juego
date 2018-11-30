@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class AnimalElementList : MonoBehaviour {
     public RawImage animalImage; //This shall be substituted by a sprite of the actual animal, eventually.
@@ -10,9 +11,14 @@ public class AnimalElementList : MonoBehaviour {
     public Text statusText;
     public Text sizeText;
     public Text speciesText;
-    public Button adoptButton;
-    public Button rejectButton;
+    //public Button adoptButton;
+    //public Button rejectButton;
     public Animal associatedAnimal;
+
+
+    GraphicRaycaster graphicRaycaster;
+    EventSystem eventSystem;
+    PointerEventData pointerEvent;
 
     public void AssociateAnimal(Animal animal) {
         associatedAnimal = animal;
@@ -21,8 +27,8 @@ public class AnimalElementList : MonoBehaviour {
         statusText.text = animal.estado.ToString();
         sizeText.text = animal.size.ToString();
         speciesText.text = animal.especie.ToString();
-        adoptButton.onClick.AddListener(() => AddAnimal(animal));
-        rejectButton.onClick.AddListener(() => RejectAnimal(animal));
+        //adoptButton.onClick.AddListener(() => AddAnimal(animal));
+        //rejectButton.onClick.AddListener(() => RejectAnimal(animal));
     }
 
     void RejectAnimal(Animal a) {
@@ -36,17 +42,36 @@ public class AnimalElementList : MonoBehaviour {
             GameLogic.instance.shelterAnimals.Add(a);
             Destroy(gameObject);
         } else {
-            adoptButton.GetComponentInChildren<Text>().text = "No hay sitio";
+            //adoptButton.GetComponentInChildren<Text>().text = "No hay sitio";
         }
     }
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
+        if (graphicRaycaster == null) Debug.LogError("Graphic raycaster not found from AnimalGraphics.cs");
+        eventSystem = FindObjectOfType<EventSystem>();
+        if (eventSystem == null) Debug.LogError("EventSystem not found from AnimalGraphics.cs");
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (Input.GetKey(KeyCode.Mouse0)) {
+            pointerEvent = new PointerEventData(eventSystem);
+            pointerEvent.position = Input.mousePosition;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            graphicRaycaster.Raycast(pointerEvent, results);
+
+
+            if (results.Count > 0) {
+                if (results[0].gameObject.tag == "animalElementList") {
+                    CanvasScript.canvasScript.SelectAnimal(results[0].gameObject.GetComponentInParent<AnimalElementList>());
+                    //Debug.Log(results[0].gameObject.GetComponentInParent<AnimalElementList>());
+                    Debug.Log(results[0].gameObject);
+                }
+            }
+
+        }
+    }
 }
