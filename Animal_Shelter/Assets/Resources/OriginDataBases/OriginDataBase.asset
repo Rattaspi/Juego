@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714482d4823319940a112a28b27c6e48, type: 3}
+  m_Name: OriginDataBase
+  m_EditorClassIdentifier: 
+  originStart:
+  - Era la estrella de un circo
+  - "Huy\xF3"
+  - "Sus due\xF1os lo abandonaron y no tuvo m\xE1s remedio que vagar por las calles"
+  - "Viv\xEDa junto a sus hermanos en un tonel de manzanas en un callej\xF3n"
+  - "Estaba buscando comida para su familia cuando un coche le di\xF3 un golpe. Un
+    hombre lo llev\xF3 al hospital veterinario"
+  - "Lleg\xF3 el verano y sus amos no pod\xEDan mantenerlo, lo dejaron en una gasolinera"
+  - "Una se\xF1ora mayor viv\xEDa rodeada de muchos como \xE9l, pero un d\xEDa comenz\xF3
+    a com\xE9rselos para no morir de hambre hasta que la internaron en el manicomio"
+  originMiddle:
+  - "de Las Vegas. Un lud\xF3pata lo adopt\xF3 y acab\xF3 apost\xE1ndolo en una de
+    sus partidas, sigui\xF3 pasando de mano en mano"
+  - "de Chern\xF3bil. Al ser v\xEDctima de la radiaci\xF3n, nadie quer\xEDa hacerse
+    cargo de \xE9l debido a sus deformidades"
+  - "de Pek\xEDn. Un cocinero lo adopt\xF3 hasta que un d\xEDa se qued\xF3 sin carne
+    y necesitaba usarlo a \xE9l para satisfacer a sus clientes. Estaba encerrado en
+    un cuarto oscuro"
+  - "de Tokio. Una colegiala lo encontr\xF3 de camino a casa y lo convirti\xF3 en
+    la mascota de su grupo de baile"
+  - de Palestina. Debido a la guerra tuvo que seguir huyendo por mucho tiempo hasta
+    encontrar un lugar mejor
+  - "de la India. R\xE1pidamente se uni\xF3 a un grupo de monos callejeros que robaban
+    a turistas"
+  - "de Barcelona. Una pareja de ancianos lo adopt\xF3, pero meses m\xE1s tarde murieron.
+    Unos amigos de estos lo acogieron, pero tambi\xE9n murieron. A partir de entonces
+    lo repudiaron por ser un mensajero de la muerte"
+  - "de Paris. Rompi\xF3 a llorar sin consuelo hasta que una ni\xF1a le dio un trozo
+    de su croissant para calmarlo. La persigui\xF3 "
+  originEnd:
+  - "hasta que tropez\xF3 con un militante de Green Peace, que lo trajo hasta aqu\xED."
+  - "hasta que una familia de magos lo incorpor\xF3 a su espect\xE1culo. Entonces
+    sufri\xF3 una lesi\xF3n y dej\xF3 de ser \xFAtil."
+  - "hasta que una anciana vendedora de flores lo confundi\xF3 con su antigua mascota,
+    ya fallecida, y lo intent\xF3 enterrar vivo en el sitio d\xF3nde se supone que
+    deb\xEDa estar."
+  - "hasta que lleg\xF3 la polic\xEDa y los detuvo a todos. Entonces lo enviaron aqu\xED."
+  - "hasta que un enorme animal comenz\xF3 a perseguirlo, llev\xE1ndolo a la puerta
+    del refugio."
+  - "hasta que anocheci\xF3 y lleg\xF3 aqu\xED sin saber c\xF3mo."
+  - "hasta que una infestaci\xF3n de garrapatas le hizo rodar para rascarse y cay\xF3
+    cuesta abajo llegando aqu\xED."
+  - "hasta que se dio cuenta que no deb\xEDa seguir all\xED y trat\xF3 de volver a
+    sus or\xEDgenes. Con bastante poco \xE9xito."
+  - "hasta que sufri\xF3 un infarto y no supieron que m\xE1s hacer con \xE9l."

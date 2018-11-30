@@ -5237,6 +5237,7 @@ MonoBehaviour:
   expensesToPay: 0
   publicityToInvest: 0
   cleanupToDo: 0
+  originDataBase: {fileID: 11400000, guid: 40ee62688db2d584bbcc60cd4a927e7a, type: 2}
   instalations: []
 --- !u!4 &1012311402
 Transform:

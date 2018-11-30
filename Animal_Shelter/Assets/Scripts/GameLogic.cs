@@ -23,6 +23,7 @@ public class GameLogic : MonoBehaviour {
     public ToggleScript.ToggleType expensesToPay;
     public ToggleScript.ToggleType publicityToInvest;
     public ToggleScript.ToggleType cleanupToDo;
+    public OriginDataBase originDataBase;
 
     [SerializeField]
     List<Instalation> instalations;

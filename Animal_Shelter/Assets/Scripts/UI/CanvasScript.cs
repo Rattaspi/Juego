@@ -31,6 +31,9 @@ public class CanvasScript : MonoBehaviour {
     public List<AnimalElementList> animalElements;
     // Use this for initialization
     void Start() {
+
+        
+
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
         canvasScript = this;
         UIManagementGameObject.SetActive(true);
