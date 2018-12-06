@@ -90,7 +90,7 @@ public class PouLogic : MonoBehaviour {
                                 break;
                         }
                     }
-                    spawnTimer += Time.deltaTime;
+                    spawnTimer += GameTime.deltaTime;
                     currentItems.RemoveAll(isNull);
 
                     if (gameTimer > maxTime) {

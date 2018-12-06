@@ -61,7 +61,7 @@ public class TempleRunLogic : MonoBehaviour {
                 monedasText.text = "Monedas: " + monedas;
                 if (gameTimer > maxTime) Restart();
 
-                gameTimer += (Time.deltaTime / Time.timeScale);
+                gameTimer += (GameTime.deltaTime/ Time.timeScale);
                 break;
 
             case STATE.END:

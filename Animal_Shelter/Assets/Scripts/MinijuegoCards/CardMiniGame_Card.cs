@@ -59,7 +59,7 @@ public class CardMiniGame_Card : MonoBehaviour {
             Vector3 rotationVector;
             transform.rotation.ToAngleAxis(out tempAngle, out rotationVector);
             transform.rotation = Quaternion.AngleAxis(Mathf.Lerp(originalRotationAngle, tempAngle, sigma2), new Vector3(0, 1, 0));
-            sigma2 -= Time.deltaTime;
+            sigma2 -= GameTime.deltaTime;
         } else {
             sigma2 = 0;
             wasClicked = false;
@@ -73,7 +73,7 @@ public class CardMiniGame_Card : MonoBehaviour {
             Vector3 rotationVector;
             transform.rotation.ToAngleAxis(out tempAngle, out rotationVector);
             transform.rotation = Quaternion.AngleAxis(Mathf.Lerp(tempAngle, destinedRotation, sigma2), new Vector3(0, 1, 0));
-            sigma2 += Time.deltaTime;
+            sigma2 += GameTime.deltaTime;
         } else {
             sigma2 = 1;
             rotated = true;
@@ -96,15 +96,15 @@ public class CardMiniGame_Card : MonoBehaviour {
 
     void HighlightManagement() {
         if (highlighted) {
-            highlightTimer += Time.deltaTime;
+            highlightTimer += GameTime.deltaTime; ;
             if (sigma < 1) {
-                sigma += Time.deltaTime * 3;
+                sigma += GameTime.deltaTime * 3;
             } else {
                 sigma = 1;
             }
         } else {
             if (sigma > 0) {
-                sigma -= Time.deltaTime * 3;
+                sigma -= GameTime.deltaTime * 3;
             } else {
                 sigma = 0;
             }
