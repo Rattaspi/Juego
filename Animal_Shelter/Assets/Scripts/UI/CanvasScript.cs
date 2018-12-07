@@ -29,11 +29,15 @@ public class CanvasScript : MonoBehaviour {
 
     public int numAnimals;
     public List<AnimalElementList> animalElements;
+
+    public EnteringAnimalDisplayer enteringAnimalDisplayer;
+    //public Animal enteringAnimal;
+    public GameObject enteringAnimalButtonObject;
+    public bool debugBool;
+
+
     // Use this for initialization
     void Start() {
-
-        
-
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
         canvasScript = this;
         UIManagementGameObject.SetActive(true);
@@ -45,6 +49,33 @@ public class CanvasScript : MonoBehaviour {
         tempAnimalParent.name = "tempAnimalParent";
         tempAnimalParent.transform.parent = gameObject.transform;
         canvasState = CanvasState.IDLE;
+        enteringAnimalButtonObject.SetActive(false);
+
+    }
+
+    public void ResolveAnimalRequest(bool accepted) {
+
+        if (accepted) {
+            enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
+            enteringAnimalDisplayer.selectedAnimalInList = null;
+        } else {
+
+            Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
+        }
+        enteringAnimalDisplayer.backgroundObject.SetActive(false);
+        enteringAnimalButtonObject.SetActive(false);
+    }
+
+    public void AddEnteringAnimal() {
+        enteringAnimalButtonObject.SetActive(true);
+        Animal animal = Animal.MakeARandomAnimal().GetComponent<Animal>();
+        canvasScript.enteringAnimalDisplayer.selectedAnimalInList = animal;
+        //Debug.Log(canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
+        //Aqui hay que meter el código para que se añada un animal
+    }
+
+    public void DisplayEnteringAnimal() {
+        //enteringAnimalObject.SetActive(true);
     }
 
     public void SelectAnimal(AnimalElementList animal) {
@@ -56,6 +87,12 @@ public class CanvasScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        if (debugBool) {
+            debugBool = false;
+            canvasScript.AddEnteringAnimal();
+        }
+
         switch (canvasState) {
             case CanvasState.DISPLAYANIMALLIST:
                 if (selectedAnimalDisplayer != null) {

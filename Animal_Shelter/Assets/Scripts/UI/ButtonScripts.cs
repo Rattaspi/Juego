@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS};
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO };
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -17,7 +17,7 @@ public class ButtonScripts : MonoBehaviour {
                 myselfButton.onClick.AddListener(() => EndWeek());
                 break;
             case ButtonFunction.PAUSE:
-
+                myselfButton.onClick.AddListener(() => Pause());
                 break;
 
             case ButtonFunction.SACRIFICE:
@@ -40,10 +40,43 @@ public class ButtonScripts : MonoBehaviour {
                 myselfButton.onClick.AddListener(() => DisplayAnimals());
                 break;
 
+            case ButtonFunction.ACCEPTANIMAL:
+                myselfButton.onClick.AddListener(() => ResolveAnimalRequest(true));
+                break;
+            case ButtonFunction.REJECTANIMAL:
+                myselfButton.onClick.AddListener(() => ResolveAnimalRequest(false));
+                break;
+            case ButtonFunction.SET_ENTRY_INFO:
+                myselfButton.onClick.AddListener(() => SetEntryInfo());
+                break;
             default:
                 break;
         }
-        
+
+    }
+
+    void SetEntryInfo() {
+
+        CanvasScript.canvasScript.enteringAnimalDisplayer.SetInfo(CanvasScript.canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
+    }
+
+    void ResolveAnimalRequest(bool accepted) {
+        if (accepted) {
+            CanvasScript.canvasScript.ResolveAnimalRequest(accepted);
+        } else {
+            CanvasScript.canvasScript.ResolveAnimalRequest(accepted);
+
+        }
+    }
+
+    void Pause() {
+        GameTime.Pause();
+    }
+
+    void DisplayEnteringAnimal() {
+        if (CanvasScript.canvasScript != null) {
+            CanvasScript.canvasScript.DisplayEnteringAnimal();
+        }
     }
 
     void EndWeek() {

@@ -7,6 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class GameTime {
     public static bool isPaused;
     public static float deltaTime { get { return isPaused ? 0 : Time.deltaTime; } }
+    public static void Pause() {
+        isPaused = !isPaused;
+    }
 }
 
 public class GameLogic : MonoBehaviour {
@@ -115,6 +118,7 @@ public class GameLogic : MonoBehaviour {
             }
         }
     }
+
 
     void NewEvents() {
         Event random = new PuppyBagEvent();
