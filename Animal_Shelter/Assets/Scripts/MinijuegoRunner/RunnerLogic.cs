@@ -48,7 +48,7 @@ public class RunnerLogic : MonoBehaviour {
                 timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
                 if (gameTimer > maxTime) Stop();
 
-                gameTimer += (Time.deltaTime / Time.timeScale);
+                gameTimer += (GameTime.deltaTime / Time.timeScale);
                 break;
 
             case STATE.END:

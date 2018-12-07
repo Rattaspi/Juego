@@ -40,7 +40,7 @@ public class Animal : MonoBehaviour {
         color = Color.HSVToRGB(Random.value, 0.8f, 0.8f);
 
         CreateBody();
-
+        CreateOrigin();
         //START THE INTERNAL VALUES
         //salud [0, 100]
         switch (estado) {
@@ -78,6 +78,17 @@ public class Animal : MonoBehaviour {
         hambre = hambriento ? Random.Range(0, 9) : Random.Range(10, 20);
     }
 
+    public void CreateOrigin() {
+        int randomInt = Random.Range(0, Stories.inicio.Length - 1);
+        descripcion = "" + Stories.inicio[randomInt];
+        randomInt = Random.Range(0, Stories.nudo.Length - 1);
+        descripcion += Stories.nudo[randomInt]; 
+
+        randomInt = Random.Range(0, Stories.desenlace.Length - 1);
+        descripcion += Stories.desenlace[randomInt];
+
+    }
+
     public void UpdateStats() {
         int variacionSalud = 5;
         int variacionConfort = 2;
@@ -97,6 +108,17 @@ public class Animal : MonoBehaviour {
         }
     }
 
+    public static GameObject MakeARandomAnimal() {
+        GameObject animalObject = new GameObject();
+        animalObject.transform.SetParent(CanvasScript.canvasScript.tempAnimalParent.transform);
+        Animal temp2;
+        temp2 = animalObject.AddComponent<Animal>();
+        temp2.StartStats();
+        //Debug.Log(temp2);
+        animalObject.name = temp2.name;
+        return animalObject;
+    }
+
     private void Start() {
         StartStats();
         this.gameObject.tag = "animal";
@@ -110,10 +132,10 @@ public class Animal : MonoBehaviour {
 
     void CreateBody() {
         //CREATE THE BODY ELEMENTS
-        graphics = Resources.Load<GameObject>("Prefabs/AnimalBody");
-        graphics = Instantiate(graphics, this.transform);
-        graphics.name = "Body";
-        graphics.layer = 20;
+        //graphics = Resources.Load<GameObject>("Prefabs/AnimalBody");
+        //graphics = Instantiate(graphics, this.transform);
+        //graphics.name = "Body";
+        //graphics.layer = 20;
 
     }
 }

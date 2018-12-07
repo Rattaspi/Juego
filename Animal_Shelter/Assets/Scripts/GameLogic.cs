@@ -4,7 +4,16 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+public static class GameTime {
+    public static bool isPaused;
+    public static float deltaTime { get { return isPaused ? 0 : Time.deltaTime; } }
+    public static void Pause() {
+        isPaused = !isPaused;
+    }
+}
+
 public class GameLogic : MonoBehaviour {
+
     //Singleton
     public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME };
     public static GameLogic instance;
@@ -27,6 +36,12 @@ public class GameLogic : MonoBehaviour {
 
     [SerializeField]
     List<Instalation> instalations;
+    public float maxTimeOfEntry;
+    public float timeOfEntry;
+
+    public bool CanEndWeek() {
+        return timeOfEntry >= maxTimeOfEntry;
+    }
 
     void Awake() {
         if (instance == null) {
@@ -54,7 +69,11 @@ public class GameLogic : MonoBehaviour {
         foodPrice = 1.0f;
         publictyPrice = 1.0f;
         cleanUpCost = 1.0f;
+        maxTimeOfEntry = 60;
+        timeOfEntry =  0;
     }
+
+    
 
     void Update() {
 
@@ -63,11 +82,20 @@ public class GameLogic : MonoBehaviour {
             switch (gameState) {
                 case GameState.WEEKSTART:
                     //CanvasScript.canvasScript.DisplayIncomingAnimals();
+                    gameState = GameState.WEEK;
+                    timeOfEntry = 0;
 
                     break;
                 case GameState.WEEK:
                     //Here we'd set the entrance and management of clients
-                    break;
+
+                    if (timeOfEntry < maxTimeOfEntry) {
+                        timeOfEntry += GameTime.deltaTime;
+                        if (timeOfEntry > maxTimeOfEntry) {
+                            timeOfEntry = maxTimeOfEntry;
+                        }
+                    }
+                        break;
                 case GameState.EVENT:
                     if (currentEventIndex < incomingEvents.Count) {
                         if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
@@ -90,6 +118,7 @@ public class GameLogic : MonoBehaviour {
             }
         }
     }
+
 
     void NewEvents() {
         Event random = new PuppyBagEvent();
@@ -262,6 +291,7 @@ public class GameLogic : MonoBehaviour {
         currentAnimalCapacity = 10;
         instalations = new List<Instalation>();
         gameState = GameState.WEEK;
+        timeOfEntry = 0;
         incomingEvents = new List<Event>();
         shelterAnimals = new List<Animal>();
         currentEventIndex = 0;

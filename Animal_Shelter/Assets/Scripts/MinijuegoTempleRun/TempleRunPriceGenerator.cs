@@ -44,7 +44,7 @@ public class TempleRunPriceGenerator : MonoBehaviour {
                     return;
                 }
 
-                generatorTimer += Time.deltaTime;
+                generatorTimer += GameTime.deltaTime;
                 break;
 
             case GENERATOR_STATE.GENERATE:
