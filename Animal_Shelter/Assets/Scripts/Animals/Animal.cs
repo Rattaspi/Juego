@@ -132,10 +132,9 @@ public class Animal : MonoBehaviour {
 
     void CreateBody() {
         //CREATE THE BODY ELEMENTS
-        //graphics = Resources.Load<GameObject>("Prefabs/AnimalBody");
-        //graphics = Instantiate(graphics, this.transform);
-        //graphics.name = "Body";
-        //graphics.layer = 20;
-
+        graphics = Resources.Load<GameObject>("Prefabs/AnimalBody");
+        graphics = Instantiate(graphics, this.transform);
+        graphics.name = "Body";
+        graphics.layer = 20;
     }
 }
