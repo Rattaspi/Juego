@@ -17,6 +17,11 @@ public class Adoptante : MonoBehaviour {
         canvas = GetComponentInParent<Canvas>();
         this.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
 
+        this.gameObject.AddComponent(typeof(MovementAdoptante));
+
+        CircleCollider2D circleCol = (CircleCollider2D) this.gameObject.AddComponent(typeof(CircleCollider2D));
+        circleCol.radius = 150.0f;
+
         GameObject g = Resources.Load<GameObject>("Prefabs/Humans/HumanGraphics");
         g = Instantiate(g, this.transform);
         g.name = "Graphics";
@@ -35,6 +40,11 @@ public class Adoptante : MonoBehaviour {
         }
         else {
             speciePreferred = (Animal.ESPECIE)Random.Range(0, (int)Animal.ESPECIE.LENGTH);
+        }
+
+        //ERROR COMPROVATION
+        if (this.transform.parent.transform.position != Vector3.zero) {
+            Debug.LogWarning("The parent of the Adopter object is not on (0,0,0). It might cause errors");
         }
     }
 }
