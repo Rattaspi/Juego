@@ -11,6 +11,9 @@ public class MovementAdoptante : MonoBehaviour {
 	void Start () {
         state = State.MOVING;
 
+        Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+
         this.transform.position = new Vector2(Random.Range(400, Screen.width - 200), -50);
 	}
 	
@@ -26,8 +29,11 @@ public class MovementAdoptante : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        print("trigger enter");
         if(collision.tag == "movement_bounds"){
             state = State.WAIT;
         }
     }
+
+
 }
