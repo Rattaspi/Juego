@@ -8,11 +8,18 @@ public class TintAnimalPart : MonoBehaviour {
 
 	void Awake () {
         animalInfo = GetComponentInParent<Animal>();
-        if (animalInfo == null) Debug.LogError("Animal not found from TintAnimalPart");
+        //if (animalInfo == null) Debug.LogError("Animal not found from TintAnimalPart");
 	}
-	
-	void Start () {
+
+    //Método para forzar el pintado (Se usa en los casos de preview, donde animalInfo es null)
+    public void ForcePaint(Color c) {
         Image i = GetComponent<Image>();
+        i.color = c;
+    }
+
+    void Start () {
+        Image i = GetComponent<Image>();
+        if(animalInfo!=null)
         i.color = animalInfo.color;
 	}
 }

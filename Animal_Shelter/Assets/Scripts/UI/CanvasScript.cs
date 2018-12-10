@@ -58,9 +58,11 @@ public class CanvasScript : MonoBehaviour {
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
             enteringAnimalDisplayer.selectedAnimalInList = null;
+            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
 
             Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
+            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         }
         enteringAnimalDisplayer.backgroundObject.SetActive(false);
         enteringAnimalButtonObject.SetActive(false);

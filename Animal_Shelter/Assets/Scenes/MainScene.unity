@@ -2413,6 +2413,7 @@ MonoBehaviour:
   foodBar: {fileID: 2035177606}
   foodIcon: {fileID: 513573217}
   backgroundObject: {fileID: 14259678}
+  backgroundForAnimalImageObject: {fileID: 1782505228}
 --- !u!114 &419974572
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -78,6 +78,22 @@ public class Animal : MonoBehaviour {
         hambre = hambriento ? Random.Range(0, 9) : Random.Range(10, 20);
     }
 
+    public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue,int hambre) {
+        this.size = size;
+        this.edad = edad;
+        this.confort = confort;
+        this.estado = estado;
+        this.especie = especie;
+        this.hambriento = hambriento;
+        this.nombre = nombre;
+        this.color = color;
+        CreateBody();
+        this.descripcion = origin;
+        this.salud = salud;
+        this.confortValue = confortValue;
+        this.hambre = hambre;
+    }
+
     public void CreateOrigin() {
         int randomInt = Random.Range(0, Stories.inicio.Length - 1);
         descripcion = "" + Stories.inicio[randomInt];
@@ -115,12 +131,12 @@ public class Animal : MonoBehaviour {
         temp2 = animalObject.AddComponent<Animal>();
         temp2.StartStats();
         //Debug.Log(temp2);
-        animalObject.name = temp2.name;
+        animalObject.name = temp2.nombre;
         return animalObject;
     }
 
     private void Start() {
-        StartStats();
+        //StartStats();
         this.gameObject.tag = "animal";
 
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
