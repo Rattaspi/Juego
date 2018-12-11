@@ -31,7 +31,7 @@ public class Animal : MonoBehaviour {
     public void StartStats() {
         size = (SIZE)Random.Range(0, (int)SIZE.LENGTH);
         edad = (EDAD)Random.Range(0, (int)EDAD.LENGTH);
-        confort = CONFORT.NORMAL;
+        confort = (CONFORT)Random.Range(0, (int)CONFORT.LENGTH);
         estado = (ESTADO)Random.Range(0, (int)ESTADO.LENGTH);
         especie = (ESPECIE)Random.Range(0, (int)ESPECIE.LENGTH);
         hambriento = Random.Range(0, 10) >= 4;

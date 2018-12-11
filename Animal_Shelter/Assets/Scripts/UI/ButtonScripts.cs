@@ -55,9 +55,14 @@ public class ButtonScripts : MonoBehaviour {
 
     }
 
-    void SetEntryInfo() {
+    IEnumerator SetEntryInfoCoroutine() {
+        yield return null;
 
         CanvasScript.canvasScript.enteringAnimalDisplayer.SetInfo(CanvasScript.canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
+    }
+
+    void SetEntryInfo() {
+        StartCoroutine(SetEntryInfoCoroutine());
     }
 
     void ResolveAnimalRequest(bool accepted) {

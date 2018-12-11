@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ToggleScript : MonoBehaviour {
 
     public enum ToggleType { NONE, SMALL, MEDIUM, BIG };
-    public enum ToggleTheme { CLEANUP, FOOD, PUBLICITY, EXPENSES };
+    public enum ToggleTheme { CLEANUP, FOOD, PUBLICITY, EXPENSES,SEARCH };
 
     public ToggleTheme toggleTheme;
     public ToggleType toggleType;
@@ -33,6 +33,9 @@ public class ToggleScript : MonoBehaviour {
                     break;
                 case ToggleTheme.EXPENSES:
                     GameLogic.instance.expensesToPay = toggleType;
+                    break;
+                case ToggleTheme.SEARCH:
+                    GameLogic.instance.searchAmount = toggleType;
                     break;
             }
             Debug.Log("Told");

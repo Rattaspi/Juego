@@ -25,6 +25,7 @@ public class GameLogic : MonoBehaviour {
     public int currentEventIndex;
     public GameObject animalObjectParent;
     public float foodPrice;
+    public float gasPrice;
     public float publictyPrice;
     public float cleanUpCost;
 
@@ -32,12 +33,14 @@ public class GameLogic : MonoBehaviour {
     public ToggleScript.ToggleType expensesToPay;
     public ToggleScript.ToggleType publicityToInvest;
     public ToggleScript.ToggleType cleanupToDo;
+    public ToggleScript.ToggleType searchAmount;
     public OriginDataBase originDataBase;
 
     [SerializeField]
     List<Instalation> instalations;
     public float maxTimeOfEntry;
     public float timeOfEntry;
+    public float timeForNextAnimal;
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
@@ -67,10 +70,18 @@ public class GameLogic : MonoBehaviour {
         StartVariables();
         currentEventIndex = 0;
         foodPrice = 1.0f;
+        gasPrice = 1.0f;
         publictyPrice = 1.0f;
-        cleanUpCost = 1.0f;
+        cleanUpCost = 100.0f;
         maxTimeOfEntry = 60;
         timeOfEntry =  0;
+        timeForNextAnimal = 0;
+        int timeToAdd = Random.Range(3, 9);
+        timeForNextAnimal += timeToAdd;
+        Instalation baseInstalation = new Instalation(100,"Base");
+        instalations.Add(baseInstalation);
+        cleanupToDo = ToggleScript.ToggleType.BIG;
+        expensesToPay = ToggleScript.ToggleType.BIG;
     }
 
     
@@ -84,13 +95,18 @@ public class GameLogic : MonoBehaviour {
                     //CanvasScript.canvasScript.DisplayIncomingAnimals();
                     gameState = GameState.WEEK;
                     timeOfEntry = 0;
-
+                    timeForNextAnimal = 0;
                     break;
                 case GameState.WEEK:
                     //Here we'd set the entrance and management of clients
 
                     if (timeOfEntry < maxTimeOfEntry) {
                         timeOfEntry += GameTime.deltaTime;
+                        if(timeOfEntry > timeForNextAnimal&&!CanvasScript.canvasScript.enteringAnimalButtonObject.activeInHierarchy) {
+                            int timeToAdd = Random.Range(3,9);
+                            timeForNextAnimal += timeToAdd;
+                            CanvasScript.canvasScript.AddEnteringAnimal();
+                        }
                         if (timeOfEntry > maxTimeOfEntry) {
                             timeOfEntry = maxTimeOfEntry;
                         }
@@ -121,20 +137,146 @@ public class GameLogic : MonoBehaviour {
 
 
     void NewEvents() {
-        Event random = new PuppyBagEvent();
-        instance.incomingEvents.Add(random);
+        //Event random = new PuppyBagEvent();
+        //instance.incomingEvents.Add(random);
 
 
         switch (currentWeek) {
             case 0:
+
                 break;
             case 1:
+                Event donationEvent = new TownHallMoneyEvent();
+                instance.incomingEvents.Add(donationEvent);
                 break;
             case 2:
                 break;
             case 3:
                 break;
             case 4:
+                CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.EASY);
+                break;
+            case 5:
+                //Evento Positivo
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                //RunnerPlay
+                break;
+            case 9:
+                //Evento aleatorio
+                break;
+            case 10:
+                break;
+            case 11:
+                //Evento positivo
+                break;
+            case 12:
+                //PouGame Play
+                break;
+            case 13:
+                break;
+            case 14:
+                break;
+            case 15:
+                //Evento Aleatorio
+                break;
+            case 16:
+                //MiniJuego Tres Carriles
+                break;
+            case 17:
+                //Evento Aleatorio
+                break;
+            case 18:
+                //Evento Aleatorio
+                break;
+            case 19:
+                break;
+            case 20:
+                CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.NORMAL);
+
+                break;
+            case 21:
+                //Event donationEvent = new TownHallMoneyEvent();
+                //instance.incomingEvents.Add(donationEvent);
+
+                break;
+            case 22:
+                //Evento negativo
+                break;
+            case 23:
+                //Evento Aleatorio
+                break;
+            case 24:
+                //Runner II
+                break;
+            case 25:
+                break;
+            case 26:
+                break;
+            case 27:
+                break;
+            case 28:
+                //Pou II 
+                break;
+            case 29:
+                //Evento negativo
+                break;
+            case 30:
+                break;
+            case 31:
+                //Evento Aleatorio
+                break;
+            case 32:
+                //3 Carriles
+                break;
+            case 33:
+
+                break;
+            case 34:
+                //Evento positivo
+                break;
+            case 35:
+                //Evento negativo
+                break;
+            case 36:
+                CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.HARD);
+                break;
+            case 37:
+                //Evento Aleatorio
+                break;
+            case 38:
+                //Evento Negativo
+                break;
+            case 39:
+                //Evento Negativo
+                break;
+            case 40:
+                //Runner III
+                break;
+            case 41:
+                break;
+            case 42:
+                break;
+            case 43:
+                break;
+            case 44:
+                //Pou III
+                break;
+            case 45:
+                //Evento Negativo
+                break;
+            case 46:
+                //Evento Negativo
+                break;
+            case 47:
+                //Evento Negativo
+                break;
+            case 48:
+                //3 Carriles III
                 break;
             default:
                 int randomInt = Random.Range(0, 10);
@@ -168,37 +310,31 @@ public class GameLogic : MonoBehaviour {
                 break;
             case ToggleScript.ToggleType.MEDIUM:
                 totalExpense += foodPrice * 100.0f;
-
                 break;
             case ToggleScript.ToggleType.BIG:
                 totalExpense += foodPrice * 150.0f;
-
                 break;
         }
 
         switch (publicityToInvest) {
             case ToggleScript.ToggleType.NONE:
-
                 break;
             case ToggleScript.ToggleType.SMALL:
-                totalExpense += publictyPrice * 150.0f;
-
+                totalExpense += publictyPrice * 50.0f;
                 break;
             case ToggleScript.ToggleType.MEDIUM:
-                totalExpense += publictyPrice * 150.0f;
-
+                totalExpense += publictyPrice * 100.0f;
                 break;
             case ToggleScript.ToggleType.BIG:
                 totalExpense += publictyPrice * 150.0f;
-
                 break;
         }
 
         switch (cleanupToDo) {
             case ToggleScript.ToggleType.NONE:
-                totalExpense += cleanUpCost;
                 break;
             default:
+                totalExpense += cleanUpCost;
                 break;
         }
 
@@ -207,6 +343,25 @@ public class GameLogic : MonoBehaviour {
                 break;
             default:
                 totalExpense += GetInstalationsUpKeep();
+                break;
+        }
+
+        switch (searchAmount) {
+            case ToggleScript.ToggleType.NONE:
+
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                totalExpense += gasPrice * 50;
+
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                totalExpense += gasPrice * 100;
+
+                break;
+            case ToggleScript.ToggleType.BIG:
+                totalExpense += gasPrice * 150;
+
+
                 break;
         }
 

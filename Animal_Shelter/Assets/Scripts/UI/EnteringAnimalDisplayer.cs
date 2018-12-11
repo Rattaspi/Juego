@@ -22,11 +22,21 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
     public Image foodBar;
     public Image foodIcon;
 
+    public Image humorRepresentation;
+
     public GameObject backgroundObject;
     public GameObject backgroundForAnimalImageObject;
     public GameObject currentAnimalPreview;
 
+    public Sprite caraContenta;
+    public Sprite caraSeria;
+    public Sprite caraTriste;
+
+
     IEnumerator AssignToCanvas() {
+
+
+
         while (CanvasScript.canvasScript == null) {
             yield return null;
         }
@@ -97,8 +107,8 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
         descriptionText.text = selectedAnimalInList.descripcion;
 
         //sizeText.text = selectedAnimalInList.size.ToString();
-
-        healthBar.fillAmount = selectedAnimalInList.salud;
+        
+        healthBar.fillAmount = selectedAnimalInList.salud/80.0f;
 
         switch (selectedAnimalInList.edad) {
             case Animal.EDAD.CACHORRO:
@@ -115,16 +125,58 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
                 break;
         }
 
-        foodBar.fillAmount = selectedAnimalInList.hambre;
+        if(selectedAnimalInList.confort== Animal.CONFORT.COMODO) {
+            humorRepresentation.sprite = caraContenta;
+        }else if(selectedAnimalInList.confort== Animal.CONFORT.NORMAL) {
+            humorRepresentation.sprite = caraSeria;
+
+        } else {
+            humorRepresentation.sprite = caraTriste;
+
+        }
+
+        foodBar.fillAmount = selectedAnimalInList.hambre/20.0f;
+
         currentAnimalPreview = GenerateAnimal();
+
+        if (foodBar.fillAmount > 0.5f) {
+            foodBar.color = Color.green;
+        }else if (foodBar.fillAmount > 0.15f) {
+            foodBar.color = Color.yellow;
+        } else {
+            foodBar.color = Color.red;
+        }
+
+
+        if (healthBar.fillAmount > 0.5f) {
+            healthBar.color = Color.green;
+        } else if (foodBar.fillAmount > 0.15f) {
+            healthBar.color = Color.yellow;
+        } else {
+            healthBar.color = Color.red;
+        }
+
+
+        //if (ageBar.fillAmount < 0.5f) {
+        //    ageBar.color = Color.green;
+        //} else if (ageBar.fillAmount > 0.15f) {
+        //    ageBar.color = Color.yellow;
+        //} else {
+        //    ageBar.color = Color.red;
+        //}
+
+
+
     }
     // Use this for initialization
     void Start() {
+        caraContenta = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_0");
+        caraSeria = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_1");
+        caraTriste = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_2");
         StartCoroutine(AssignToCanvas());
     }
 
     // Update is called once per frame
     void Update() {
-
     }
 }

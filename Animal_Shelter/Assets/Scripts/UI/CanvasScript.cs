@@ -34,7 +34,7 @@ public class CanvasScript : MonoBehaviour {
     //public Animal enteringAnimal;
     public GameObject enteringAnimalButtonObject;
     public bool debugBool;
-
+    public Text totalExpensesText;
 
     // Use this for initialization
     void Start() {
@@ -102,6 +102,9 @@ public class CanvasScript : MonoBehaviour {
                         selectedAnimalDisplayer.SetInfo(animalOnListClickedOnto);
                     }
                 }
+                break;
+            case CanvasState.IDLE:
+                totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
                 break;
             default:
                 break;

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Instalation : MonoBehaviour {
     float upKeep;
+    string name;
     string description;
 	// Use this for initialization
 
-    Instalation(float upKeep) {
+    public Instalation(float upKeep,string name) {
         this.upKeep = upKeep;
+        this.name = name;
     }
 
 	void Start () {
@@ -20,12 +22,16 @@ public class Instalation : MonoBehaviour {
 		
 	}
 
+    public string GetName() {
+        return name;
+    }
+
     public void SetUpKeep(float k) {
         upKeep = k;
     }
 
     public float GetUpKeep() {
-        return GetUpKeep();
+        return upKeep;
     }
 
 
