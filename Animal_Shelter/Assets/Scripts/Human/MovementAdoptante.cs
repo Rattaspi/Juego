@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementAdoptante : MonoBehaviour {
-    [SerializeField] int speed = 20;
+    [SerializeField] int speed = 85;
 
     enum State {WAIT, MOVING};
     State state;
@@ -13,9 +13,7 @@ public class MovementAdoptante : MonoBehaviour {
 
         Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;
-
-        this.transform.position = new Vector2(Random.Range(400, Screen.width - 200), -50);
-	}
+    }
 	
 	void Update () {
         switch (state) {

@@ -5,17 +5,19 @@ using UnityEngine;
 public class Adoptante : MonoBehaviour {
     Canvas canvas;
     GameLogic gamelogic;
+    [HideInInspector] public string adopterName;
+
     [Header("Adopter preferences")]
-    [SerializeField] Animal.SIZE sizePreferred;
-    [SerializeField] Animal.ESPECIE speciePreferred;
+    [SerializeField] public Animal.SIZE sizePreferred;
+    [SerializeField] public Animal.ESPECIE speciePreferred;
 
     private void Awake() {
         gamelogic = FindObjectOfType<GameLogic>();
+        canvas = GetComponentInParent<Canvas>();
     }
 
     void Start () {
-        canvas = GetComponentInParent<Canvas>();
-        this.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+        this.transform.position = new Vector2(Random.Range(450, Screen.width - 250), -150);
 
         this.gameObject.AddComponent(typeof(MovementAdoptante));
 
@@ -25,6 +27,8 @@ public class Adoptante : MonoBehaviour {
         GameObject g = Resources.Load<GameObject>("Prefabs/Humans/HumanGraphics");
         g = Instantiate(g, this.transform);
         g.name = "Graphics";
+
+        adopterName = HumanCommonInfo.GetName();
 
         //Initialize adopter preferences
         sizePreferred = (Animal.SIZE)Random.Range(0, (int)Animal.SIZE.LENGTH);

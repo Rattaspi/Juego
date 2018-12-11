@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GraphicsAdoptante : MonoBehaviour {
+    [HideInInspector] public Sprite adopterImage;
 
 	void Start () {
         GameObject humanSprite = new GameObject();
@@ -12,7 +13,8 @@ public class GraphicsAdoptante : MonoBehaviour {
         humanSprite.transform.localPosition = Vector2.zero;
 
         Image i = humanSprite.AddComponent<Image>();
-        i.sprite = Resources.Load<Sprite>("Sprites/Humans/pj_" + Random.Range(1, 30));
+        adopterImage = Resources.Load<Sprite>("Sprites/Humans/pj_" + Random.Range(1, 30));
+        i.sprite = adopterImage;
 
         RectTransform rectTransform = humanSprite.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(250, 250);
