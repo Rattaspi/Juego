@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class CanvasScript : MonoBehaviour {
     public static CanvasScript canvasScript;
     public SelectedAnimalDisplayer selectedAnimalDisplayer;
@@ -10,20 +9,22 @@ public class CanvasScript : MonoBehaviour {
     public GameObject eventHandlerObject;
     public Button acceptButton;
     public Button declineButton;
-    public Text eventDescription;
-    public Text eventTitle;
+    public TextMeshProUGUI eventDescription;
+    public TextMeshProUGUI eventTitle;
     public Event currentDisplayedEvent;
     public enum CanvasState { IDLE, DISPLAYEVENT, DISPLAYANIMALLIST };
     public CanvasState canvasState;
     //public GameObject incomingAnimalListObject;
     public GameObject gridObject;
     public GameObject amountOfAnimalsFeedBack;
-    public Text amountOfAnimalsFeedBackText;
+    public TextMeshProUGUI amountOfAnimalsFeedBackText;
     public GameObject tempAnimalParent;
     public GameObject expensesWindow;
     public GameObject animalsWindow;
 
     GameObject animalElementPrefab;
+
+    public List<Animal> enteringAnimalList;
 
     public Animal animalOnListClickedOnto;
 
@@ -34,8 +35,9 @@ public class CanvasScript : MonoBehaviour {
     //public Animal enteringAnimal;
     public GameObject enteringAnimalButtonObject;
     public bool debugBool;
-    public Text totalExpensesText;
-
+    public TextMeshProUGUI totalExpensesText;
+    public TextMeshProUGUI moneyText;
+    [SerializeField] int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
@@ -50,7 +52,30 @@ public class CanvasScript : MonoBehaviour {
         tempAnimalParent.transform.parent = gameObject.transform;
         canvasState = CanvasState.IDLE;
         enteringAnimalButtonObject.SetActive(false);
+        enteringAnimalList = new List<Animal>();
 
+    }
+
+    public void SetDisplayIndex(int index) {
+        if (index >= 0 && index < enteringAnimalList.Count) {
+            indexAnimalToDisplay = index;
+            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+            enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+        }
+    }
+
+    public void IncreaseDisplayIndex(int index) {
+        int tempIndex = indexAnimalToDisplay + index;
+        if (tempIndex >= enteringAnimalList.Count) {
+            tempIndex = 0;
+        }else if (tempIndex < 0) {
+            tempIndex = enteringAnimalList.Count-1;
+        }
+        indexAnimalToDisplay = tempIndex;
+        if (enteringAnimalDisplayer.gameObject.activeInHierarchy) {
+            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+            enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+        }
     }
 
     public void ResolveAnimalRequest(bool accepted) {
@@ -58,20 +83,26 @@ public class CanvasScript : MonoBehaviour {
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
             enteringAnimalDisplayer.selectedAnimalInList = null;
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
             Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
-
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
             Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
             Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         }
-        enteringAnimalDisplayer.backgroundObject.SetActive(false);
-        enteringAnimalButtonObject.SetActive(false);
+        if (enteringAnimalList.Count == 0) {
+            enteringAnimalDisplayer.backgroundObject.SetActive(false);
+            enteringAnimalButtonObject.SetActive(false);
+        }
     }
 
     public void AddEnteringAnimal() {
         enteringAnimalButtonObject.SetActive(true);
         Animal animal = Animal.MakeARandomAnimal().GetComponent<Animal>();
-        canvasScript.enteringAnimalDisplayer.selectedAnimalInList = animal;
+
+        //canvasScript.enteringAnimalDisplayer.selectedAnimalInList = animal;
+        enteringAnimalList.Add(animal);
+
         //Debug.Log(canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
         //Aqui hay que meter el código para que se añada un animal
     }
@@ -105,6 +136,7 @@ public class CanvasScript : MonoBehaviour {
                 break;
             case CanvasState.IDLE:
                 totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
+                moneyText.text = GameLogic.instance.money.ToString();
                 break;
             default:
                 break;

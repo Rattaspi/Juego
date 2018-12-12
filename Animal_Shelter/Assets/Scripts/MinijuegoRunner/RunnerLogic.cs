@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class RunnerLogic : MonoBehaviour {
 
     bool run;
@@ -14,7 +14,7 @@ public class RunnerLogic : MonoBehaviour {
     RunnerAvatarController rac;
     [SerializeField] DIFFICULTY difficulty;
     [SerializeField] float maxTime;
-    [SerializeField] Text timeText;
+    [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] GameObject startCanvas;
 
 	void Start () {

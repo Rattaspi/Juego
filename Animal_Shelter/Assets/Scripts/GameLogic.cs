@@ -102,7 +102,7 @@ public class GameLogic : MonoBehaviour {
 
                     if (timeOfEntry < maxTimeOfEntry) {
                         timeOfEntry += GameTime.deltaTime;
-                        if(timeOfEntry > timeForNextAnimal&&!CanvasScript.canvasScript.enteringAnimalButtonObject.activeInHierarchy) {
+                        if(timeOfEntry > timeForNextAnimal) {
                             int timeToAdd = Random.Range(3,9);
                             timeForNextAnimal += timeToAdd;
                             CanvasScript.canvasScript.AddEnteringAnimal();
