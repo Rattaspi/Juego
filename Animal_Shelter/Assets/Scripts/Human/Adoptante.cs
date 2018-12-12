@@ -10,6 +10,7 @@ public class Adoptante : MonoBehaviour {
     [Header("Adopter preferences")]
     [SerializeField] public Animal.SIZE sizePreferred;
     [SerializeField] public Animal.ESPECIE speciePreferred;
+    [SerializeField] public Animal.EDAD agePreferred;
 
     private void Awake() {
         gamelogic = FindObjectOfType<GameLogic>();
@@ -37,9 +38,11 @@ public class Adoptante : MonoBehaviour {
             if(rng < 0.6f) {
                 int id = Random.Range(0, gamelogic.shelterAnimals.Count);
                 speciePreferred = gamelogic.shelterAnimals[id].especie;
+                agePreferred = gamelogic.shelterAnimals[id].edad;
             }
             else {
                 speciePreferred = (Animal.ESPECIE)Random.Range(0, (int) Animal.ESPECIE.LENGTH);
+                agePreferred = (Animal.EDAD)Random.Range(0, (int)Animal.EDAD.LENGTH);
             }
         }
         else {

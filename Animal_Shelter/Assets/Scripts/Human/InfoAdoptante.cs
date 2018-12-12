@@ -16,6 +16,7 @@ public class InfoAdoptante : MonoBehaviour {
     [SerializeField] Image adopterDisplayImage;
     [SerializeField] TextMeshProUGUI specieText;
     [SerializeField] TextMeshProUGUI sizeText;
+    [SerializeField] TextMeshProUGUI edadText;
 
     private void Awake() {
         adoptante = GetComponentInParent<Adoptante>();
@@ -48,6 +49,8 @@ public class InfoAdoptante : MonoBehaviour {
                 sizeText.text = "PEQUEÑO";
                 break;
         }
+
+        edadText.text = adoptante.agePreferred.ToString();
 
         rechazar.onClick.AddListener(delegate {
             this.gameObject.SetActive(false);
