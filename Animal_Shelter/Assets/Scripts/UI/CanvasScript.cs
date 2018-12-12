@@ -136,7 +136,7 @@ public class CanvasScript : MonoBehaviour {
                 break;
             case CanvasState.IDLE:
                 totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
-                moneyText.text = GameLogic.instance.money.ToString();
+                moneyText.text = GameLogic.instance.money.ToString() + "€";
                 break;
             default:
                 break;
