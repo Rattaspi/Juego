@@ -103,12 +103,13 @@ public class CanvasScript : MonoBehaviour {
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
             enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+            GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
 
             if (enteringAnimalList.Count > 0) {
                 SetDisplayIndex(indexAnimalToDisplay - 1);
             }
             //enteringAnimalDisplayer.selectedAnimalInList = null;
-            
+
             //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
             enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
@@ -151,6 +152,7 @@ public class CanvasScript : MonoBehaviour {
         //if (selectedAnimalDisplayer != null) {
         //    selectedAnimalDisplayer.selectedAnimalInList = animal.associatedAnimal;
         //}
+        Debug.Log(animal.associatedAnimal);
         animalOnListClickedOnto = animal.associatedAnimal;
     }
 
