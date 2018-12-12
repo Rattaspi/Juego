@@ -83,10 +83,10 @@ public class CanvasScript : MonoBehaviour {
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
             enteringAnimalDisplayer.selectedAnimalInList = null;
-            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
             Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
-            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
             Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
             Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         }
