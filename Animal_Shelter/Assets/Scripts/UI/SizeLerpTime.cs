@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SizeLerpTime : MonoBehaviour {
+    public Transform target;
     public float periodTime;
     public float maxSize;
     public float minSize;
@@ -37,7 +38,7 @@ public class SizeLerpTime : MonoBehaviour {
         currentScale.y = vectorValue;
         currentScale.z = vectorValue;
 
-        transform.localScale = currentScale;
+        target.localScale = currentScale;
 
     }
 }

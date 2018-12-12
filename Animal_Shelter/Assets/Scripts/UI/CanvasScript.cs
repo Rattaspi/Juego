@@ -37,6 +37,9 @@ public class CanvasScript : MonoBehaviour {
     public bool debugBool;
     public TextMeshProUGUI totalExpensesText;
     public TextMeshProUGUI moneyText;
+
+    public TextMeshProUGUI enteringAnimalsNumber;
+
     [SerializeField] int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
@@ -57,9 +60,26 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void SetDisplayIndex(int index) {
-        if (index >= 0 && index < enteringAnimalList.Count) {
+        //Debug.Log("TrynaSet");
+
+        if (index >= 0) {
+            if (index < enteringAnimalList.Count) {
+                //Debug.Log("Set1");
+
+                indexAnimalToDisplay = index;
+                enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+                enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+            } else {
+                //Debug.Log("Set2");
+
+                indexAnimalToDisplay = index;
+                enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[enteringAnimalList.Count - 1];
+                enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+            }
+        } else {
+            //Debug.Log("Set3");
             indexAnimalToDisplay = index;
-            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[0];
             enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
         }
     }
@@ -68,8 +88,8 @@ public class CanvasScript : MonoBehaviour {
         int tempIndex = indexAnimalToDisplay + index;
         if (tempIndex >= enteringAnimalList.Count) {
             tempIndex = 0;
-        }else if (tempIndex < 0) {
-            tempIndex = enteringAnimalList.Count-1;
+        } else if (tempIndex < 0) {
+            tempIndex = enteringAnimalList.Count - 1;
         }
         indexAnimalToDisplay = tempIndex;
         if (enteringAnimalDisplayer.gameObject.activeInHierarchy) {
@@ -82,13 +102,29 @@ public class CanvasScript : MonoBehaviour {
 
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
-            enteringAnimalDisplayer.selectedAnimalInList = null;
-            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
-            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+
+            if (enteringAnimalList.Count > 0) {
+                SetDisplayIndex(indexAnimalToDisplay - 1);
+            }
+            //enteringAnimalDisplayer.selectedAnimalInList = null;
+            
+            //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
-            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
-            Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
-            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+
+
+
+            if (enteringAnimalDisplayer.selectedAnimalInList != null) {
+                if (enteringAnimalDisplayer.selectedAnimalInList.gameObject != null) {
+                    Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
+                }
+            }
+
+            if (enteringAnimalList.Count > 0)
+                SetDisplayIndex(indexAnimalToDisplay - 1);
+
+            //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         }
         if (enteringAnimalList.Count == 0) {
             enteringAnimalDisplayer.backgroundObject.SetActive(false);
@@ -121,6 +157,10 @@ public class CanvasScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            debugBool = true;
+        }
+
         if (debugBool) {
             debugBool = false;
             canvasScript.AddEnteringAnimal();
@@ -137,6 +177,7 @@ public class CanvasScript : MonoBehaviour {
             case CanvasState.IDLE:
                 totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
                 moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
+                enteringAnimalsNumber.text = CanvasScript.canvasScript.enteringAnimalList.Count.ToString();
                 break;
             default:
                 break;
@@ -144,7 +185,7 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    
+
 
     private void OnDestroy() {
         canvasScript = null;
