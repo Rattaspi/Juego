@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnteringAnimalDisplayer : MonoBehaviour {
 
     public Animal selectedAnimalInList;
 
-    public Text nameText;
+    public TextMeshProUGUI nameText;
 
-    public Text sizeText;
-    public Text descriptionText;
+    public TextMeshProUGUI sizeText;
+    public TextMeshProUGUI descriptionText;
 
 
     public Image healthBar;
@@ -32,6 +33,7 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
     public Sprite caraSeria;
     public Sprite caraTriste;
 
+    public float prevHorizontalAxis;
 
     IEnumerator AssignToCanvas() {
 
@@ -137,6 +139,10 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
 
         foodBar.fillAmount = selectedAnimalInList.hambre/20.0f;
 
+        if (currentAnimalPreview != null) {
+            Destroy(currentAnimalPreview);
+        }
+
         currentAnimalPreview = GenerateAnimal();
 
         if (foodBar.fillAmount > 0.5f) {
@@ -178,5 +184,15 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        float horizontalAxis = Input.GetAxisRaw("Horizontal");
+
+        if (horizontalAxis > 0 && horizontalAxis != prevHorizontalAxis) {
+            CanvasScript.canvasScript.IncreaseDisplayIndex(1);
+        } else if (horizontalAxis < 0 && horizontalAxis != prevHorizontalAxis) {
+            CanvasScript.canvasScript.IncreaseDisplayIndex(-1);
+        }
+
+
+        prevHorizontalAxis = horizontalAxis;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class CardMiniGame_Logic : MonoBehaviour {
     [HideInInspector]
     public static CardMiniGame_Logic cardLogic;
@@ -22,7 +23,7 @@ public class CardMiniGame_Logic : MonoBehaviour {
     public Canvas personalCanvas;
     public bool playButton;
     bool wasSetUp;
-    public Text triesText;
+    public TextMeshProUGUI triesText;
     // Use this for initialization
 
     public void Play(RunnerLogic.DIFFICULTY diff) {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO };
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX };
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -49,16 +49,30 @@ public class ButtonScripts : MonoBehaviour {
             case ButtonFunction.SET_ENTRY_INFO:
                 myselfButton.onClick.AddListener(() => SetEntryInfo());
                 break;
+            case ButtonFunction.INCREASE_ANIMAL_INDEX:
+                myselfButton.onClick.AddListener(() => IncreaseAnimalIndex(1));
+
+                break;
+            case ButtonFunction.DECREASE_ANIMAL_INDEX:
+                myselfButton.onClick.AddListener(() => IncreaseAnimalIndex(-1));
+
+                break;
             default:
                 break;
         }
 
     }
 
+    void IncreaseAnimalIndex(int increase) {
+        CanvasScript.canvasScript.IncreaseDisplayIndex(increase);
+    }
+
     IEnumerator SetEntryInfoCoroutine() {
         yield return null;
 
-        CanvasScript.canvasScript.enteringAnimalDisplayer.SetInfo(CanvasScript.canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
+        //CanvasScript.canvasScript.enteringAnimalDisplayer.SetInfo(CanvasScript.canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
+        //CanvasScript.canvasScript.IncreaseDisplayIndex(0);
+        CanvasScript.canvasScript.SetDisplayIndex(0);
     }
 
     void SetEntryInfo() {

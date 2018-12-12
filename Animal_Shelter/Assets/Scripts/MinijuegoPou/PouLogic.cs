@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PouLogic : MonoBehaviour {
     bool play;
@@ -18,12 +19,12 @@ public class PouLogic : MonoBehaviour {
     //public RunnerLogic.DIFFICULTY difficulty;
     public RunnerLogic.STATE state;
     public GameObject startCanvas;
-    public Text timeText;
-    public Text startGameText;
-    public Text instructionsText;
-    public Text finalScore;
-    public Text gameOverText;
-    public Text continueText;
+    public TextMeshProUGUI timeText;
+    public TextMeshProUGUI startGameText;
+    public TextMeshProUGUI instructionsText;
+    public TextMeshProUGUI finalScore;
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI continueText;
     // Use this for initialization
     void Start() {
         lives = 3;
