@@ -42,6 +42,9 @@ public class GameLogic : MonoBehaviour {
     public float timeOfEntry;
     public float timeForNextAnimal;
 
+    //Stores all the animal prefabs to avoid loading from resources every time.
+    [HideInInspector] public GameObject[] animalGraphics;
+
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
     }
@@ -82,6 +85,47 @@ public class GameLogic : MonoBehaviour {
         instalations.Add(baseInstalation);
         cleanupToDo = ToggleScript.ToggleType.BIG;
         expensesToPay = ToggleScript.ToggleType.BIG;
+
+        //Array which stores all the animal graphics prefabs
+        //They are stored in the enum order so you can access it using the enum integer
+        //EG. animalGraphics[(int)Animal.ESPECIE.GATO] --> it returns the cat graphics prefab
+        animalGraphics = new GameObject[(int)Animal.ESPECIE.LENGTH];
+        for(int i = 0; i < (int)Animal.ESPECIE.LENGTH; i++) {
+            switch ((Animal.ESPECIE)i) {
+                case Animal.ESPECIE.GATO:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Gato");
+                    break;
+
+                case Animal.ESPECIE.HAMSTER:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Hamster");
+                    break;
+
+                case Animal.ESPECIE.KOALA:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Koala");
+                    break;
+
+                case Animal.ESPECIE.NARVAL:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Narval");
+                    break;
+
+                case Animal.ESPECIE.PALOMA:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Paloma");
+                    break;
+
+                case Animal.ESPECIE.PERRO:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Perro");
+                    break;
+
+                case Animal.ESPECIE.TIGRE:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Tigre");
+                    break;
+
+                default:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Perro");
+                    break;
+            }
+
+        }
     }
 
     

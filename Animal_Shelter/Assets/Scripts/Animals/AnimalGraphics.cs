@@ -41,48 +41,7 @@ public class AnimalGraphics : MonoBehaviour {
     }
 
     private void GenerateAnimal() {
-        GameObject g;
-        switch (animalInfo.especie) {
-            case Animal.ESPECIE.GATO:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Gato");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.HAMSTER:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Hamster");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.KOALA:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Koala");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.NARVAL:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Narval");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.PALOMA:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Paloma");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.PERRO:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
-                Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.TIGRE:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Tigre");
-                Instantiate(g, this.transform);
-                break;
-
-            default:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
-                Instantiate(g, this.transform);
-                break;
-        }
+        Instantiate(GameLogic.instance.animalGraphics[(int)animalInfo.especie], this.transform);
     }
 
     private void Update() {
