@@ -16,8 +16,8 @@ public class Event {
     }
 
     public Event() {
-        acceptMessage = "Accept";
-        declineMessage = "Decline";
+        acceptMessage = "Aceptar";
+        declineMessage = "Declinar";
         canBeAccepted = true;
         canBeDenied = true;
     }
