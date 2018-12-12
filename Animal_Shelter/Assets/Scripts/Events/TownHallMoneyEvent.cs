@@ -5,9 +5,9 @@ using UnityEngine;
 public class TownHallMoneyEvent : Event {
     float randomAmountOfMoney;
     public TownHallMoneyEvent() {
-        float amountOfMoney = Random.Range(50, 200);
-        description = "The local elections are near and the town hall wants to make a good impresion, so they decide to donate " + amountOfMoney + " euros to your shelter";
-        title = "Town Hall Donation";
+        float amountOfMoney = 200;
+        description = "Las elecciones locales están muy cerca y el ayuntamiento ha decidido ayudar a unos cuantos negocios del pueblo con una subvención de " + amountOfMoney + ". Tu refugio ha sido uno de los seleccionados.";
+        title = "Donación del ayuntamiento";
         canBeDenied = false;
         randomAmountOfMoney = amountOfMoney;
     }
