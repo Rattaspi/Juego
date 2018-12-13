@@ -154,6 +154,8 @@ public class CanvasScript : MonoBehaviour {
         //}
         Debug.Log(animal.associatedAnimal);
         animalOnListClickedOnto = animal.associatedAnimal;
+        selectedAnimalDisplayer.SetInfo(animalOnListClickedOnto);
+
     }
 
     // Update is called once per frame

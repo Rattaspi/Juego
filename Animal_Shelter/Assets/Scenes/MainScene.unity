@@ -4153,7 +4153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedAnimalInList: {fileID: 0}
-  nameText: {fileID: 0}
+  nameText: {fileID: 503101355}
   sizeText: {fileID: 0}
   healthBar: {fileID: 1394900282}
   healthIcon: {fileID: 266690918}
@@ -4162,6 +4162,10 @@ MonoBehaviour:
   foodBar: {fileID: 1270713691}
   foodIcon: {fileID: 582738285}
   selectedAnimalGraphics: {fileID: 0}
+  humorRepresentation: {fileID: 751977281}
+  caraContenta: {fileID: 0}
+  caraSeria: {fileID: 0}
+  caraTriste: {fileID: 0}
 --- !u!1 &474985352
 GameObject:
   m_ObjectHideFlags: 0
@@ -4323,10 +4327,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: NAME
+  m_text: NOMBRE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 69679430b58745548818edef00ade3ba, type: 2}
-  m_sharedMaterial: {fileID: 21189799726977316, guid: 69679430b58745548818edef00ade3ba,
+  m_fontAsset: {fileID: 11400000, guid: 16272b4b853dc4a4b9b4045df30a2838, type: 2}
+  m_sharedMaterial: {fileID: 21256566121582196, guid: 16272b4b853dc4a4b9b4045df30a2838,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4392,7 +4396,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 4
+    characterCount: 6
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -5195,7 +5199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 0.7411765}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6593,6 +6597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297decddfe071c4bbf000b0f3b96e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setsCanvasState: 0
+  blocked: 0
+  stateToSet: 0
 --- !u!1 &735478942
 GameObject:
   m_ObjectHideFlags: 0
@@ -6756,7 +6763,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c8413f3ec66444a848c6a94cf09ecc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8367,7 +8374,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 959843122}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -8461,8 +8468,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -9555,6 +9562,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297decddfe071c4bbf000b0f3b96e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setsCanvasState: 1
+  blocked: 0
+  stateToSet: 0
 --- !u!1 &1215143105
 GameObject:
   m_ObjectHideFlags: 0
@@ -9585,7 +9595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a513b9eb4385b604abe1ba24085ef509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedAnimalDisplayer: {fileID: 0}
+  selectedAnimalDisplayer: {fileID: 473772599}
   UIManagementGameObject: {fileID: 1932297208}
   eventHandlerObject: {fileID: 56159815}
   acceptButton: {fileID: 1500949762}
@@ -14478,6 +14488,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297decddfe071c4bbf000b0f3b96e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setsCanvasState: 0
+  blocked: 0
+  stateToSet: 0
 --- !u!114 &1592989573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17390,8 +17403,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}

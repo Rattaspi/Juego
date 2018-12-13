@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class SelectedAnimalDisplayer : MonoBehaviour {
 
     public Animal selectedAnimalInList;
 
-    public Text nameText;
+    public TextMeshProUGUI nameText;
 
-    public Text sizeText;
+    public TextMeshProUGUI sizeText;
 
     public Image healthBar;
     public Image healthIcon;
@@ -22,57 +22,26 @@ public class SelectedAnimalDisplayer : MonoBehaviour {
 
     public GameObject selectedAnimalGraphics;
 
-    IEnumerator assignToCanvas() {
-        while (CanvasScript.canvasScript == null) {
-            yield return null;
-        }
-        CanvasScript.canvasScript.selectedAnimalDisplayer = this;
-    }
+    public Image humorRepresentation;
+
+    public Sprite caraContenta;
+    public Sprite caraSeria;
+    public Sprite caraTriste;
+
+    //IEnumerator assignToCanvas() {
+    //    while (CanvasScript.canvasScript == null) {
+    //        yield return null;
+    //    }
+    //    Debug.Log("Assigned");
+    //    CanvasScript.canvasScript.selectedAnimalDisplayer = this;
+    //}
 
     public GameObject GenerateAnimal() {
         GameObject g;
         GameObject resultingObject;
-        switch (selectedAnimalInList.especie) {
-            case Animal.ESPECIE.GATO:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Gato");
-                resultingObject = Instantiate(g, this.transform);
-                break;
 
-            case Animal.ESPECIE.HAMSTER:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Hamster");
-                resultingObject = Instantiate(g, this.transform);
-                break;
+        resultingObject = Instantiate(GameLogic.instance.animalGraphics[(int)selectedAnimalInList.especie]);
 
-            case Animal.ESPECIE.KOALA:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Koala");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.NARVAL:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Narval");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.PALOMA:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Paloma");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.PERRO:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-
-            case Animal.ESPECIE.TIGRE:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Tigre");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-
-            default:
-                g = Resources.Load<GameObject>("Prefabs/Animals/Perro");
-                resultingObject = Instantiate(g, this.transform);
-                break;
-        }
         resultingObject.transform.parent = gameObject.transform;
         resultingObject.transform.localPosition = new Vector3(0, 0, 0);
         TintAnimalPart[] parts = resultingObject.GetComponentsInChildren<TintAnimalPart>();
@@ -84,39 +53,80 @@ public class SelectedAnimalDisplayer : MonoBehaviour {
 
 
     public void SetInfo(Animal anAnimal) {
-        Debug.Log("Bruh");
-        selectedAnimalInList = anAnimal;
+        if (selectedAnimalInList != anAnimal) {
+            Debug.Log("Bruh");
+            selectedAnimalInList = anAnimal;
 
-        nameText.text = selectedAnimalInList.nombre;
+            nameText.text = selectedAnimalInList.nombre;
 
-        //sizeText.text = selectedAnimalInList.size.ToString();
+            //sizeText.text = selectedAnimalInList.size.ToString();
 
-        healthBar.fillAmount = selectedAnimalInList.salud;
+            healthBar.fillAmount = selectedAnimalInList.salud / 100.0f;
 
-        switch (selectedAnimalInList.edad) {
-            case Animal.EDAD.CACHORRO:
-                ageBar.fillAmount = 0;
-                break;
-            case Animal.EDAD.JOVEN:
-                ageBar.fillAmount = 15;
-                break;
-            case Animal.EDAD.ADULTO:
-                ageBar.fillAmount = 40;
-                break;
-            case Animal.EDAD.ANCIANO:
-                ageBar.fillAmount = 80;
-                break;
+            foodBar.fillAmount = selectedAnimalInList.hambre / 20.0f;
+
+            switch (selectedAnimalInList.edad) {
+                case Animal.EDAD.CACHORRO:
+                    ageBar.fillAmount = 0;
+                    break;
+                case Animal.EDAD.JOVEN:
+                    ageBar.fillAmount = 0.15f;
+                    break;
+                case Animal.EDAD.ADULTO:
+                    ageBar.fillAmount = 0.40f;
+                    break;
+                case Animal.EDAD.ANCIANO:
+                    ageBar.fillAmount = 0.80f;
+                    break;
+            }
+
+            if (foodBar.fillAmount > 0.5f) {
+                foodBar.color = Color.green;
+            } else if (foodBar.fillAmount > 0.15f) {
+                foodBar.color = Color.yellow;
+            } else {
+                foodBar.color = Color.red;
+            }
+
+
+            if (healthBar.fillAmount > 0.5f) {
+                healthBar.color = Color.green;
+            } else if (foodBar.fillAmount > 0.15f) {
+                healthBar.color = Color.yellow;
+            } else {
+                healthBar.color = Color.red;
+            }
+
+            foodBar.fillAmount = selectedAnimalInList.hambre;
+
+            if (selectedAnimalInList.confort == Animal.CONFORT.COMODO) {
+                humorRepresentation.sprite = caraContenta;
+            } else if (selectedAnimalInList.confort == Animal.CONFORT.NORMAL) {
+                humorRepresentation.sprite = caraSeria;
+
+            } else {
+                humorRepresentation.sprite = caraTriste;
+
+            }
+
+            if (selectedAnimalGraphics != null) {
+                for(int i = 0; i < selectedAnimalGraphics.transform.childCount; i++) {
+                    Destroy(selectedAnimalGraphics.gameObject);
+                }
+            }
+            //selectedAnimalGraphics = new GameObject();
+
+            selectedAnimalGraphics = GenerateAnimal();
+            selectedAnimalGraphics.transform.localPosition = (new Vector2(0, -100));
         }
-
-        foodBar.fillAmount = selectedAnimalInList.hambre;
-
-        selectedAnimalGraphics = GenerateAnimal();
-
     }
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(assignToCanvas());
-	}
+        //StartCoroutine(assignToCanvas());
+        caraContenta = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_0");
+        caraSeria = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_1");
+        caraTriste = Resources.Load<Sprite>("Sprites/AnimalPreviewInfo/cara_2");
+    }
 	
 	// Update is called once per frame
 	void Update () {
