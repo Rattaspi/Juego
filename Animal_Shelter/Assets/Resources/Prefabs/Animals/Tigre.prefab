@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 224710777646968190}
   - component: {fileID: 222912314574755736}
   - component: {fileID: 114840806350579638}
+  - component: {fileID: 114404620605417720}
   m_Layer: 5
   m_Name: Ears
   m_TagString: Untagged
@@ -161,6 +162,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1879769260619552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cb8bd61085c894f95d01432efc1752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114404620605417720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891101957849540}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01cb8bd61085c894f95d01432efc1752, type: 3}

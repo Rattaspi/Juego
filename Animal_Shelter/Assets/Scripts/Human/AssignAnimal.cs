@@ -9,6 +9,8 @@ public class AssignAnimal : MonoBehaviour {
     Canvas canvas;
     GraphicsAdoptante graphics;
     int animalId;
+    int adoptionPercentage;
+    Animal currentAnimal;
 
     [Header("Info to display (Adopter)")]
     [SerializeField] TextMeshProUGUI adopterSpecie;
@@ -22,6 +24,7 @@ public class AssignAnimal : MonoBehaviour {
     [SerializeField] TextMeshProUGUI animalSize;
     [SerializeField] TextMeshProUGUI animalAge;
     [SerializeField] GameObject animalDisplayPosition;
+    GameObject animalDisplayed;
 
     private void Awake() {
         adoptante = GetComponentInParent<Adoptante>();
@@ -72,14 +75,21 @@ public class AssignAnimal : MonoBehaviour {
             Debug.Log("There is no animal in the shelter");
             return;
         }
-        Animal animal = GameLogic.instance.shelterAnimals[animalId];
+        currentAnimal = GameLogic.instance.shelterAnimals[animalId];
 
-        animalName.text = animal.nombre;
-        animalSpecie.text = animal.especie.ToString();
-        if (animal.especie == Animal.ESPECIE.PAVO_REAL) animalName.text = "PAVO REAL";
-        animalAge.text = animal.edad.ToString();
+        Destroy(animalDisplayed);
+        animalDisplayed = Instantiate(GameLogic.instance.animalGraphics[(int)currentAnimal.especie], animalDisplayPosition.transform);
+        TintAnimalPart[] t = animalDisplayed.GetComponentsInChildren<TintAnimalPart>();
+        foreach(TintAnimalPart i in t) {
+            i.ForcePaint(currentAnimal.color);
+        }
 
-        switch (animal.size) {
+        animalName.text = currentAnimal.nombre;
+        animalSpecie.text = currentAnimal.especie.ToString();
+        if (currentAnimal.especie == Animal.ESPECIE.PAVO_REAL) animalSpecie.text = "PAVO REAL";
+        animalAge.text = currentAnimal.edad.ToString();
+
+        switch (currentAnimal.size) {
             case Animal.SIZE.BIG:
                 animalSize.text = "GRANDE";
                 break;
@@ -95,7 +105,7 @@ public class AssignAnimal : MonoBehaviour {
     }
 
     #region BUTTONS
-    void Left() {
+    public void Left() {
         animalId--;
         if (animalId < 0) {
             animalId = 0;
@@ -104,13 +114,37 @@ public class AssignAnimal : MonoBehaviour {
         UpdateAnimalDisplayedInfo();
     }
 
-    void Right() {
+    public void Right() {
         animalId++;
-        if (animalId >= GameLogic.instance.shelterAnimals.Count - 1) {
-            animalId = GameLogic.instance.shelterAnimals.Count - 1;
+        if (animalId >= GameLogic.instance.shelterAnimals.Count) {
+            animalId = GameLogic.instance.shelterAnimals.Count-1;
             return;
         }
         UpdateAnimalDisplayedInfo();
+    }
+
+    public void Assign() {
+        //ADOPTION PERCENTAGE
+        //Starts with 5%
+        //If specie match adds 45%
+        //If age match adds 25%
+        //If size match adds 20%
+
+        adoptionPercentage = 5;
+        if (adoptante.speciePreferred == currentAnimal.especie) adoptionPercentage += 45;
+        if (adoptante.agePreferred == currentAnimal.edad) adoptionPercentage += 25;
+        if (adoptante.sizePreferred == currentAnimal.size) adoptionPercentage += 20;
+
+        int rng = Random.Range(0, 100);
+
+        if(rng < adoptionPercentage) {
+            print("ANIMAL ACEPTADO");
+            Destroy(adoptante.gameObject);
+            Destroy(this.gameObject);
+        }
+        else {
+            print("ANIMAL RECHAZADO");
+        }
     }
     #endregion
 }
