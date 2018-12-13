@@ -43,7 +43,8 @@ public class SelectedAnimalDisplayer : MonoBehaviour {
         resultingObject = Instantiate(GameLogic.instance.animalGraphics[(int)selectedAnimalInList.especie]);
 
         resultingObject.transform.parent = gameObject.transform;
-        resultingObject.transform.localPosition = new Vector3(0, 0, 0);
+        //resultingObject.transform.localPosition = new Vector3(0, -800, 0);
+        resultingObject.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
         TintAnimalPart[] parts = resultingObject.GetComponentsInChildren<TintAnimalPart>();
         for (int i = 0; i < parts.Length; i++) {
             parts[i].ForcePaint(selectedAnimalInList.color);
@@ -117,7 +118,7 @@ public class SelectedAnimalDisplayer : MonoBehaviour {
             //selectedAnimalGraphics = new GameObject();
 
             selectedAnimalGraphics = GenerateAnimal();
-            selectedAnimalGraphics.transform.localPosition = (new Vector2(0, -100));
+            selectedAnimalGraphics.transform.localPosition = (new Vector2(0, -350));
         }
     }
 	// Use this for initialization

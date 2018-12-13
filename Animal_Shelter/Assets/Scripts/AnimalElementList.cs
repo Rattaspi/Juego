@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using TMPro;
 public class AnimalElementList : MonoBehaviour {
-    public RawImage animalImage; //This shall be substituted by a sprite of the actual animal, eventually.
-    public Text nameText;
-    public Text ageText;
-    public Text statusText;
-    public Text sizeText;
-    public Text speciesText;
+    //public RawImage animalImage; //This shall be substituted by a sprite of the actual animal, eventually.
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI ageText;
+    public TextMeshProUGUI statusText;
+    public TextMeshProUGUI sizeText;
+    public TextMeshProUGUI speciesText;
     //public Button adoptButton;
     //public Button rejectButton;
     public Animal associatedAnimal;
-
+    GameObject graphicsObject;
 
     GraphicRaycaster graphicRaycaster;
     EventSystem eventSystem;
@@ -27,6 +27,17 @@ public class AnimalElementList : MonoBehaviour {
         statusText.text = animal.estado.ToString();
         sizeText.text = animal.size.ToString();
         speciesText.text = animal.especie.ToString();
+        graphicsObject = Instantiate(GameLogic.instance.animalGraphics[(int)animal.especie]);
+        graphicsObject.transform.parent = gameObject.transform;
+        graphicsObject.transform.localPosition = new Vector3(-180, 0, 0);
+        graphicsObject.transform.localScale = new Vector3(0.5f, 0.5f,0.5f);
+
+
+        TintAnimalPart[] parts = graphicsObject.GetComponentsInChildren<TintAnimalPart>();
+        for (int i = 0; i < parts.Length; i++) {
+            parts[i].ForcePaint(animal.color);
+        }
+
         //adoptButton.onClick.AddListener(() => AddAnimal(animal));
         //rejectButton.onClick.AddListener(() => RejectAnimal(animal));
     }
