@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AssignAnimal : MonoBehaviour {
     Adoptante adoptante;
     Canvas canvas;
+    GraphicRaycaster graphicRaycaster;
     GraphicsAdoptante graphics;
     int animalId;
     int adoptionPercentage;
@@ -17,6 +18,7 @@ public class AssignAnimal : MonoBehaviour {
     [SerializeField] TextMeshProUGUI adopterSize;
     [SerializeField] TextMeshProUGUI adopterAge;
     [SerializeField] Image adopterSprite;
+    [SerializeField] TextMeshProUGUI conversation;
 
     [Header("Info to display (Animal)")]
     [SerializeField] TextMeshProUGUI animalName;
@@ -35,6 +37,8 @@ public class AssignAnimal : MonoBehaviour {
 
         graphics = GetComponentInParent<GraphicsAdoptante>();
         if (graphics == null) Debug.LogError("GraphicsAdoptante class not found from " + this.gameObject.name + " gameobject");
+
+        graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
     }
 
     void Start () {
@@ -138,13 +142,36 @@ public class AssignAnimal : MonoBehaviour {
         int rng = Random.Range(0, 100);
 
         if(rng < adoptionPercentage) {
+            //ACCEPTED
             print("ANIMAL ACEPTADO");
-            Destroy(adoptante.gameObject);
-            Destroy(this.gameObject);
+            conversation.transform.parent.gameObject.SetActive(true);
+            conversation.text = HumanCommonInfo.GetAcceptMessage();
+            StartCoroutine(AcceptAdoption());
         }
         else {
+            //REJECTED
             print("ANIMAL RECHAZADO");
+            conversation.transform.parent.gameObject.SetActive(true);
+            conversation.text = HumanCommonInfo.GetRejectMessage();
+            StartCoroutine(RejectAdoption());
         }
     }
     #endregion
+
+    IEnumerator AcceptAdoption() {
+        graphicRaycaster.enabled = false;
+        yield return new WaitForSeconds(3.0f);
+        graphicRaycaster.enabled = true;
+        GameLogic.instance.RemoveAnimal(currentAnimal);
+        Destroy(adoptante.gameObject);
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator RejectAdoption() {
+        graphicRaycaster.enabled = false;
+        yield return new WaitForSeconds(3.0f);
+        graphicRaycaster.enabled = true;
+        Destroy(adoptante.gameObject);
+        Destroy(this.gameObject);
+    }
 }

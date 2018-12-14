@@ -800,7 +800,26 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1836761054901798, guid: 1feb9e18158e7e14e9541787bb1b4817, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114090999916047668, guid: 1feb9e18158e7e14e9541787bb1b4817,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114173198800342060, guid: 1feb9e18158e7e14e9541787bb1b4817,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114542804402980592, guid: 1feb9e18158e7e14e9541787bb1b4817,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1246223928017306, guid: 1feb9e18158e7e14e9541787bb1b4817, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1feb9e18158e7e14e9541787bb1b4817, type: 2}
@@ -990,10 +1009,10 @@ MonoBehaviour:
   cleanupToDo: 0
   searchAmount: 0
   originDataBase: {fileID: 0}
-  instalations: []
   maxTimeOfEntry: 0
   timeOfEntry: 0
   timeForNextAnimal: 0
+  debugBool: 0
   animalGraphics: []
 --- !u!4 &1431145612
 Transform:
