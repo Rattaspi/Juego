@@ -119,6 +119,7 @@ public class CanvasScript : MonoBehaviour {
 
     public void PopUpNoSpaceMessage() {
         noSpaceAlphaValue = 1.0f;
+        noSpaceMessageGroup.GetComponent<ScaleReactor>().React();
     }
 
     public void ResolveAnimalRequest(bool accepted) {
@@ -205,8 +206,10 @@ public class CanvasScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        amountOfAnimalsFeedBackText.text = GameLogic.instance.shelterAnimals.Count.ToString() + "/" + GameLogic.instance.currentAnimalCapacity;
+
         if (noSpaceAlphaValue > 0) {
-            noSpaceAlphaValue -= GameTime.deltaTime;
+            noSpaceAlphaValue -= Time.deltaTime;
 
             if (noSpaceAlphaValue < 0) {
                 noSpaceAlphaValue = 0;

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222404395047638408}
   - component: {fileID: 114774458291489898}
   - component: {fileID: 114080106015207230}
+  - component: {fileID: 114702087260256156}
   m_Layer: 0
   m_Name: AnimalBody
   m_TagString: animal
@@ -93,6 +94,19 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114702087260256156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1964271397973434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790a6d48e230ba342b0b4ddbc7d0e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectTime: 0.1
+  amplitude: 0.2
 --- !u!114 &114774458291489898
 MonoBehaviour:
   m_ObjectHideFlags: 1
