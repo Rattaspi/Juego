@@ -47,6 +47,12 @@ public class CanvasScript : MonoBehaviour {
     public TextMeshProUGUI truckText;
     public GameObject mainGameGroup;
 
+    public GameObject noSpaceMessageGroup;
+    public float noSpaceAlphaValue;
+    Image[] imageChildren;
+    TextMeshProUGUI[] textChildren;
+
+
     [SerializeField] int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
@@ -67,6 +73,9 @@ public class CanvasScript : MonoBehaviour {
         enteringAnimalButtonObject.SetActive(false);
         enteringAnimalList = new List<Animal>();
 
+        imageChildren = noSpaceMessageGroup.GetComponentsInChildren<Image>();
+        textChildren = noSpaceMessageGroup.GetComponentsInChildren<TextMeshProUGUI>();
+        noSpaceAlphaValue = 0.01f;
     }
 
     public void SetDisplayIndex(int index) {
@@ -108,23 +117,24 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
+    public void PopUpNoSpaceMessage() {
+        noSpaceAlphaValue = 1.0f;
+    }
+
     public void ResolveAnimalRequest(bool accepted) {
 
         if (accepted) {
-            enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
 
-            float randomX = Random.Range(300,1300);
-            float randomY = Random.Range(100, 900);
+            if (AcceptAnimalInShelter(enteringAnimalDisplayer.selectedAnimalInList)) {
 
-            enteringAnimalDisplayer.selectedAnimalInList.transform.localPosition = new Vector3(randomX,randomY,0);
-            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
-            GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
+                enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
 
-            if (enteringAnimalList.Count > 0) {
-                SetDisplayIndex(indexAnimalToDisplay - 1);
-            }
-            //enteringAnimalDisplayer.selectedAnimalInList = null;
+                if (enteringAnimalList.Count > 0) {
+                    SetDisplayIndex(indexAnimalToDisplay - 1);
+                }
 
+                //enteringAnimalDisplayer.selectedAnimalInList = null;
+            } 
             //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
             enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
@@ -146,6 +156,25 @@ public class CanvasScript : MonoBehaviour {
             enteringAnimalDisplayer.backgroundObject.SetActive(false);
             enteringAnimalButtonObject.SetActive(false);
         }
+    }
+
+    public bool AcceptAnimalInShelter(Animal a) {
+
+        if (GameLogic.instance.shelterAnimals.Count < GameLogic.instance.currentAnimalCapacity) {
+
+            enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
+
+            a.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
+            float randomX = Random.Range(300, 1300);
+            float randomY = Random.Range(100, 900);
+
+            a.transform.localPosition = new Vector3(randomX, randomY, 0);
+
+            GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
+            return true;
+        }
+        PopUpNoSpaceMessage();
+        return false;
     }
 
     public void AddEnteringAnimal() {
@@ -176,6 +205,24 @@ public class CanvasScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+        if (noSpaceAlphaValue > 0) {
+            noSpaceAlphaValue -= GameTime.deltaTime;
+
+            if (noSpaceAlphaValue < 0) {
+                noSpaceAlphaValue = 0;
+            }
+
+            for(int i = 0; i < imageChildren.Length; i++) {
+                imageChildren[i].color = new Color(imageChildren[i].color.r, imageChildren[i].color.g, imageChildren[i].color.b, noSpaceAlphaValue);
+            }
+
+            for(int i = 0; i < textChildren.Length; i++) {
+                textChildren[i].color = new Color(textChildren[i].color.r, textChildren[i].color.g, textChildren[i].color.b, noSpaceAlphaValue);
+
+            }
+
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)) {
             debugBool = true;
         }
@@ -198,13 +245,13 @@ public class CanvasScript : MonoBehaviour {
 
 
 
-    //public TextMeshProUGUI foodText;
-    //public TextMeshProUGUI publicityText;
-    //public TextMeshProUGUI instalationsText;
-    //public TextMeshProUGUI cleanUpText;
-    //public TextMeshProUGUI truckText;
+                foodText.text = "Compra de comida (" + GameLogic.instance.currentFoodExpense.ToString() + "€)";
+                publicityText.text = "Gastos en publicidad (" + GameLogic.instance.currentPublicityExpense.ToString() + "€)";
+                instalationsText.text = "Gastos local (" + GameLogic.instance.currentInstalationsExpense.ToString() + "€)";
+                cleanUpText.text = "Limpieza (" + GameLogic.instance.currentCleanUpExpense.ToString() + "€)";
+                truckText.text = "Gastos en furgoneta (busca animales) (" + GameLogic.instance.currentGasExpense.ToString() + "€)";
 
-    moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
+                moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
                 enteringAnimalsNumber.text = CanvasScript.canvasScript.enteringAnimalList.Count.ToString();
                 break;
             default:
