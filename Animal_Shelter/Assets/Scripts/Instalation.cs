@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Instalation : MonoBehaviour {
+public class Instalation {
     float upKeep;
     string name;
     string description;
@@ -13,14 +13,6 @@ public class Instalation : MonoBehaviour {
         this.name = name;
     }
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public string GetName() {
         return name;

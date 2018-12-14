@@ -37,6 +37,16 @@ public class CanvasScript : MonoBehaviour {
     public bool debugBool;
     public TextMeshProUGUI totalExpensesText;
     public TextMeshProUGUI moneyText;
+
+    public TextMeshProUGUI enteringAnimalsNumber;
+
+    public TextMeshProUGUI foodText;
+    public TextMeshProUGUI publicityText;
+    public TextMeshProUGUI instalationsText;
+    public TextMeshProUGUI cleanUpText;
+    public TextMeshProUGUI truckText;
+    public GameObject mainGameGroup;
+
     [SerializeField] int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
@@ -48,6 +58,9 @@ public class CanvasScript : MonoBehaviour {
         expensesWindow.SetActive(false);
         animalsWindow.SetActive(false);
         tempAnimalParent = new GameObject();
+        tempAnimalParent.transform.position = new Vector3(-1300, 0, 0);
+        tempAnimalParent.transform.localPosition = new Vector3(-1300, 0, 0);
+
         tempAnimalParent.name = "tempAnimalParent";
         tempAnimalParent.transform.parent = gameObject.transform;
         canvasState = CanvasState.IDLE;
@@ -57,9 +70,26 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void SetDisplayIndex(int index) {
-        if (index >= 0 && index < enteringAnimalList.Count) {
+        //Debug.Log("TrynaSet");
+
+        if (index >= 0) {
+            if (index < enteringAnimalList.Count) {
+                //Debug.Log("Set1");
+
+                indexAnimalToDisplay = index;
+                enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+                enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+            } else {
+                //Debug.Log("Set2");
+
+                indexAnimalToDisplay = index;
+                enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[enteringAnimalList.Count - 1];
+                enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
+            }
+        } else {
+            //Debug.Log("Set3");
             indexAnimalToDisplay = index;
-            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[indexAnimalToDisplay];
+            enteringAnimalDisplayer.selectedAnimalInList = enteringAnimalList[0];
             enteringAnimalDisplayer.SetInfo(enteringAnimalDisplayer.selectedAnimalInList);
         }
     }
@@ -68,8 +98,8 @@ public class CanvasScript : MonoBehaviour {
         int tempIndex = indexAnimalToDisplay + index;
         if (tempIndex >= enteringAnimalList.Count) {
             tempIndex = 0;
-        }else if (tempIndex < 0) {
-            tempIndex = enteringAnimalList.Count-1;
+        } else if (tempIndex < 0) {
+            tempIndex = enteringAnimalList.Count - 1;
         }
         indexAnimalToDisplay = tempIndex;
         if (enteringAnimalDisplayer.gameObject.activeInHierarchy) {
@@ -82,13 +112,35 @@ public class CanvasScript : MonoBehaviour {
 
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
-            enteringAnimalDisplayer.selectedAnimalInList = null;
-            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
-            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
+
+            float randomX = Random.Range(300,1300);
+            float randomY = Random.Range(100, 900);
+
+            enteringAnimalDisplayer.selectedAnimalInList.transform.localPosition = new Vector3(randomX,randomY,0);
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+            GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
+
+            if (enteringAnimalList.Count > 0) {
+                SetDisplayIndex(indexAnimalToDisplay - 1);
+            }
+            //enteringAnimalDisplayer.selectedAnimalInList = null;
+
+            //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         } else {
-            //enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
-            Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
-            Destroy(enteringAnimalDisplayer.currentAnimalPreview);
+            enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
+
+
+
+            if (enteringAnimalDisplayer.selectedAnimalInList != null) {
+                if (enteringAnimalDisplayer.selectedAnimalInList.gameObject != null) {
+                    Destroy(enteringAnimalDisplayer.selectedAnimalInList.gameObject);
+                }
+            }
+
+            if (enteringAnimalList.Count > 0)
+                SetDisplayIndex(indexAnimalToDisplay - 1);
+
+            //Destroy(enteringAnimalDisplayer.currentAnimalPreview);
         }
         if (enteringAnimalList.Count == 0) {
             enteringAnimalDisplayer.backgroundObject.SetActive(false);
@@ -115,11 +167,18 @@ public class CanvasScript : MonoBehaviour {
         //if (selectedAnimalDisplayer != null) {
         //    selectedAnimalDisplayer.selectedAnimalInList = animal.associatedAnimal;
         //}
+        Debug.Log(animal.associatedAnimal);
         animalOnListClickedOnto = animal.associatedAnimal;
+        selectedAnimalDisplayer.SetInfo(animalOnListClickedOnto);
+
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            debugBool = true;
+        }
 
         if (debugBool) {
             debugBool = false;
@@ -135,14 +194,26 @@ public class CanvasScript : MonoBehaviour {
                 }
                 break;
             case CanvasState.IDLE:
-                totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
-                moneyText.text = GameLogic.instance.money.ToString() + "€";
+                totalExpensesText.text = "Total : " + CommonMethods.GetNumberWithDots((int)GameLogic.instance.GetToggleOptionsMoney()) + "€";
+
+
+
+    //public TextMeshProUGUI foodText;
+    //public TextMeshProUGUI publicityText;
+    //public TextMeshProUGUI instalationsText;
+    //public TextMeshProUGUI cleanUpText;
+    //public TextMeshProUGUI truckText;
+
+    moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
+                enteringAnimalsNumber.text = CanvasScript.canvasScript.enteringAnimalList.Count.ToString();
                 break;
             default:
                 break;
 
         }
     }
+
+
 
     private void OnDestroy() {
         canvasScript = null;

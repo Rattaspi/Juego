@@ -6,9 +6,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class GameTime {
     public static bool isPaused;
+
     public static float deltaTime { get { return isPaused ? 0 : Time.deltaTime; } }
+
+    public static bool pauseBlocked;
+
     public static void Pause() {
-        isPaused = !isPaused;
+        if (!pauseBlocked) {
+            isPaused = !isPaused;
+            Debug.Log(isPaused);
+        } else {
+            Debug.Log("Called but blocked");
+        }
+    }
+    public static IEnumerator unBlockPause() {
+            yield return null;
+            yield return null;
+            pauseBlocked = false;
     }
 }
 
@@ -41,7 +55,7 @@ public class GameLogic : MonoBehaviour {
     public float maxTimeOfEntry;
     public float timeOfEntry;
     public float timeForNextAnimal;
-
+    public bool debugBool;
     //Stores all the animal prefabs to avoid loading from resources every time.
     [HideInInspector] public GameObject[] animalGraphics;
 
@@ -65,7 +79,9 @@ public class GameLogic : MonoBehaviour {
         }
         animalObjectParent = new GameObject();
         animalObjectParent.name = "Animals";
-        animalObjectParent.transform.parent = CanvasScript.canvasScript.transform;
+        animalObjectParent.transform.parent = CanvasScript.canvasScript.mainGameGroup.transform;
+        animalObjectParent.transform.SetSiblingIndex(2);
+        //animalObjectParent.transform.();
     }
 
     void Start() {
@@ -85,7 +101,8 @@ public class GameLogic : MonoBehaviour {
         instalations.Add(baseInstalation);
         cleanupToDo = ToggleScript.ToggleType.BIG;
         expensesToPay = ToggleScript.ToggleType.BIG;
-
+        StartCoroutine(GameTime.unBlockPause());
+        //GameTime.pauseBlocked = false;
         //Array which stores all the animal graphics prefabs
         //They are stored in the enum order so you can access it using the enum integer
         //EG. animalGraphics[(int)Animal.ESPECIE.GATO] --> it returns the cat graphics prefab
@@ -128,9 +145,20 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
+    public void RemoveAnimal(Animal animal) {
+        if (shelterAnimals.Contains(animal)) {
+            Destroy(animal.gameObject);
+            shelterAnimals.Remove(animal);
+        }
+    }
     
 
     void Update() {
+
+        if (debugBool) {
+            debugBool = false;
+            RemoveAnimal(shelterAnimals[0]);
+        }
 
         if (CanvasScript.canvasScript != null) {
 
@@ -141,21 +169,26 @@ public class GameLogic : MonoBehaviour {
                     timeOfEntry = 0;
                     timeForNextAnimal = 0;
                     break;
-                case GameState.WEEK:
-                    //Here we'd set the entrance and management of clients
+                case GameState.WEEK: {
+                        //Here we'd set the entrance and management of clients
 
-                    if (timeOfEntry < maxTimeOfEntry) {
-                        timeOfEntry += GameTime.deltaTime;
-                        if(timeOfEntry > timeForNextAnimal) {
-                            int timeToAdd = Random.Range(3,9);
-                            timeForNextAnimal += timeToAdd;
-                            CanvasScript.canvasScript.AddEnteringAnimal();
+                        if (Input.GetKeyDown(KeyCode.Escape)) {
+                            GameTime.Pause();
                         }
-                        if (timeOfEntry > maxTimeOfEntry) {
-                            timeOfEntry = maxTimeOfEntry;
+
+                        if (timeOfEntry < maxTimeOfEntry) {
+                            timeOfEntry += GameTime.deltaTime;
+                            if (timeOfEntry > timeForNextAnimal) {
+                                int timeToAdd = Random.Range(3, 9);
+                                timeForNextAnimal += timeToAdd;
+                                CanvasScript.canvasScript.AddEnteringAnimal();
+                            }
+                            if (timeOfEntry > maxTimeOfEntry) {
+                                timeOfEntry = maxTimeOfEntry;
+                            }
                         }
-                    }
                         break;
+                    }
                 case GameState.EVENT:
                     if (currentEventIndex < incomingEvents.Count) {
                         if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
