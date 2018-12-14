@@ -20,9 +20,9 @@ public static class GameTime {
         }
     }
     public static IEnumerator unBlockPause() {
-            yield return null;
-            yield return null;
-            pauseBlocked = false;
+        yield return null;
+        yield return null;
+        pauseBlocked = false;
     }
 }
 
@@ -42,6 +42,12 @@ public class GameLogic : MonoBehaviour {
     public float gasPrice;
     public float publictyPrice;
     public float cleanUpCost;
+
+    public float currentFoodExpense;
+    public float currentCleanUpExpense;
+    public float currentGasExpense;
+    public float currentPublicityExpense;
+    public float currentInstalationsExpense;
 
     public ToggleScript.ToggleType foodToBuy;
     public ToggleScript.ToggleType expensesToPay;
@@ -93,11 +99,11 @@ public class GameLogic : MonoBehaviour {
         publictyPrice = 1.0f;
         cleanUpCost = 100.0f;
         maxTimeOfEntry = 60;
-        timeOfEntry =  0;
+        timeOfEntry = 0;
         timeForNextAnimal = 0;
         int timeToAdd = Random.Range(3, 9);
         timeForNextAnimal += timeToAdd;
-        Instalation baseInstalation = new Instalation(100,"Base");
+        Instalation baseInstalation = new Instalation(100, "Base");
         instalations.Add(baseInstalation);
         cleanupToDo = ToggleScript.ToggleType.BIG;
         expensesToPay = ToggleScript.ToggleType.BIG;
@@ -107,7 +113,7 @@ public class GameLogic : MonoBehaviour {
         //They are stored in the enum order so you can access it using the enum integer
         //EG. animalGraphics[(int)Animal.ESPECIE.GATO] --> it returns the cat graphics prefab
         animalGraphics = new GameObject[(int)Animal.ESPECIE.LENGTH];
-        for(int i = 0; i < (int)Animal.ESPECIE.LENGTH; i++) {
+        for (int i = 0; i < (int)Animal.ESPECIE.LENGTH; i++) {
             switch ((Animal.ESPECIE)i) {
                 case Animal.ESPECIE.GATO:
                     animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Gato");
@@ -147,15 +153,15 @@ public class GameLogic : MonoBehaviour {
 
     public void RemoveAnimal(Animal animal) {
         if (shelterAnimals.Contains(animal)) {
-            Destroy(animal.gameObject);
             shelterAnimals.Remove(animal);
         }
+        Destroy(animal.gameObject);
     }
-    
+
 
     void Update() {
 
-        if (debugBool) {
+        if (debugBool&&shelterAnimals.Count > 0) {
             debugBool = false;
             RemoveAnimal(shelterAnimals[0]);
         }
@@ -381,66 +387,91 @@ public class GameLogic : MonoBehaviour {
         float totalExpense = 0;
         switch (foodToBuy) {
             case ToggleScript.ToggleType.NONE:
+                currentFoodExpense = 0;
                 break;
             case ToggleScript.ToggleType.SMALL:
-                totalExpense += foodPrice * 50.0f;
+                currentFoodExpense = foodPrice * 50.0f;
+                //totalExpense += foodPrice * 50.0f;
                 break;
             case ToggleScript.ToggleType.MEDIUM:
-                totalExpense += foodPrice * 100.0f;
+                currentFoodExpense = foodPrice * 100.0f;
+
+                //totalExpense += foodPrice * 100.0f;
                 break;
             case ToggleScript.ToggleType.BIG:
-                totalExpense += foodPrice * 150.0f;
+                currentFoodExpense = foodPrice * 150.0f;
+
+                //totalExpense += foodPrice * 150.0f;
                 break;
         }
 
         switch (publicityToInvest) {
             case ToggleScript.ToggleType.NONE:
+                currentPublicityExpense = 0;
                 break;
             case ToggleScript.ToggleType.SMALL:
-                totalExpense += publictyPrice * 50.0f;
+                currentPublicityExpense = publictyPrice * 50;
+                //totalExpense += publictyPrice * 50.0f;
                 break;
             case ToggleScript.ToggleType.MEDIUM:
-                totalExpense += publictyPrice * 100.0f;
+                currentPublicityExpense = publictyPrice * 100;
+
+                //totalExpense += publictyPrice * 100.0f;
                 break;
             case ToggleScript.ToggleType.BIG:
-                totalExpense += publictyPrice * 150.0f;
+                currentPublicityExpense = publictyPrice * 150;
+
+                //totalExpense += publictyPrice * 150.0f;
                 break;
         }
 
         switch (cleanupToDo) {
             case ToggleScript.ToggleType.NONE:
+                currentCleanUpExpense = 0;
                 break;
             default:
-                totalExpense += cleanUpCost;
+                currentCleanUpExpense = cleanUpCost;
+                //totalExpense += cleanUpCost;
                 break;
         }
 
         switch (expensesToPay) {
             case ToggleScript.ToggleType.NONE:
+                currentInstalationsExpense = 0;
                 break;
             default:
-                totalExpense += GetInstalationsUpKeep();
+                currentInstalationsExpense = GetInstalationsUpKeep();
+
+                //totalExpense += GetInstalationsUpKeep();
                 break;
         }
 
         switch (searchAmount) {
             case ToggleScript.ToggleType.NONE:
+                currentGasExpense = 0;
 
                 break;
             case ToggleScript.ToggleType.SMALL:
-                totalExpense += gasPrice * 50;
+                //totalExpense += gasPrice * 50;
+                currentGasExpense = gasPrice * 50;
 
                 break;
             case ToggleScript.ToggleType.MEDIUM:
-                totalExpense += gasPrice * 100;
+                currentGasExpense = gasPrice * 100;
+
+                //totalExpense += gasPrice * 100;
 
                 break;
             case ToggleScript.ToggleType.BIG:
-                totalExpense += gasPrice * 150;
+                currentGasExpense = gasPrice * 150;
+
+                //totalExpense += gasPrice * 150;
 
 
                 break;
         }
+
+        totalExpense = currentGasExpense + currentCleanUpExpense + currentFoodExpense + currentPublicityExpense + currentInstalationsExpense;
 
         return totalExpense;
     }
