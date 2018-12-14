@@ -27,7 +27,6 @@ public class MovementAdoptante : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        print("trigger enter");
         if(collision.tag == "movement_bounds"){
             state = State.WAIT;
         }

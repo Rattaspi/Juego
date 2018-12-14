@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 224719807997659188}
   - component: {fileID: 222412116991053726}
   - component: {fileID: 114375712204362004}
+  - component: {fileID: 114925368504044730}
   m_Layer: 5
   m_Name: Ears
   m_TagString: Untagged
@@ -252,6 +253,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01cb8bd61085c894f95d01432efc1752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114925368504044730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1725836435414374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cb8bd61085c894f95d01432efc1752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114984871041128394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -396,15 +408,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978448633599132}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.32768378, w: 0.94478744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children: []
   m_Father: {fileID: 224390232964684578}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 38.256}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: -153}
+  m_AnchoredPosition: {x: -55, y: 0}
   m_SizeDelta: {x: 52.55, y: 132.69}
   m_Pivot: {x: 0.5, y: 0.5}
