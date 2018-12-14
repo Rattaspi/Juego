@@ -148,6 +148,7 @@ public class Animal : MonoBehaviour {
 
     void CreateBody() {
         //CREATE THE BODY ELEMENTS
+        transform.localPosition = Vector3.zero;
         graphics = Resources.Load<GameObject>("Prefabs/AnimalBody");
         graphics = Instantiate(graphics, this.transform);
         graphics.name = "Body";

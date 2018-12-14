@@ -40,6 +40,13 @@ public class CanvasScript : MonoBehaviour {
 
     public TextMeshProUGUI enteringAnimalsNumber;
 
+    public TextMeshProUGUI foodText;
+    public TextMeshProUGUI publicityText;
+    public TextMeshProUGUI instalationsText;
+    public TextMeshProUGUI cleanUpText;
+    public TextMeshProUGUI truckText;
+    public GameObject mainGameGroup;
+
     [SerializeField] int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
@@ -51,6 +58,9 @@ public class CanvasScript : MonoBehaviour {
         expensesWindow.SetActive(false);
         animalsWindow.SetActive(false);
         tempAnimalParent = new GameObject();
+        tempAnimalParent.transform.position = new Vector3(-1300, 0, 0);
+        tempAnimalParent.transform.localPosition = new Vector3(-1300, 0, 0);
+
         tempAnimalParent.name = "tempAnimalParent";
         tempAnimalParent.transform.parent = gameObject.transform;
         canvasState = CanvasState.IDLE;
@@ -102,6 +112,11 @@ public class CanvasScript : MonoBehaviour {
 
         if (accepted) {
             enteringAnimalDisplayer.selectedAnimalInList.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
+
+            float randomX = Random.Range(300,1300);
+            float randomY = Random.Range(100, 900);
+
+            enteringAnimalDisplayer.selectedAnimalInList.transform.localPosition = new Vector3(randomX,randomY,0);
             enteringAnimalList.Remove(enteringAnimalDisplayer.selectedAnimalInList);
             GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
 
@@ -179,8 +194,17 @@ public class CanvasScript : MonoBehaviour {
                 }
                 break;
             case CanvasState.IDLE:
-                totalExpensesText.text = GameLogic.instance.GetToggleOptionsMoney().ToString();
-                moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
+                totalExpensesText.text = "Total : " + CommonMethods.GetNumberWithDots((int)GameLogic.instance.GetToggleOptionsMoney()) + "€";
+
+
+
+    //public TextMeshProUGUI foodText;
+    //public TextMeshProUGUI publicityText;
+    //public TextMeshProUGUI instalationsText;
+    //public TextMeshProUGUI cleanUpText;
+    //public TextMeshProUGUI truckText;
+
+    moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
                 enteringAnimalsNumber.text = CanvasScript.canvasScript.enteringAnimalList.Count.ToString();
                 break;
             default:

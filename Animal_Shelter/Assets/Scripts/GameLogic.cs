@@ -55,7 +55,7 @@ public class GameLogic : MonoBehaviour {
     public float maxTimeOfEntry;
     public float timeOfEntry;
     public float timeForNextAnimal;
-
+    public bool debugBool;
     //Stores all the animal prefabs to avoid loading from resources every time.
     [HideInInspector] public GameObject[] animalGraphics;
 
@@ -79,7 +79,9 @@ public class GameLogic : MonoBehaviour {
         }
         animalObjectParent = new GameObject();
         animalObjectParent.name = "Animals";
-        animalObjectParent.transform.parent = CanvasScript.canvasScript.transform;
+        animalObjectParent.transform.parent = CanvasScript.canvasScript.mainGameGroup.transform;
+        animalObjectParent.transform.SetSiblingIndex(2);
+        //animalObjectParent.transform.();
     }
 
     void Start() {
@@ -143,9 +145,20 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
+    public void RemoveAnimal(Animal animal) {
+        if (shelterAnimals.Contains(animal)) {
+            Destroy(animal.gameObject);
+            shelterAnimals.Remove(animal);
+        }
+    }
     
 
     void Update() {
+
+        if (debugBool) {
+            debugBool = false;
+            RemoveAnimal(shelterAnimals[0]);
+        }
 
         if (CanvasScript.canvasScript != null) {
 
