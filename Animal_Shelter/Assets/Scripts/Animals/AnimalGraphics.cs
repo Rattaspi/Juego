@@ -16,7 +16,6 @@ public class AnimalGraphics : MonoBehaviour {
     GraphicRaycaster graphicRaycaster;
     EventSystem eventSystem;
     PointerEventData pointerEvent;
-    bool generatedBody;
 
     void Start () {
         graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
@@ -37,11 +36,7 @@ public class AnimalGraphics : MonoBehaviour {
 
         info.SetActive(false);
         changeName.SetActive(false);
-
-        if (!generatedBody) {
-            generatedBody = true;
-            GenerateAnimal();
-        }
+        GenerateAnimal();
     }
 
     private void GenerateAnimal() {

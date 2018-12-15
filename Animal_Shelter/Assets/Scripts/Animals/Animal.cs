@@ -136,7 +136,7 @@ public class Animal : MonoBehaviour {
     }
 
     private void Start() {
-        StartStats();
+        //StartStats();
         this.gameObject.tag = "animal";
 
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY

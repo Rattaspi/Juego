@@ -12,7 +12,7 @@ public class CanvasScript : MonoBehaviour {
     public TextMeshProUGUI eventDescription;
     public TextMeshProUGUI eventTitle;
     public Event currentDisplayedEvent;
-    public enum CanvasState { IDLE, DISPLAYEVENT, DISPLAYANIMALLIST };
+    public enum CanvasState { IDLE, DISPLAYEVENT, DISPLAYANIMALLIST, DISPLAYEXPENSES };
     public CanvasState canvasState;
     //public GameObject incomingAnimalListObject;
     public GameObject gridObject;
@@ -234,7 +234,7 @@ public class CanvasScript : MonoBehaviour {
             debugBool = false;
             canvasScript.AddEnteringAnimal();
         }
-
+        enteringAnimalsNumber.text = canvasScript.enteringAnimalList.Count.ToString();
         switch (canvasState) {
             case CanvasState.DISPLAYANIMALLIST:
                 if (selectedAnimalDisplayer != null) {
@@ -245,9 +245,6 @@ public class CanvasScript : MonoBehaviour {
                 break;
             case CanvasState.IDLE:
                 totalExpensesText.text = "Total : " + CommonMethods.GetNumberWithDots((int)GameLogic.instance.GetToggleOptionsMoney()) + "€";
-
-
-
                 foodText.text = "Compra de comida (" + GameLogic.instance.currentFoodExpense.ToString() + "€)";
                 publicityText.text = "Gastos en publicidad (" + GameLogic.instance.currentPublicityExpense.ToString() + "€)";
                 instalationsText.text = "Gastos local (" + GameLogic.instance.currentInstalationsExpense.ToString() + "€)";
@@ -255,34 +252,38 @@ public class CanvasScript : MonoBehaviour {
                 truckText.text = "Gastos en furgoneta (busca animales) (" + GameLogic.instance.currentGasExpense.ToString() + "€)";
 
                 moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
-                enteringAnimalsNumber.text = CanvasScript.canvasScript.enteringAnimalList.Count.ToString();
                 break;
             default:
                 break;
 
         }
     }
-
+    
 
 
     private void OnDestroy() {
         canvasScript = null;
     }
 
-    public void StopDisplayingShelterAnimals() {
-        canvasScript.canvasState = CanvasState.IDLE;
-        animalsWindow.SetActive(false);
-    }
-
-    public void DisplayShelterAnimals() {
+    public void DisplayShelterAnimals(bool should) {
         CreateAnimalList();
         canvasScript.canvasState = CanvasState.DISPLAYANIMALLIST;
-        animalsWindow.SetActive(true);
+        animalsWindow.SetActive(should);
+
+        if (!should) {
+            canvasScript.canvasState = CanvasState.IDLE;
+            //animalsWindow.SetActive(false);
+        }
+
     }
 
-    public void DisplayExpenses() {
-        expensesWindow.SetActive(true);
+    public void DisplayExpenses(bool should) {
+        expensesWindow.SetActive(should);
+        if (!should) {
+            canvasScript.canvasState = CanvasState.IDLE;
+        }
     }
+
 
     public void CreateAnimalList() {
         if (animalElements.Count > 0) {

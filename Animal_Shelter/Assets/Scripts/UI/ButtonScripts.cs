@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX };
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX,STOP_DISPLAY_ANIMALS, STOP_DISPLAY_EXPENSES };
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -33,11 +33,11 @@ public class ButtonScripts : MonoBehaviour {
                 break;
 
             case ButtonFunction.DISPLAYEXPENSES:
-                myselfButton.onClick.AddListener(() => DisplayExpenses());
+                myselfButton.onClick.AddListener(() => DisplayExpenses(true));
                 break;
 
             case ButtonFunction.DISPLAYANIMALS:
-                myselfButton.onClick.AddListener(() => DisplayAnimals());
+                myselfButton.onClick.AddListener(() => DisplayAnimals(true));
                 break;
 
             case ButtonFunction.ACCEPTANIMAL:
@@ -55,7 +55,12 @@ public class ButtonScripts : MonoBehaviour {
                 break;
             case ButtonFunction.DECREASE_ANIMAL_INDEX:
                 myselfButton.onClick.AddListener(() => IncreaseAnimalIndex(-1));
-
+                break;
+            case ButtonFunction.STOP_DISPLAY_ANIMALS:
+                myselfButton.onClick.AddListener(() => DisplayAnimals(false));
+                break;
+            case ButtonFunction.STOP_DISPLAY_EXPENSES:
+                myselfButton.onClick.AddListener(() => DisplayExpenses(false));
                 break;
             default:
                 break;
@@ -118,15 +123,15 @@ public class ButtonScripts : MonoBehaviour {
         throw new NotImplementedException();
     }
 
-    void DisplayExpenses() {
+    void DisplayExpenses(bool should) {
         if (CanvasScript.canvasScript != null) {
-            CanvasScript.canvasScript.DisplayExpenses();
+            CanvasScript.canvasScript.DisplayExpenses(should);
         }
     }
 
-    void DisplayAnimals() {
+    void DisplayAnimals(bool should) {
         if (CanvasScript.canvasScript != null) {
-            CanvasScript.canvasScript.DisplayShelterAnimals();
+            CanvasScript.canvasScript.DisplayShelterAnimals(should);
         }
     }
 }
