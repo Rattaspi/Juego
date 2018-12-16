@@ -22,7 +22,7 @@ public class CanvasScript : MonoBehaviour {
     public GameObject expensesWindow;
     public GameObject animalsWindow;
 
-    GameObject animalElementPrefab;
+    protected GameObject animalElementPrefab;
 
     public List<Animal> enteringAnimalList;
 
@@ -49,11 +49,11 @@ public class CanvasScript : MonoBehaviour {
 
     public GameObject noSpaceMessageGroup;
     public float noSpaceAlphaValue;
-    Image[] imageChildren;
-    TextMeshProUGUI[] textChildren;
+    protected Image[] imageChildren;
+    protected TextMeshProUGUI[] textChildren;
 
 
-    [SerializeField] int indexAnimalToDisplay;
+    public  int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
@@ -78,7 +78,7 @@ public class CanvasScript : MonoBehaviour {
         noSpaceAlphaValue = 0.01f;
     }
 
-    public void SetDisplayIndex(int index) {
+    public virtual void SetDisplayIndex(int index) {
         //Debug.Log("TrynaSet");
 
         if (index >= 0) {
@@ -103,7 +103,7 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    public void IncreaseDisplayIndex(int index) {
+    public virtual void IncreaseDisplayIndex(int index) {
         int tempIndex = indexAnimalToDisplay + index;
         if (tempIndex >= enteringAnimalList.Count) {
             tempIndex = 0;
@@ -117,12 +117,12 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    public void PopUpNoSpaceMessage() {
+    public virtual void PopUpNoSpaceMessage() {
         noSpaceAlphaValue = 1.0f;
         noSpaceMessageGroup.GetComponent<ScaleReactor>().React();
     }
 
-    public void ResolveAnimalRequest(bool accepted) {
+    public virtual void ResolveAnimalRequest(bool accepted) {
 
         if (accepted) {
 
@@ -159,7 +159,7 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    public bool AcceptAnimalInShelter(Animal a) {
+    public virtual bool AcceptAnimalInShelter(Animal a) {
 
         if (GameLogic.instance.shelterAnimals.Count < GameLogic.instance.currentAnimalCapacity) {
 
@@ -178,7 +178,7 @@ public class CanvasScript : MonoBehaviour {
         return false;
     }
 
-    public void AddEnteringAnimal() {
+    public virtual void AddEnteringAnimal() {
         enteringAnimalButtonObject.SetActive(true);
         Animal animal = Animal.MakeARandomAnimal().GetComponent<Animal>();
 
@@ -189,11 +189,11 @@ public class CanvasScript : MonoBehaviour {
         //Aqui hay que meter el código para que se añada un animal
     }
 
-    public void DisplayEnteringAnimal() {
+    public virtual void DisplayEnteringAnimal() {
         //enteringAnimalObject.SetActive(true);
     }
 
-    public void SelectAnimal(AnimalElementList animal) {
+    public virtual void SelectAnimal(AnimalElementList animal) {
         //if (selectedAnimalDisplayer != null) {
         //    selectedAnimalDisplayer.selectedAnimalInList = animal.associatedAnimal;
         //}
@@ -261,11 +261,11 @@ public class CanvasScript : MonoBehaviour {
     
 
 
-    private void OnDestroy() {
+    protected virtual void OnDestroy() {
         canvasScript = null;
     }
 
-    public void DisplayShelterAnimals(bool should) {
+    public virtual void DisplayShelterAnimals(bool should) {
         CreateAnimalList();
         canvasScript.canvasState = CanvasState.DISPLAYANIMALLIST;
         animalsWindow.SetActive(should);
@@ -277,7 +277,7 @@ public class CanvasScript : MonoBehaviour {
 
     }
 
-    public void DisplayExpenses(bool should) {
+    public virtual void DisplayExpenses(bool should) {
         expensesWindow.SetActive(should);
         if (!should) {
             canvasScript.canvasState = CanvasState.IDLE;
@@ -285,7 +285,7 @@ public class CanvasScript : MonoBehaviour {
     }
 
 
-    public void CreateAnimalList() {
+    public virtual void CreateAnimalList() {
         if (animalElements.Count > 0) {
             foreach (AnimalElementList a in animalElements) {
                 Destroy(a.gameObject);
@@ -348,26 +348,26 @@ public class CanvasScript : MonoBehaviour {
 
     //}
 
-    bool IsNull(AnimalElementList g) {
+    public virtual bool IsNull(AnimalElementList g) {
         return g == null;
     }
 
-    public void DisableAcceptButton() {
+    public virtual void DisableAcceptButton() {
         acceptButton.GetComponent<Image>().color = Color.grey;
         acceptButton.onClick.RemoveAllListeners();
         Debug.Log("Disable");
     }
 
-    public void DisableDeclineButton() {
+    public virtual void DisableDeclineButton() {
         declineButton.GetComponent<Image>().color = Color.grey;
         acceptButton.onClick.RemoveAllListeners();
     }
 
-    public void ReEnableButtons() {
+    public virtual void ReEnableButtons() {
         declineButton.GetComponent<Image>().color = Color.white;
     }
 
-    public void DisplayEvent(Event e) {
+    public virtual void DisplayEvent(Event e) {
         UIManagementGameObject.SetActive(false);
         if (currentDisplayedEvent != e) {
             canvasState = CanvasState.DISPLAYEVENT;
@@ -392,7 +392,7 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    public void StopEvent() {
+    public virtual void StopEvent() {
         currentDisplayedEvent = null;
         eventHandlerObject.SetActive(false);
         canvasState = CanvasState.IDLE;
