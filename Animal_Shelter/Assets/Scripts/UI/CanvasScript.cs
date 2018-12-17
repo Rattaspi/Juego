@@ -159,6 +159,8 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
+    //1268,425
+
     public virtual bool AcceptAnimalInShelter(Animal a) {
 
         if (GameLogic.instance.shelterAnimals.Count < GameLogic.instance.currentAnimalCapacity) {
@@ -226,7 +228,7 @@ public class CanvasScript : MonoBehaviour {
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Backspace)) {
             debugBool = true;
         }
 
