@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class FaderScript : MonoBehaviour {
     public static FaderScript instance;
-    bool doing;
+    public bool doing;
     public Color localColor;
     public RawImage image;
     public bool fade;
