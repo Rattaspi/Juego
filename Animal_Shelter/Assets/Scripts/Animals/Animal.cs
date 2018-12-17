@@ -136,10 +136,11 @@ public class Animal : MonoBehaviour {
     }
 
     private void Start() {
-        StartStats();
+        //StartStats();
         this.gameObject.tag = "animal";
-
-        this.gameObject.AddComponent<AnimalMovement>();
+        if (TutorialOverrider.instance == null) {
+            this.gameObject.AddComponent<AnimalMovement>();
+        }
         Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
