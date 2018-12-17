@@ -10,7 +10,7 @@ public class Animal : MonoBehaviour {
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGTH }
     public enum CONFORT { COMODO, NORMAL, INCOMODO, LENGTH };
     public enum ESTADO { SALUDABLE, ENFERMO, MUY_ENFERMO, TERMINAL, LENGTH };
-    public enum ESPECIE { NARVAL, HAMSTER, TIGRE, PERRO, GATO, KOALA, PALOMA, PAVO_REAL, RINOCERONTE, ELEFANTE, LENGTH };
+    public enum ESPECIE { NARVAL, HAMSTER, TIGRE, PERRO, GATO, KOALA, PALOMA, RINOCERONTE, ELEFANTE, LENGTH };
 
     public int gastoComida;
     public int gastoMedico; //en caso de tener que tratarlo

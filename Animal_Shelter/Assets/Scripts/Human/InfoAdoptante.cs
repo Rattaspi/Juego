@@ -34,7 +34,6 @@ public class InfoAdoptante : MonoBehaviour {
         adopterName.text = adoptante.adopterName;
 
         specieText.text = adoptante.speciePreferred.ToString();
-        if (adoptante.speciePreferred == Animal.ESPECIE.PAVO_REAL) specieText.text = "PAVO REAL";
 
         switch (adoptante.sizePreferred) {
             case Animal.SIZE.BIG:

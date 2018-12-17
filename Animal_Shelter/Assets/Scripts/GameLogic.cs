@@ -150,6 +150,14 @@ public class GameLogic : MonoBehaviour {
                     animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Tigre");
                     break;
 
+                case Animal.ESPECIE.ELEFANTE:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Elefante");
+                    break;
+
+                case Animal.ESPECIE.RINOCERONTE:
+                    animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Rinoceronte");
+                    break;
+
                 default:
                     animalGraphics[i] = Resources.Load<GameObject>("Prefabs/Animals/Perro");
                     break;
