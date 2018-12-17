@@ -18,6 +18,8 @@ public class InfoAdoptante : MonoBehaviour {
     [SerializeField] TextMeshProUGUI sizeText;
     [SerializeField] TextMeshProUGUI edadText;
 
+    Button assignButton;
+
     private void Awake() {
         adoptante = GetComponentInParent<Adoptante>();
         if (adoptante == null) Debug.LogError("Adoptante class not found from " + this.gameObject.name + " gameobject");
@@ -56,6 +58,10 @@ public class InfoAdoptante : MonoBehaviour {
             this.gameObject.SetActive(false);
             Destroy(adoptante.gameObject);
         });
+        if (TutorialOverrider.instance != null) {
+            assignButton = GetComponentsInChildren<Button>()[2];
+            assignButton.onClick.AddListener(() => TutorialOverrider.instance.GoToNextEvent());
+        }
 	}
 
     private void OnEnable() {
@@ -64,6 +70,6 @@ public class InfoAdoptante : MonoBehaviour {
     }
 
     private void OnDisable() {
-        this.transform.parent = graphics.transform;
+        //this.transform.parent = graphics.transform;
     }
 }

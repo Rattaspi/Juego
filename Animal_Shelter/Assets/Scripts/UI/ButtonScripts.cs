@@ -121,11 +121,16 @@ public class ButtonScripts : MonoBehaviour {
             TutorialOverrider.instance.GoToNextEvent();
         }
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     void HealAnimal() {
-        throw new NotImplementedException();
+
+        if (TutorialOverrider.instance != null) {
+            TutorialOverrider.instance.GoToNextEvent();
+        }
+
+        //throw new NotImplementedException();
     }
 
     void DisplayExpenses(bool should) {

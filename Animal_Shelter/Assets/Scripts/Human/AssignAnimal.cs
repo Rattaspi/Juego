@@ -27,8 +27,9 @@ public class AssignAnimal : MonoBehaviour {
     [SerializeField] TextMeshProUGUI animalAge;
     [SerializeField] GameObject animalDisplayPosition;
     GameObject animalDisplayed;
-
+    public Button[] buttons;
     private void Awake() {
+        buttons = GetComponentsInChildren<Button>();
         adoptante = GetComponentInParent<Adoptante>();
         if (adoptante == null) Debug.LogError("Adoptante class not found from " + this.gameObject.name + " gameobject");
 
@@ -62,6 +63,12 @@ public class AssignAnimal : MonoBehaviour {
         }
 
         animalId = 0;
+
+        if (TutorialOverrider.instance != null) {
+            buttons[3].onClick.AddListener(() => TutorialOverrider.instance.GoToNextEvent());
+
+            transform.GetChild(6).GetComponentsInChildren<Button>()[0].onClick.AddListener(() => TutorialOverrider.instance.GoToNextEvent());
+        }
     }
 
     private void OnEnable() {
