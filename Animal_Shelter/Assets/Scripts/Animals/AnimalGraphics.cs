@@ -92,6 +92,9 @@ public class AnimalGraphics : MonoBehaviour {
     }
 
     public void ActivateInfo() {
+        if (TutorialOverrider.instance != null) {
+            TutorialOverrider.instance.GoToNextEvent();
+        }
         GetComponent<ScaleReactor>().React();
         previewInfo.gameObject.SetActive(false);
         showInfo.gameObject.SetActive(true);

@@ -146,10 +146,12 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
     void Update() {
         float horizontalAxis = Input.GetAxisRaw("Horizontal");
 
-        if (horizontalAxis > 0 && horizontalAxis != prevHorizontalAxis) {
-            CanvasScript.canvasScript.IncreaseDisplayIndex(1);
-        } else if (horizontalAxis < 0 && horizontalAxis != prevHorizontalAxis) {
-            CanvasScript.canvasScript.IncreaseDisplayIndex(-1);
+        if (CanvasScript.canvasScript.enteringAnimalList.Count > 0) {
+            if (horizontalAxis > 0 && horizontalAxis != prevHorizontalAxis) {
+                CanvasScript.canvasScript.IncreaseDisplayIndex(1);
+            } else if (horizontalAxis < 0 && horizontalAxis != prevHorizontalAxis) {
+                CanvasScript.canvasScript.IncreaseDisplayIndex(-1);
+            }
         }
 
 

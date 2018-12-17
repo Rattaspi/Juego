@@ -116,6 +116,11 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void FeedAnimal() {
+
+        if (TutorialOverrider.instance != null){
+            TutorialOverrider.instance.GoToNextEvent();
+        }
+
         throw new NotImplementedException();
     }
 

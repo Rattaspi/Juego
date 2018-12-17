@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 public class TutorialOverrider : MonoBehaviour {
-    public enum ElementToHighlight { NONE,MANAGEMENT_BUTTON, MONEY_ICON, WEEK_TIMER, ENTRANCE_BUTTON, ACCEPT_BUTTON, ANIMAL_ENTRANCE, SMALL_TOGGLE_PUBLICITY, HUNGER_INDICATOR_ENTERING, SMALL_FOOD_TOGGLE, ACCEPTED_ANIMAL, FEED_BUTTON, HAPPINESS_INDICATOR, SMALL_TOGGLE_GAS, ACCEPT_EVENT_BUTTON, ALL_ENTRANCES, SICK_ANIMAL, HEAL_BUTTON, ADOPTER, GIVE_AWAY, REPUTATION, TOTAL_EXPENSE }
+    public enum ElementToHighlight { NONE, MANAGEMENT_BUTTON, MONEY_ICON, WEEK_TIMER, ENTRANCE_BUTTON, ACCEPT_BUTTON, ANIMAL_ENTRANCE, SMALL_TOGGLE_PUBLICITY, HUNGER_INDICATOR_ENTERING, SMALL_FOOD_TOGGLE, ACCEPTED_ANIMAL, FEED_BUTTON, HAPPINESS_INDICATOR, SMALL_TOGGLE_GAS, ACCEPT_EVENT_BUTTON, ALL_ENTRANCES, SICK_ANIMAL, HEAL_BUTTON, ADOPTER, GIVE_AWAY, REPUTATION, TOTAL_EXPENSE }
     public static TutorialOverrider instance;
     public bool enabled;
     public bool displayingText;
@@ -31,6 +31,7 @@ public class TutorialOverrider : MonoBehaviour {
     public Button animalEntranceButton;
     public Button acceptAnimalButton;
     public Button resourceManagementButton;
+    public Button endWeekButton;
     public Toggle toggleGas;
     public Toggle toggleFood;
     public Toggle togglePublicity;
@@ -42,12 +43,19 @@ public class TutorialOverrider : MonoBehaviour {
         if (instance == null) {
             instance = this;
         }
+
+        Invoke("SetWeekNegative", 1);
+
     }
 
     public void SetPosWidthHeight(GameObject g, float x, float y, float z, float w, float h) {
         g.transform.localPosition = new Vector3(x, y, z);
         g.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, h);
         g.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, w);
+    }
+
+    void SetWeekNegative(){
+        GameLogic.instance.currentWeek = -3;
     }
 
     public void HighlightElement(ElementToHighlight h) {
@@ -232,6 +240,7 @@ public class TutorialOverrider : MonoBehaviour {
         animalEntranceButton.onClick.AddListener(() => GoToNextEvent());
         acceptAnimalButton.onClick.AddListener(() => GoToNextEvent());
         resourceManagementButton.onClick.AddListener(() => GoToNextEvent());
+        endWeekButton.onClick.AddListener(() => GoToNextEvent());
 
         toggleGas.onValueChanged.AddListener(delegate {
             GoToNextEvent();
@@ -319,7 +328,7 @@ IEnumerator ShowBubble() {
         //displayingText = false;
     }
 
-    void GoToNextEvent() {
+    public void GoToNextEvent() {
         displayingText = false;
         textDisplayer.text = "";
         actionCounter++;
@@ -415,8 +424,9 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Por curiosidad ¿Qué nombre tienes pensado ponerle al refugio ?";
                         StartCoroutine(DisplayText());
+                    } else {
+                        PressEnterOrSpace(false);
                     }
-                    PressEnterOrSpace(false);
 
                     if (textDisplayer.text.Length >= currentText.Length) {
                         if (!objetoEntradaNombre.activeInHierarchy) {
@@ -619,6 +629,8 @@ IEnumerator ShowBubble() {
                         StartCoroutine(DisplayText());
                     } else {
                         //Resaltar indicador aceptar en refugio, desbloquear botón aceptar en refugio
+                        PressEnterOrSpace(false);
+
                     }
                     break;
                 case 17:
@@ -685,12 +697,12 @@ IEnumerator ShowBubble() {
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.WEEK_TIMER);
                         currentText = "Vamos a esperar";
+                        GameLogic.instance.timeOfEntry = GameLogic.instance.maxTimeOfEntry;
                         StartCoroutine(DisplayText());
                     } else {
                         //Esconder y des esconder la burbuja
                         //Salto de semana automatico con fadeout fadein
                         PressEnterOrSpace(false);
-
                     }
                     break;
                 case 23:

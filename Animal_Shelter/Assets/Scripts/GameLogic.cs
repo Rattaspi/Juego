@@ -225,6 +225,14 @@ public class GameLogic : MonoBehaviour {
 
 
         switch (currentWeek) {
+            case -3:
+                break;
+            case -2:
+                break;
+            case -1:
+                Event tutoDonationEvent = new TownHallMoneyEvent();
+                instance.incomingEvents.Add(tutoDonationEvent);
+                break;
             case 0:
 
                 break;
