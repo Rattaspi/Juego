@@ -146,10 +146,10 @@ public class TutorialOverrider : MonoBehaviour {
                 break;
             case ElementToHighlight.ACCEPTED_ANIMAL:
 
-                //SetPosWidthHeight(leftImage, 0, 0, 0, 0, 1080);
-                //SetPosWidthHeight(rightImage, 0, 0, 0, 0, 1080);
-                //SetPosWidthHeight(botImage, 0, 0, 0, 0, 0);
-                //SetPosWidthHeight(topImage, 0, 0, 0, 0, 0);
+                SetPosWidthHeight(leftImage, -836.1f, 0, 0, 247.8f, 1080);
+                SetPosWidthHeight(rightImage, 203.8f, 0, 0, 1512.5f, 1080);
+                SetPosWidthHeight(botImage, -632.35f, -429.2f, 0, 159.8f, 221.6f);
+                SetPosWidthHeight(topImage, -632.35f, 266.3f, 0, 159.8f, 547.4f);
 
                 break;
             case ElementToHighlight.FEED_BUTTON:
@@ -159,13 +159,18 @@ public class TutorialOverrider : MonoBehaviour {
                 //SetPosWidthHeight(botImage, 0, 0, 0, 0, 0);
                 //SetPosWidthHeight(topImage, 0, 0, 0, 0, 0);
 
+                SetPosWidthHeight(leftImage, -733.92f, 0, 0, 452.26f, 1080);
+                SetPosWidthHeight(rightImage, 276.77f, 0, 0, 1366.67f, 1080);
+                SetPosWidthHeight(botImage, -457.18f, -481.05f, 0, 101.22f, 117.91f);
+                SetPosWidthHeight(topImage, -457.18f, 81.33f, 0, 101.22f, 917.36f);
+
                 break;
             case ElementToHighlight.HAPPINESS_INDICATOR:
 
-                //SetPosWidthHeight(leftImage, 0, 0, 0, 0, 1080);
-                //SetPosWidthHeight(rightImage, 0, 0, 0, 0, 1080);
-                //SetPosWidthHeight(botImage, 0, 0, 0, 0, 0);
-                //SetPosWidthHeight(topImage, 0, 0, 0, 0, 0);
+                SetPosWidthHeight(leftImage, -671.9f, 0, 0, 576.4f, 1080);
+                SetPosWidthHeight(rightImage, 332.24f, 0, 0, 1255.72f, 1080);
+                SetPosWidthHeight(botImage, -339.66f, -371.56f, 0, 88.085f, 336.89f);
+                SetPosWidthHeight(topImage, -339.66f, 210.38f, 0, 88.088f, 659.34f);
 
                 break;
             case ElementToHighlight.SMALL_TOGGLE_GAS:
@@ -584,7 +589,7 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 5;
-
+                        //CanvasScaler
                         HighlightElement(ElementToHighlight.ENTRANCE_BUTTON);
                         currentText = "Mira!Parece que un pequeñajo te ha seguido hasta aquí";
                         StartCoroutine(DisplayText());
@@ -634,12 +639,18 @@ IEnumerator ShowBubble() {
                     }
                     break;
                 case 17:
-                    if(GameLogic.instance.shelterAnimals[0].transform.position.x!= 427+960 || GameLogic.instance.shelterAnimals[0].transform.position.y != -247 + 540) {
-                        GameLogic.instance.shelterAnimals[0].transform.position = new Vector2(427+960,-247+540);
+                    //if(GameLogic.instance.shelterAnimals[0].transform.position.x!= 328 + 960 || GameLogic.instance.shelterAnimals[0].transform.position.y != 365 + 540) {
+                    //    GameLogic.instance.shelterAnimals[0].transform.position = new Vector2(328 + 960, 365 + 570);
+                    //}
+
+                    if (GameLogic.instance.shelterAnimals[0].transform.localPosition.x != 328 || GameLogic.instance.shelterAnimals[0].transform.localPosition.y != 365) {
+                        GameLogic.instance.shelterAnimals[0].transform.localPosition = new Vector2(328, 365);
                     }
+
+
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.MONEY_ICON);
-                        currentText = "Veo que vienes con unos ahorros";
+                        currentText = "Genial! mira, vamos a hacer uso de esos ahorros";
                         StartCoroutine(DisplayText());
                     } else {
                         PressEnterOrSpace(true);
@@ -744,7 +755,7 @@ IEnumerator ShowBubble() {
                         currentText = "Eso es! Se le ve mucho más feliz.";
                         StartCoroutine(DisplayText());
                     } else {
-                        PressEnterOrSpace(false);
+                        PressEnterOrSpace(true);
 
                         //Resaltar indicador felicidad
                     }
