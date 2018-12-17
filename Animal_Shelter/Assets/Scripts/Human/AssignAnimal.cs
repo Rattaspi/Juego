@@ -44,7 +44,6 @@ public class AssignAnimal : MonoBehaviour {
 
     void Start () {
         adopterSpecie.text = adoptante.speciePreferred.ToString();
-        if (adoptante.speciePreferred == Animal.ESPECIE.PAVO_REAL) adopterSpecie.text = "PAVO REAL";
         adopterAge.text = adoptante.agePreferred.ToString();
         adopterSprite.sprite = graphics.adopterImage;
 
@@ -97,7 +96,6 @@ public class AssignAnimal : MonoBehaviour {
 
         animalName.text = currentAnimal.nombre;
         animalSpecie.text = currentAnimal.especie.ToString();
-        if (currentAnimal.especie == Animal.ESPECIE.PAVO_REAL) animalSpecie.text = "PAVO REAL";
         animalAge.text = currentAnimal.edad.ToString();
 
         switch (currentAnimal.size) {

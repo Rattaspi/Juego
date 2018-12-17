@@ -10,7 +10,7 @@ public class Animal : MonoBehaviour {
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGTH }
     public enum CONFORT { COMODO, NORMAL, INCOMODO, LENGTH };
     public enum ESTADO { SALUDABLE, ENFERMO, MUY_ENFERMO, TERMINAL, LENGTH };
-    public enum ESPECIE { NARVAL, HAMSTER, TIGRE, PERRO, GATO, KOALA, PALOMA, PAVO_REAL, RINOCERONTE, ELEFANTE, LENGTH };
+    public enum ESPECIE { NARVAL, HAMSTER, TIGRE, PERRO, GATO, KOALA, PALOMA, RINOCERONTE, ELEFANTE, LENGTH };
 
     public int gastoComida;
     public int gastoMedico; //en caso de tener que tratarlo
@@ -136,8 +136,18 @@ public class Animal : MonoBehaviour {
     }
 
     private void Start() {
-        //StartStats();
+        StartStats();
         this.gameObject.tag = "animal";
+
+        this.gameObject.AddComponent<AnimalMovement>();
+        Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.freezeRotation = true;
+
+        BoxCollider2D b = this.gameObject.AddComponent<BoxCollider2D>();
+        b.size = new Vector2(100, 200);
+        b.isTrigger = true;
+
 
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
         //ME DABA PEREZA HACERLO A MANO :D
