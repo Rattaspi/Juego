@@ -11,6 +11,8 @@ TagManager:
   - animal_info
   - animal
   - animalElementList
+  - movement_bounds
+  - animal_bounds
   layers:
   - Default
   - TransparentFX
