@@ -509,6 +509,7 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "El nombre que me puso mi primer dueño fue Turtlellini, pero por aquí se me conoce como el anciano.";
                         StartCoroutine(DisplayText());
+                        booleanOnce = false;
                     } else {
                         PressEnterOrSpace(true);
 
@@ -675,11 +676,12 @@ IEnumerator ShowBubble() {
                         StartCoroutine(DisplayText());
                     } else {
                         //Resaltar botón semana siguiente y desbloquear botón semana siguiente
-                        PressEnterOrSpace(false);
+                        PressEnterOrSpace(true);
 
                     }
                     break;
                 case 22:
+
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.WEEK_TIMER);
                         currentText = "Vamos a esperar";

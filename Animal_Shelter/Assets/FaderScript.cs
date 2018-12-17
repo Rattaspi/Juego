@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class FaderScript : MonoBehaviour {
     public static FaderScript instance;
-    bool doing;
+    public bool doing;
     public Color localColor;
     public RawImage image;
     public bool fade;
@@ -41,8 +41,6 @@ public class FaderScript : MonoBehaviour {
         }
     }
 
-    
-
     public void Pause() {
         if (localColor.a != 0.3f) {
             localColor.a = 0.3f;
@@ -50,6 +48,7 @@ public class FaderScript : MonoBehaviour {
     }
 
     public IEnumerator Fade() {
+        image.raycastTarget = true;
         if (doing) {
             yield return null;
         } else {
@@ -82,6 +81,7 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
+            image.raycastTarget = false;
         }
     }
 
