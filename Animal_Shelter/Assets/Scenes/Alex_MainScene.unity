@@ -800,7 +800,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1836761054901798, guid: 1feb9e18158e7e14e9541787bb1b4817, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114090999916047668, guid: 1feb9e18158e7e14e9541787bb1b4817,
         type: 2}
@@ -810,12 +810,12 @@ Prefab:
     - target: {fileID: 114173198800342060, guid: 1feb9e18158e7e14e9541787bb1b4817,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114542804402980592, guid: 1feb9e18158e7e14e9541787bb1b4817,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1246223928017306, guid: 1feb9e18158e7e14e9541787bb1b4817, type: 2}
       propertyPath: m_IsActive
@@ -1003,6 +1003,11 @@ MonoBehaviour:
   gasPrice: 0
   publictyPrice: 0
   cleanUpCost: 0
+  currentFoodExpense: 0
+  currentCleanUpExpense: 0
+  currentGasExpense: 0
+  currentPublicityExpense: 0
+  currentInstalationsExpense: 0
   foodToBuy: 0
   expensesToPay: 0
   publicityToInvest: 0

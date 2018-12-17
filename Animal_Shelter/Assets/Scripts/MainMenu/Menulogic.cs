@@ -16,6 +16,19 @@ public class Menulogic : MonoBehaviour {
         StartCoroutine(PlayGame());
     }
 
+    public void ExitButton() {
+        StartCoroutine(fader.Fade());
+        StartCoroutine(ExitGame());
+    }
+
+    IEnumerator ExitGame() {
+        while (fader.doing) {
+            yield return null;
+        }
+        Application.Quit();
+        yield return new WaitForSeconds(5.0f);
+    }
+
     IEnumerator PlayGame() {
         while (fader.doing) {
             yield return null;
