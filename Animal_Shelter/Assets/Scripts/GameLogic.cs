@@ -29,7 +29,7 @@ public static class GameTime {
 public class GameLogic : MonoBehaviour {
 
     //Singleton
-    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME };
+    public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME, MAINMENU };
     public static GameLogic instance;
     public GameState gameState;
     public float money, reputation;
@@ -64,6 +64,12 @@ public class GameLogic : MonoBehaviour {
     public bool debugBool;
     //Stores all the animal prefabs to avoid loading from resources every time.
     [HideInInspector] public GameObject[] animalGraphics;
+
+    //It has to be stored in playerprefs
+    //  0 = true
+    //  1 = false
+    bool firstTimePlayed = true;
+    string firstTimePlayedKey = "firstTimePlayed";
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
@@ -109,6 +115,7 @@ public class GameLogic : MonoBehaviour {
         expensesToPay = ToggleScript.ToggleType.BIG;
         StartCoroutine(GameTime.unBlockPause());
         //GameTime.pauseBlocked = false;
+
         //Array which stores all the animal graphics prefabs
         //They are stored in the enum order so you can access it using the enum integer
         //EG. animalGraphics[(int)Animal.ESPECIE.GATO] --> it returns the cat graphics prefab
@@ -149,6 +156,8 @@ public class GameLogic : MonoBehaviour {
             }
 
         }
+
+        firstTimePlayed = PlayerPrefs.GetInt(firstTimePlayedKey) == 0;
     }
 
     public void RemoveAnimal(Animal animal) {
@@ -169,6 +178,9 @@ public class GameLogic : MonoBehaviour {
         if (CanvasScript.canvasScript != null) {
 
             switch (gameState) {
+                case GameState.MAINMENU:
+                    break;
+
                 case GameState.WEEKSTART:
                     //CanvasScript.canvasScript.DisplayIncomingAnimals();
                     gameState = GameState.WEEK;
