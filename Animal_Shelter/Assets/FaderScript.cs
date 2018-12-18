@@ -40,12 +40,10 @@ public class FaderScript : MonoBehaviour {
             unFade = false;
         }
 
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.I)) {
-            print("FADE");
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F)) {
             fade = true;
-        } else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.U)){ 
+        } else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.U)){ 
             unFade = true;
-            print("UNFADE");
         }
     }
 
