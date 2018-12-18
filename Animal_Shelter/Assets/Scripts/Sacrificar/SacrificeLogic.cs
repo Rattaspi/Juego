@@ -49,7 +49,7 @@ public class SacrificeLogic : MonoBehaviour {
         GameLogic.instance.RemoveAnimal(GameLogic.instance.animalToSacrifice);
         GameLogic.instance.animalToSacrifice = null;
         graphicRaycaster.enabled = true;
-
+        yield return new WaitForSeconds(1.0f);
         this.gameObject.SetActive(false);
     }
 }
