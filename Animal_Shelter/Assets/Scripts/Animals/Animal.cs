@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Animal : MonoBehaviour {
     public GameObject graphics;
-    AnimalGraphics animalGraphics;
+    public AnimalGraphics animalGraphics;
 
     public enum SIZE { SMALL, MEDIUM, BIG, LENGTH }
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGTH }
@@ -205,7 +205,7 @@ public class Animal : MonoBehaviour {
     }
 
     private void Awake() {
-        StartStats();
+        //StartStats();
     }
 
     private void Start() {
@@ -230,7 +230,7 @@ public class Animal : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) DisableOnClickingAway(true);
+        //if (Input.GetKeyDown(KeyCode.Space)) DisableOnClickingAway(true);
     }
 
     void CreateBody() {

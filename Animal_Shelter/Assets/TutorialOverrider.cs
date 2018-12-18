@@ -17,7 +17,8 @@ public class TutorialOverrider : MonoBehaviour {
     public int letterIndex;
     public TextMeshProUGUI textDisplayer;
     public string currentText;
-
+    public GameObject turtelliniObject;
+    Image turtelliniImage;
     public delegate void TestDelegate();
     public TestDelegate m_methodCall;
     public GameObject bubbleObject;
@@ -122,14 +123,14 @@ public class TutorialOverrider : MonoBehaviour {
 
                 break;
             case ElementToHighlight.MONEY_ICON:
-                SetPosWidthHeight(leftImage, -927.9f, 0, 0, 64.6f, 1080f);
-                SetPosWidthHeight(rightImage, 204.6f, 438.44f, 0, 1510.7f, 103.18f);
-                SetPosWidthHeight(botImage, 32.19998f, -76.6f, 0, 1855.6f, 926.9f);
-                SetPosWidthHeight(topImage, 32.16998f, 515.03f, 0, 1855.6f, 50);
+                SetPosWidthHeight(leftImage, -942.6f, 0, 0, 35.2f, 1080f);
+                SetPosWidthHeight(rightImage, 153.9f, 446.45f, 0, 1612.1f, 87.2f);
+                SetPosWidthHeight(botImage, 17.5f, -68.6f, 0, 1885f, 942.9f);
+                SetPosWidthHeight(topImage, 17.48498f, 515.03f, 0, 1885f, 50);
                 break;
             case ElementToHighlight.WEEK_TIMER:
                 SetPosWidthHeight(leftImage, -162.2f, 0, 0, 1596, 1080f);
-                SetPosWidthHeight(rightImage, 941.8f, -25, 0, 36.3f, 1030.1f);
+                SetPosWidthHeight(rightImage, 941.8f, 0, 0, 36.3f, 1080);
                 SetPosWidthHeight(botImage, 779.72f, -526.1f, 0, 287.85f, 27.8f);
                 SetPosWidthHeight(topImage, 779.73f, 157.1f, 0, 287.84f, 765.8f);
                 break;
@@ -211,7 +212,7 @@ public class TutorialOverrider : MonoBehaviour {
                 SetPosWidthHeight(leftImage, -735.8f, 0, 0, 448.5f, 1080);
                 SetPosWidthHeight(rightImage, 308.6f, 0, 0, 1303, 1080);
                 SetPosWidthHeight(botImage, -427.25f, -341.8f, 0, 168.7f, 396.5f);
-                SetPosWidthHeight(topImage, -113.71f, 319.1f, 0, 795.8f, 441.6f);
+                SetPosWidthHeight(topImage, -427.25f, 319.1f, 0, 168.71f, 442f);
 
                 break;
             case ElementToHighlight.HEAL_BUTTON:
@@ -278,6 +279,7 @@ public class TutorialOverrider : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        turtelliniObject.SetActive(false);
 
         actionCounter = 0;
         objetoEntradaNombre.SetActive(false);
@@ -317,29 +319,31 @@ public class TutorialOverrider : MonoBehaviour {
 IEnumerator ShowBubble() {
         if (!modifyingBubble) {
             modifyingBubble = true;
-            while (bubbleObject.transform.localScale.x < 1) {
+            while (bubbleObject.transform.localScale.x > -1) {
                 Vector3 localLocalScale;
                 localLocalScale = bubbleObject.transform.localScale;
-                localLocalScale += new Vector3(Time.deltaTime * 2, Time.deltaTime * 2, Time.deltaTime * 2);
+                localLocalScale -= new Vector3(Time.deltaTime * 2, -Time.deltaTime * 2, -Time.deltaTime * 2);
                 bubbleObject.transform.localScale = localLocalScale;
                 yield return null;
             }
-            if (bubbleObject.transform.localScale.x > 1) {
-                bubbleObject.transform.localScale = new Vector3(1, 1, 1);
+            if (bubbleObject.transform.localScale.x < -1) {
+                bubbleObject.transform.localScale = new Vector3(-1, 1, 1);
             }
         }
+        Invoke("ModifyingBubbleIsFalse", 0.5f);
+
     }
 
     IEnumerator HideBubble() {
         if (!modifyingBubble) {
             modifyingBubble = true;
-            while (bubbleObject.transform.localScale.x > 0) {
+            while (bubbleObject.transform.localScale.x < 0) {
                 Vector3 localLocalScale;
                 localLocalScale = bubbleObject.transform.localScale;
-                localLocalScale -= new Vector3(Time.deltaTime * 2, Time.deltaTime * 2, Time.deltaTime * 2);
+                localLocalScale += new Vector3(Time.deltaTime * 2, -Time.deltaTime * 2, -Time.deltaTime * 2);
                 bubbleObject.transform.localScale = localLocalScale;
 
-                if (bubbleObject.transform.localScale.x < 0) {
+                if (bubbleObject.transform.localScale.x > 0) {
                     bubbleObject.transform.localScale = new Vector3(0, 0, 0);
                 }
 
@@ -539,14 +543,25 @@ IEnumerator ShowBubble() {
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Vale, ya puedes encenderla...";
+                        turtelliniObject.SetActive(true);
+                        turtelliniImage = turtelliniObject.GetComponent<Image>();
+                        Color newTurtelliniColor = turtelliniImage.color;
+                        newTurtelliniColor.a = (1-FaderScript.instance.image.color.a);
+                        turtelliniImage.color = newTurtelliniColor;
+
                         StartCoroutine(DisplayText());
                     } else {
+                        Color newTurtelliniColor = turtelliniImage.color;
+                        newTurtelliniColor.a = (1 - FaderScript.instance.image.color.a);
+                        turtelliniImage.color = newTurtelliniColor;
                         PressEnterOrSpace(true, UnFadeGame, StartHideBubbleCoroutine);
+
                     }
 
                     break;
                 case 7:
                     if (!modifyingBubble) {
+
                         if (!booleanOnce) {
                             booleanOnce = true;
                             StartShowBubbleCoroutine();
@@ -554,14 +569,20 @@ IEnumerator ShowBubble() {
                             HighlightElement(ElementToHighlight.NONE);
                         }
 
+                        if (bubbleObject.transform.localScale.y > 0.8f) {
+                            if (!displayingText) {
+                                HighlightElement(ElementToHighlight.NONE);
+                                currentText = "Hola, soy el inquilino más anciano de este refugio. Llevo aquí desde… Podríamos decir que desde el principio.";
+                                StartCoroutine(DisplayText());
+                            } else {
+                                PressEnterOrSpace(true);
 
-                        if (!displayingText ) {
-                            HighlightElement(ElementToHighlight.NONE);
-                            currentText = "Hola, soy el inquilino más anciano de este refugio. Llevo aquí desde… Podríamos decir que desde el principio.";
-                            StartCoroutine(DisplayText());
-                        } else {
-                            PressEnterOrSpace(true);
+                            }
                         }
+                    } else {
+                        Color newTurtelliniColor = turtelliniImage.color;
+                        newTurtelliniColor.a = (1 - FaderScript.instance.image.color.a);
+                        turtelliniImage.color = newTurtelliniColor;
                     }
                     break;
                 case 8:
@@ -636,6 +657,7 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 5;
                         CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(false);
+                        Debug.Log("CLICK AWAY CAN DO " + CanvasScript.canvasScript.enteringAnimalList[0].animalGraphics.clickAwayDisables);
                         //CanvasScaler
                         HighlightElement(ElementToHighlight.ENTRANCE_BUTTON);
                         currentText = "Mira! Parece que un pequeñajo te ha seguido hasta aquí";
