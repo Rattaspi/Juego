@@ -9,9 +9,11 @@ public class SacrificeLogic : MonoBehaviour {
     [SerializeField] GameObject mouseSyringe;
     [SerializeField] GraphicRaycaster graphicRaycaster;
     GameObject animalDisplayed;
+    CanvasGroup group;
 
     private void Awake() {
         graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
+        group = GetComponentInChildren<CanvasGroup>();
     }
 
     private void OnEnable() {
@@ -25,6 +27,11 @@ public class SacrificeLogic : MonoBehaviour {
         StartCoroutine(FaderScript.instance.UnFade());
     }
 
+    private void OnDisable() {
+        group.alpha = 1.0f;
+        mouseSyringe.SetActive(false);
+    }
+
     public void SacrificeClick() {
         print(mouseSyringe.activeInHierarchy);
         if (mouseSyringe.activeInHierarchy) {
@@ -34,7 +41,6 @@ public class SacrificeLogic : MonoBehaviour {
 
     IEnumerator Sacrifice() {
         graphicRaycaster.enabled = false;
-        CanvasGroup group = animalPosition.gameObject.AddComponent<CanvasGroup>();
         float animalFadeSpeed = 1.0f;
         while(group.alpha > 0.0f) {
             group.alpha -= animalFadeSpeed * Time.deltaTime;

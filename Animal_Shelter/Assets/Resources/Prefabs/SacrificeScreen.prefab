@@ -90,6 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224563323158841968}
   - component: {fileID: 114038027387829394}
+  - component: {fileID: 225569897364673024}
   m_Layer: 5
   m_Name: Animal
   m_TagString: Untagged
@@ -556,3 +557,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2000, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225569897364673024
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732037798891262}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
