@@ -30,24 +30,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1275292581842478
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 224451272344305822}
-  - component: {fileID: 114751927466119944}
-  - component: {fileID: 222313680339857790}
-  - component: {fileID: 114061598303803514}
-  m_Layer: 5
-  m_Name: Fader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1527667144446072
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,32 +161,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!114 &114061598303803514
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275292581842478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!114 &114145205675607350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,7 +294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalPosition: {fileID: 224563323158841968}
-  fader: {fileID: 114751927466119944}
   mouseSyringe: {fileID: 1612150038110096}
   graphicRaycaster: {fileID: 0}
 --- !u!114 &114474822801902974
@@ -367,22 +322,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &114751927466119944
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275292581842478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 659192ec4bf33c94baac5a0aaf3b872f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doing: 0
-  localColor: {r: 0, g: 0, b: 0, a: 1}
-  image: {fileID: 114061598303803514}
-  fade: 0
-  unFade: 0
 --- !u!114 &114886086891043556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -457,13 +396,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1873326346353276}
   m_CullTransparentMesh: 0
---- !u!222 &222313680339857790
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275292581842478}
-  m_CullTransparentMesh: 0
 --- !u!222 &222589612158014984
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -508,7 +440,6 @@ RectTransform:
   - {fileID: 224563323158841968}
   - {fileID: 224313282569487106}
   - {fileID: 224138175534619072}
-  - {fileID: 224451272344305822}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -588,24 +519,6 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 257}
   m_SizeDelta: {x: 800, y: 621}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224451272344305822
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275292581842478}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 224022615056352750}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2000, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224563323158841968
 RectTransform:
