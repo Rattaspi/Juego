@@ -11,7 +11,7 @@ public class AnimalGraphics : MonoBehaviour {
     Animal animalInfo;
 
     [SerializeField] PreviewInfoAnimal previewInfo;
-    [SerializeField] ShowInfoAnimal showInfo;
+    [HideInInspector] public ShowInfoAnimal showInfo;
     [HideInInspector] public bool clickAwayDisables = true;
 
     GraphicRaycaster graphicRaycaster;

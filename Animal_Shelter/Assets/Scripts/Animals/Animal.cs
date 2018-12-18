@@ -231,4 +231,8 @@ public class Animal : MonoBehaviour {
     public void DisableOnClickingAway(bool b) {
         animalGraphics.clickAwayDisables = b;
     }
+
+    public void UpdateDisplayedAnimalInfo() {
+        animalGraphics.showInfo.UpdateInfo();
+    }
 }
