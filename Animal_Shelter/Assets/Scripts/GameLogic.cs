@@ -48,7 +48,10 @@ public class GameLogic : MonoBehaviour {
     public float publictyPrice;
     public float cleanUpCost;
     public float medicinePrice;
-
+    int maxTimeForNewAnimal;
+    int maxTimeForNewAdopter;
+    public bool cleanedUpThisWeek;
+    public bool payedExpensesThisWeek;
     public float currentFoodExpense;
     public float currentCleanUpExpense;
     public float currentGasExpense;
@@ -266,7 +269,7 @@ public class GameLogic : MonoBehaviour {
                         if (timeOfEntry < maxTimeOfEntry) {
                             timeOfEntry += GameTime.deltaTime;
                             if (timeOfEntry > timeForNextAnimal) {
-                                int timeToAdd = Random.Range(3, 9);
+                                int timeToAdd = Random.Range(3, maxTimeForNewAnimal);
                                 timeForNextAnimal += timeToAdd;
                                 CanvasScript.canvasScript.AddEnteringAnimal();
                             }
@@ -297,6 +300,7 @@ public class GameLogic : MonoBehaviour {
                 case GameState.ENDWEEK:
                     currentWeek++;
                     ApplyWeekExpenses();
+                    ApplyAnimalUpdates();
                     NewEvents();
                     gameState = GameState.EVENT;
                     break;
@@ -304,6 +308,11 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
+    void ApplyAnimalUpdates(){
+        foreach(Animal a in shelterAnimals) {
+            a.UpdateStats();
+        }
+    }
 
     void NewEvents() {
         //Event random = new PuppyBagEvent();
@@ -487,23 +496,98 @@ public class GameLogic : MonoBehaviour {
         return CanvasScript.canvasScript.currentDisplayedEvent == e;
     }
 
+    float CalculateTotalCleanUpCost() {
+        float temp = shelterAnimals.Count;
+        temp *= cleanUpCost;
+        return temp;
+    }
+
+    public void GetResultsFromToggles() {
+        switch (foodToBuy) {
+            case ToggleScript.ToggleType.NONE:
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                amountOfFood += 50;
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                amountOfFood += 100;
+                break;
+            case ToggleScript.ToggleType.BIG:
+                amountOfFood += 150;
+                break;
+        }
+
+        switch (publicityToInvest) {
+            case ToggleScript.ToggleType.NONE:
+                maxTimeForNewAdopter = 15;
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                maxTimeForNewAdopter = 10;
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                maxTimeForNewAdopter = 8;
+                break;
+            case ToggleScript.ToggleType.BIG:
+                maxTimeForNewAdopter = 7;
+                break;
+        }
+
+        switch (expensesToPay) {
+            case ToggleScript.ToggleType.NONE:
+                payedExpensesThisWeek = false;
+                break;
+            default:
+                payedExpensesThisWeek = true;
+                break;
+        }
+
+        switch (cleanupToDo) {
+            case ToggleScript.ToggleType.NONE:
+                cleanedUpThisWeek = false;
+                break;
+            default:
+                cleanedUpThisWeek = true;
+                break;
+        }
+
+        switch (searchAmount) {
+            case ToggleScript.ToggleType.NONE:
+                maxTimeForNewAnimal = 15;
+                break;
+            case ToggleScript.ToggleType.SMALL:
+                maxTimeForNewAnimal = 10;
+                break;
+            case ToggleScript.ToggleType.MEDIUM:
+                maxTimeForNewAnimal = 8;
+                break;
+            case ToggleScript.ToggleType.BIG:
+                maxTimeForNewAnimal = 4;
+                break;
+        }
+
+    }
+
     public float GetToggleOptionsMoney() {
         float totalExpense = 0;
+        
         switch (foodToBuy) {
             case ToggleScript.ToggleType.NONE:
                 currentFoodExpense = 0;
                 break;
             case ToggleScript.ToggleType.SMALL:
                 currentFoodExpense = foodPrice * 50.0f;
+                amountOfFood += 50;
                 //totalExpense += foodPrice * 50.0f;
                 break;
             case ToggleScript.ToggleType.MEDIUM:
                 currentFoodExpense = foodPrice * 100.0f;
+                amountOfFood += 100;
 
                 //totalExpense += foodPrice * 100.0f;
                 break;
             case ToggleScript.ToggleType.BIG:
                 currentFoodExpense = foodPrice * 150.0f;
+                amountOfFood += 150;
 
                 //totalExpense += foodPrice * 150.0f;
                 break;
@@ -531,10 +615,11 @@ public class GameLogic : MonoBehaviour {
 
         switch (cleanupToDo) {
             case ToggleScript.ToggleType.NONE:
-                currentCleanUpExpense = 0;
+                cleanUpCost = 0;
+
                 break;
             default:
-                currentCleanUpExpense = cleanUpCost;
+                cleanUpCost = 2;
                 //totalExpense += cleanUpCost;
                 break;
         }
@@ -575,7 +660,7 @@ public class GameLogic : MonoBehaviour {
                 break;
         }
 
-        totalExpense = currentGasExpense + currentCleanUpExpense + currentFoodExpense + currentPublicityExpense + currentInstalationsExpense;
+        totalExpense = currentGasExpense + CalculateTotalCleanUpCost() + currentFoodExpense + currentPublicityExpense + currentInstalationsExpense;
 
         return totalExpense;
     }
@@ -584,6 +669,9 @@ public class GameLogic : MonoBehaviour {
     public void ApplyWeekExpenses() {
         float moneyExpense = GetToggleOptionsMoney();
         money -= (moneyExpense);
+        if (payedExpensesThisWeek) {
+            reputation -= 0.3f;
+        }
     }
 
     //This method changes the GameState
