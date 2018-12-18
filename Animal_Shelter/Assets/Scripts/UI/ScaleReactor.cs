@@ -8,7 +8,7 @@ public class ScaleReactor : MonoBehaviour {
     float effectTimer;
     Vector3 originalScale;
     float lerpValue;
-    bool reacting;
+    public bool reacting;
     public float amplitude = 0.2f;
 
     public void React() {

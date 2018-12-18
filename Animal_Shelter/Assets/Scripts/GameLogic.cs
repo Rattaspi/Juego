@@ -42,12 +42,14 @@ public class GameLogic : MonoBehaviour {
     public float gasPrice;
     public float publictyPrice;
     public float cleanUpCost;
+    public float medicinePrice;
 
     public float currentFoodExpense;
     public float currentCleanUpExpense;
     public float currentGasExpense;
     public float currentPublicityExpense;
     public float currentInstalationsExpense;
+
 
     public ToggleScript.ToggleType foodToBuy;
     public ToggleScript.ToggleType expensesToPay;
@@ -99,6 +101,7 @@ public class GameLogic : MonoBehaviour {
     void Start() {
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
         StartVariables();
+        medicinePrice = 20.0f;
         currentEventIndex = 0;
         foodPrice = 1.0f;
         gasPrice = 1.0f;

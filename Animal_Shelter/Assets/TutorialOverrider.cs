@@ -635,7 +635,7 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 5;
-                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(true);
+                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(false);
                         //CanvasScaler
                         HighlightElement(ElementToHighlight.ENTRANCE_BUTTON);
                         currentText = "Mira! Parece que un pequeñajo te ha seguido hasta aquí";
@@ -809,7 +809,7 @@ IEnumerator ShowBubble() {
                     break;
                 case 27:
                     if (!displayingText) {
-                        GameLogic.instance.shelterAnimals[0].DisableOnClickingAway(false);
+                        GameLogic.instance.shelterAnimals[0].DisableOnClickingAway(true);
 
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Seguramente no lo hubiera conseguido sin ti";
@@ -934,7 +934,7 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 15;
-                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(true);
+                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(false);
 
 
                         CanvasScript.canvasScript.enteringAnimalList[1].edad = Animal.EDAD.CACHORRO;
@@ -1037,7 +1037,7 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.ADOPTER);
                         currentText = "Oh vaya! Parece que tenemos visita!";
                         StartCoroutine(DisplayText());
-                        GameLogic.instance.shelterAnimals[1].DisableOnClickingAway(false);
+                        GameLogic.instance.shelterAnimals[1].DisableOnClickingAway(true);
                     } else {
                         if(adoptanteObject.transform.localPosition != new Vector3(-205, 396)) {
                             adoptante.transform.localPosition = new Vector3(-205, 396);

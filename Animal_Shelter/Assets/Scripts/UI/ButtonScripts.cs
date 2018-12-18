@@ -133,6 +133,22 @@ public class ButtonScripts : MonoBehaviour {
             TutorialOverrider.instance.GoToNextEvent();
         }
 
+        Animal animal = GetComponentInParent<Animal>();
+        if (animal != null) {
+            if (animal.salud < 100) {
+                if (GameLogic.instance.money > GameLogic.instance.medicinePrice) {
+                    GameLogic.instance.money -= GameLogic.instance.medicinePrice;
+                    animal.TryHealing();
+                } else {
+                    CanvasScript.canvasScript.PopUpNoSpaceMessage("No puedes permitirte a este animal");
+                }
+            } else {
+                CanvasScript.canvasScript.PopUpNoSpaceMessage("Este animal está perfectamente");
+            }
+        } else {
+            Debug.Log("Null");
+        }
+
         //throw new NotImplementedException();
     }
 

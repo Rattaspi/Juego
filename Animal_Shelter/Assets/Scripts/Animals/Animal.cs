@@ -44,23 +44,7 @@ public class Animal : MonoBehaviour {
         CreateOrigin();
         //START THE INTERNAL VALUES
         //salud [0, 100]
-        switch (estado) {
-            case ESTADO.SALUDABLE:
-                salud = Random.Range(46, 80);
-                break;
-
-            case ESTADO.ENFERMO:
-                salud = Random.Range(21, 45);
-                break;
-
-            case ESTADO.MUY_ENFERMO:
-                salud = Random.Range(11, 20);
-                break;
-
-            case ESTADO.TERMINAL:
-                salud = Random.Range(5, 10);
-                break;
-        }
+        ComputeNewState();
 
         //confort [0,20]
         switch (confort) {
@@ -77,6 +61,67 @@ public class Animal : MonoBehaviour {
                 break;
         }
         hambre = hambriento ? Random.Range(0, 9) : Random.Range(10, 20);
+    }
+
+    public void TryHealing() {
+        int randomChance = Random.Range(1, 100);
+        switch (estado) {
+            case ESTADO.SALUDABLE:
+                salud += 20;
+                if (salud > 100) {
+                    salud = 100;
+                }
+                break;
+            case ESTADO.ENFERMO:
+                if (randomChance <= 60) {
+                    estado = ESTADO.SALUDABLE;
+                    ComputeNewState();
+                }
+                break;
+            case ESTADO.MUY_ENFERMO:
+                if (randomChance <= 5) {
+                    estado = ESTADO.SALUDABLE;
+                    ComputeNewState();
+                } else if (randomChance <= 30) {
+                    estado = ESTADO.ENFERMO;
+                    ComputeNewState();
+                }
+                break;
+            case ESTADO.TERMINAL:
+                if (randomChance <= 2) {
+                    estado = ESTADO.SALUDABLE;
+                    ComputeNewState();
+                } else if (randomChance <= 5) {
+                    estado = ESTADO.ENFERMO;
+                    ComputeNewState();
+                } else if (randomChance <= 15) {
+                    estado = ESTADO.MUY_ENFERMO;
+                    ComputeNewState();
+                }
+                break;
+        }
+
+    }
+
+    void ComputeNewState() {
+        switch (estado) {
+            case ESTADO.SALUDABLE:
+                salud = Random.Range(46, 80);
+                break;
+            case ESTADO.ENFERMO:
+                salud = Random.Range(21, 45);
+                break;
+
+            case ESTADO.MUY_ENFERMO:
+                salud = Random.Range(11, 20);
+                break;
+
+            case ESTADO.TERMINAL:
+                salud = Random.Range(5, 10);
+                break;
+            default:
+                break;
+        }
     }
 
     public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue,int hambre) {
@@ -133,6 +178,10 @@ public class Animal : MonoBehaviour {
         temp2.StartStats();
         //Debug.Log(temp2);
         animalObject.name = temp2.nombre;
+
+
+
+        //animalObject.transform.position 
         return animalObject;
     }
 
@@ -169,7 +218,7 @@ public class Animal : MonoBehaviour {
         animalGraphics = GetComponentInChildren<AnimalGraphics>();
         if (animalGraphics == null) Debug.LogError("AnimalGraphics not found from " + this.name);
 
-        DisableOnClickingAway(false);
+        DisableOnClickingAway(true);
     }
 
     public void DisableOnClickingAway(bool b) {

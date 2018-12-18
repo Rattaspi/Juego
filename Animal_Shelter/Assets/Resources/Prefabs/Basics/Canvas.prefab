@@ -7502,7 +7502,8 @@ MonoBehaviour:
   cleanUpText: {fileID: 114521496251160258}
   truckText: {fileID: 114519612850274060}
   mainGameGroup: {fileID: 1491215135646724}
-  noSpaceMessageGroup: {fileID: 1001430048949370}
+  popUpMessageGroup: {fileID: 1001430048949370}
+  popUpText: {fileID: 114140340032033624}
   noSpaceAlphaValue: 0
   indexAnimalToDisplay: 0
 --- !u!114 &114307444936140400
@@ -15245,6 +15246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectTime: 0.2
+  reacting: 0
   amplitude: 0.2
 --- !u!114 &114959049163309512
 MonoBehaviour:
@@ -18200,7 +18202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224315706655522594

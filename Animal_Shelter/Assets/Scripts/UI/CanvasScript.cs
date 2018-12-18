@@ -47,7 +47,8 @@ public class CanvasScript : MonoBehaviour {
     public TextMeshProUGUI truckText;
     public GameObject mainGameGroup;
 
-    public GameObject noSpaceMessageGroup;
+    public GameObject popUpMessageGroup;
+    public TextMeshProUGUI popUpText;
     public float noSpaceAlphaValue;
     protected Image[] imageChildren;
     protected TextMeshProUGUI[] textChildren;
@@ -73,8 +74,8 @@ public class CanvasScript : MonoBehaviour {
         enteringAnimalButtonObject.SetActive(false);
         enteringAnimalList = new List<Animal>();
 
-        imageChildren = noSpaceMessageGroup.GetComponentsInChildren<Image>();
-        textChildren = noSpaceMessageGroup.GetComponentsInChildren<TextMeshProUGUI>();
+        imageChildren = popUpMessageGroup.GetComponentsInChildren<Image>();
+        textChildren = popUpMessageGroup.GetComponentsInChildren<TextMeshProUGUI>();
         noSpaceAlphaValue = 0.01f;
     }
 
@@ -117,9 +118,12 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
-    public virtual void PopUpNoSpaceMessage() {
-        noSpaceAlphaValue = 1.0f;
-        noSpaceMessageGroup.GetComponent<ScaleReactor>().React();
+    public virtual void PopUpNoSpaceMessage(string message) {
+        if (!popUpMessageGroup.GetComponent<ScaleReactor>().reacting) {
+            noSpaceAlphaValue = 1.0f;
+            popUpText.text = message;
+            popUpMessageGroup.GetComponent<ScaleReactor>().React();
+        }
     }
 
     public virtual void ResolveAnimalRequest(bool accepted) {
@@ -169,14 +173,14 @@ public class CanvasScript : MonoBehaviour {
 
             a.transform.SetParent(GameLogic.instance.animalObjectParent.transform);
             float randomX = Random.Range(300, 1300);
-            float randomY = Random.Range(100, 900);
+            float randomY = Random.Range(0, 460);
 
             a.transform.localPosition = new Vector3(randomX, randomY, 0);
 
             GameLogic.instance.shelterAnimals.Add(enteringAnimalDisplayer.selectedAnimalInList);
             return true;
         }
-        PopUpNoSpaceMessage();
+        PopUpNoSpaceMessage("El refugio esta lleno");
         return false;
     }
 
