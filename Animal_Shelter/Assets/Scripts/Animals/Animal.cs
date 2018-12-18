@@ -29,10 +29,10 @@ public class Animal : MonoBehaviour {
     public ESPECIE especie;
     public bool hambriento;
 
-    Vector3 prevPosition;
-    Transform initialParent;
-    Canvas canvas;
-    AnimalMovement animalMov;
+    public Vector3 prevPosition;
+    public Transform initialParent;
+    public Canvas canvas;
+    public AnimalMovement animalMov;
 
     public void StartStats() {
         size = (SIZE)Random.Range(0, (int)SIZE.LENGTH);
@@ -359,6 +359,7 @@ public class Animal : MonoBehaviour {
 
     public void AnimalClicked() {
         prevPosition = this.transform.localPosition;
+        initialParent = this.transform.parent;
         this.transform.parent = canvas.gameObject.transform;
         this.transform.localPosition = Vector3.zero;
         if(animalMov == null) {
