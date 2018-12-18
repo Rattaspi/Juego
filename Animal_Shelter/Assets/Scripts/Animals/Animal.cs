@@ -46,6 +46,18 @@ public class Animal : MonoBehaviour {
         //salud [0, 100]
         ComputeNewState();
 
+        switch (size) {
+            case SIZE.SMALL:
+                gastoComida = 2;
+                break;
+            case SIZE.MEDIUM:
+                gastoComida = 4;
+                break;
+            case SIZE.BIG:
+                gastoComida = 6;
+                break;
+        }
+
         //confort [0,20]
         switch (confort) {
             case CONFORT.COMODO:

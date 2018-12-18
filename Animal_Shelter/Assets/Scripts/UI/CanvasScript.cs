@@ -52,8 +52,8 @@ public class CanvasScript : MonoBehaviour {
     public float noSpaceAlphaValue;
     protected Image[] imageChildren;
     protected TextMeshProUGUI[] textChildren;
-
-
+    public GameObject reputationMedalsHolder;
+    public Image[] medals;
     public  int indexAnimalToDisplay;
     // Use this for initialization
     void Start() {
@@ -77,6 +77,52 @@ public class CanvasScript : MonoBehaviour {
         imageChildren = popUpMessageGroup.GetComponentsInChildren<Image>();
         textChildren = popUpMessageGroup.GetComponentsInChildren<TextMeshProUGUI>();
         noSpaceAlphaValue = 0.01f;
+        if (reputationMedalsHolder != null) {
+            medals = reputationMedalsHolder.GetComponentsInChildren<Image>();
+        }
+    }
+
+    void UpdateMedals() {
+
+
+        for(int i = 0; i < medals.Length; i++) {
+            if (GameLogic.instance.reputation >= (i + 1) * 10) {
+                medals[i].fillAmount = 1;
+            } else {
+                medals[i].fillAmount = (GameLogic.instance.reputation - (i * 10)) / 10;
+            }
+        }
+
+        //if (GameLogic.instance.reputation > 10) {
+        //    medals[0].fillAmount = 1;
+        //} else {
+
+        //}
+        //if (GameLogic.instance.reputation > 20) {
+        //    medals[1].fillAmount = 1;
+
+        //} else {
+        //    medals[1].fillAmount = (float)((GameLogic.instance.reputation % 10) / 10);
+        //}
+        //if (GameLogic.instance.reputation > 30) {
+        //    medals[2].fillAmount = 1;
+
+        //} else {
+        //    medals[2].fillAmount = (float)((GameLogic.instance.reputation % 10) / 10);
+        //}
+        //if (GameLogic.instance.reputation > 40) {
+        //    medals[3].fillAmount = 1;
+
+        //} else {
+        //    medals[3].fillAmount = (float)((GameLogic.instance.reputation%10)/10);
+        //}
+
+        //if (GameLogic.instance.reputation == 50) {
+        //    medals[4].fillAmount = 1;
+        //} else {
+        //    medals[4].fillAmount = (float)((GameLogic.instance.reputation % 10) / 10);
+        //}
+
     }
 
     public virtual void SetDisplayIndex(int index) {
@@ -211,7 +257,7 @@ public class CanvasScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        UpdateMedals();
         amountOfAnimalsFeedBackText.text = GameLogic.instance.shelterAnimals.Count.ToString() + "/" + GameLogic.instance.currentAnimalCapacity;
 
         if (noSpaceAlphaValue > 0) {
