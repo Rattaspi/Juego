@@ -379,11 +379,14 @@ public class CanvasScript : MonoBehaviour {
             declineButton.onClick.RemoveAllListeners();
             eventTitle.text = e.GetTitle();
             eventDescription.text = e.GetDescription();
-            acceptButton.GetComponentInChildren<Text>().text = e.GetAcceptText();
-            declineButton.GetComponentInChildren<Text>().text = e.GetDeclineText();
+            acceptButton.GetComponentInChildren<TextMeshProUGUI>().text = e.GetAcceptText();
+            declineButton.GetComponentInChildren<TextMeshProUGUI>().text = e.GetDeclineText();
 
             if (e.GetCanBeAccepted()) {
                 acceptButton.onClick.AddListener(() => e.OnAccept());
+                if (TutorialOverrider.instance != null) {
+                    acceptButton.onClick.AddListener(() => TutorialOverrider.instance.GoToNextEvent());
+                }
             }
 
             if (e.GetCanBeDenied()) {

@@ -339,6 +339,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73074499}
   m_CullTransparentMesh: 0
+--- !u!114 &155447706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114904450570251292, guid: ded1ee3f267f92b4e84e75572cbf9cbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1251447782}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &157841799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1018,7 @@ MonoBehaviour:
   resourceManagementWindow: {fileID: 1694849101}
   animalEntranceButton: {fileID: 551337321}
   acceptAnimalButton: {fileID: 554601359}
+  acceptEventButton: {fileID: 155447706}
   resourceManagementButton: {fileID: 1717957492}
   endWeekButton: {fileID: 2007295851}
   toggleGas: {fileID: 473176984}

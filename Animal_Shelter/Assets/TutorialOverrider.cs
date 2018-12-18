@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class TutorialOverrider : MonoBehaviour {
-    public enum ElementToHighlight { NONE, MANAGEMENT_BUTTON, MONEY_ICON, WEEK_TIMER, ENTRANCE_BUTTON, ACCEPT_BUTTON, ANIMAL_ENTRANCE, SMALL_TOGGLE_PUBLICITY, HUNGER_INDICATOR_ENTERING, SMALL_FOOD_TOGGLE, ACCEPTED_ANIMAL, FEED_BUTTON, HAPPINESS_INDICATOR, SMALL_TOGGLE_GAS, ACCEPT_EVENT_BUTTON, ALL_ENTRANCES, SICK_ANIMAL, HEAL_BUTTON, ADOPTER, GIVE_AWAY, REPUTATION, TOTAL_EXPENSE }
+    public enum ElementToHighlight { NONE, MANAGEMENT_BUTTON, MONEY_ICON, WEEK_TIMER, ENTRANCE_BUTTON, ACCEPT_BUTTON, ANIMAL_ENTRANCE, SMALL_TOGGLE_PUBLICITY, HUNGER_INDICATOR_ENTERING, SMALL_FOOD_TOGGLE, ACCEPTED_ANIMAL, FEED_BUTTON, HAPPINESS_INDICATOR, SMALL_TOGGLE_GAS, ACCEPT_EVENT_BUTTON, ALL_ENTRANCES, SICK_ANIMAL, HEAL_BUTTON, ADOPTER, GIVE_AWAY, GIVE_AWAY_ACCEPT, GIVE_AWAY_CONFIRM, REPUTATION, TOTAL_EXPENSE }
     public static TutorialOverrider instance;
     public bool enabled;
     public bool displayingText;
@@ -30,11 +30,15 @@ public class TutorialOverrider : MonoBehaviour {
     public GameObject resourceManagementWindow;
     public Button animalEntranceButton;
     public Button acceptAnimalButton;
+    public Button acceptEventButton;
     public Button resourceManagementButton;
     public Button endWeekButton;
     public Toggle toggleGas;
     public Toggle toggleFood;
     public Toggle togglePublicity;
+
+    GameObject adoptanteObject;
+    Adoptante adoptante;
 
     //Bool guarro para hacer do Once en los eventos de tutorial
     public bool booleanOnce;
@@ -73,7 +77,18 @@ public class TutorialOverrider : MonoBehaviour {
                 SetPosWidthHeight(botImage, 0, 0, 0, 0, 0);
                 SetPosWidthHeight(topImage, 0, 0, 0, 0, 0);
                 break;
-
+            case ElementToHighlight.GIVE_AWAY_ACCEPT:
+                SetPosWidthHeight(leftImage, -319.2f, 0, 0, 1281.6f, 1080);
+                SetPosWidthHeight(rightImage, 724.17f, 0, 0, 471.55f, 1080);
+                SetPosWidthHeight(botImage, 404.97f, -432.9f, 0, 166.75f, 214.3f);
+                SetPosWidthHeight(topImage, 405, 200.5f, 0, 166.8f, 678.9f);
+                break;
+            case ElementToHighlight.GIVE_AWAY_CONFIRM:
+                SetPosWidthHeight(leftImage, -147.4f, 0, 0, 1625.2f, 1080);
+                SetPosWidthHeight(rightImage, 865.5f, 0, 0, 188.9f, 1080);
+                SetPosWidthHeight(botImage, 718.13f, -361.3f, 0, 105.88f, 357.5f);
+                SetPosWidthHeight(topImage, 718.13f, 238.5f, 0, 105.88f, 603f);
+                break;
             case ElementToHighlight.ENTRANCE_BUTTON:
                 Debug.Log("Highlight");
                 SetPosWidthHeight(leftImage, -173.92f, 0, 0, 1572.3f, 1080);
@@ -175,8 +190,8 @@ public class TutorialOverrider : MonoBehaviour {
                 break;
             case ElementToHighlight.SMALL_TOGGLE_GAS:
 
-                SetPosWidthHeight(leftImage, -597.09f, 0, 726.32f, 0, 1080);
-                SetPosWidthHeight(rightImage, 470.21f, -84.59998f, 0, 979.5f, 910.8f);
+                SetPosWidthHeight(leftImage, -596.96f, 0,0, 726.07f, 1080);
+                SetPosWidthHeight(rightImage, 470.21f, -298.52f, 0, 979.5f, 482.95f);
                 SetPosWidthHeight(botImage, -126.74f, -374.5f, 0, 214.4f, 332);
                 SetPosWidthHeight(topImage, 363.02f, 241.5f, 0, 1193.9f, 597.1f);
 
@@ -192,12 +207,37 @@ public class TutorialOverrider : MonoBehaviour {
             case ElementToHighlight.ALL_ENTRANCES:
                 break;
             case ElementToHighlight.SICK_ANIMAL:
+
+                SetPosWidthHeight(leftImage, -735.8f, 0, 0, 448.5f, 1080);
+                SetPosWidthHeight(rightImage, 308.6f, 0, 0, 1303, 1080);
+                SetPosWidthHeight(botImage, -427.25f, -341.8f, 0, 168.7f, 396.5f);
+                SetPosWidthHeight(topImage, -113.71f, 319.1f, 0, 795.8f, 441.6f);
+
                 break;
             case ElementToHighlight.HEAL_BUTTON:
+
+                SetPosWidthHeight(leftImage, -580.37f, 0, 0, 759.25f, 1080);
+                SetPosWidthHeight(rightImage, 430.02f, 0, 0, 1059.9f, 1080);
+                SetPosWidthHeight(botImage, -150.34f, 164.3f, 0, 100.82f, 751.5f);
+                SetPosWidthHeight(topImage, -150.34f, -402.77f, 0, 100.8f, 274.46f);
+
                 break;
             case ElementToHighlight.ADOPTER:
+
+                SetPosWidthHeight(leftImage, -648.3f, 0, 0, 623.4f, 1080);
+                SetPosWidthHeight(rightImage, 446.62f, 0, 0, 1026.7f, 1080);
+                SetPosWidthHeight(botImage, -201.67f, -141.12f, 0, 269.9f, 797.75f);
+                SetPosWidthHeight(topImage, -201.67f, 528.4f, 0, 269.87f, 23.1f);
+
+                
                 break;
             case ElementToHighlight.GIVE_AWAY:
+
+                SetPosWidthHeight(leftImage, -480, 0, 0, 960, 1080);
+                SetPosWidthHeight(rightImage, 656.3f, 0, 0, 607.3f, 1080);
+                SetPosWidthHeight(botImage, 176.32f, -432.9f, 0, 352.7f, 214.3f);
+                SetPosWidthHeight(topImage, 176.32f, 171.98f, 0, 352.7f, 735.95f);
+
                 break;
             case ElementToHighlight.REPUTATION:
 
@@ -246,6 +286,7 @@ public class TutorialOverrider : MonoBehaviour {
         acceptAnimalButton.onClick.AddListener(() => GoToNextEvent());
         resourceManagementButton.onClick.AddListener(() => GoToNextEvent());
         endWeekButton.onClick.AddListener(() => GoToNextEvent());
+        acceptEventButton.onClick.AddListener(()=>GoToNextEvent());
 
         toggleGas.onValueChanged.AddListener(delegate {
             GoToNextEvent();
@@ -851,6 +892,7 @@ IEnumerator ShowBubble() {
                 case 36:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.WEEK_TIMER);
+                        GameLogic.instance.timeOfEntry = GameLogic.instance.maxTimeOfEntry;
                         currentText = "Vayamos a la siguiente";
                         StartCoroutine(DisplayText());
                     } else {
@@ -864,6 +906,7 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.ACCEPT_EVENT_BUTTON);
                         currentText = "Vaya! Parece que alguien ha conseguido algo de dinero. Muy bien hecho! Esto nos ayudará a salir a flote…";
                         StartCoroutine(DisplayText());
+                        //acceptEventButton.onClick.AddListener(() => GoToNextEvent());
                     } else {
                         //Resaltar boton aceptar evento
                         PressEnterOrSpace(false);
@@ -875,6 +918,20 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.ENTRANCE_BUTTON);
                         currentText = "Recuerda que los animales que rescatamos de las calles todavía están en la furgoneta! Vamos a echarles un vistazo";
                         StartCoroutine(DisplayText());
+
+                        CanvasScript.canvasScript.AddEnteringAnimal();
+                        CanvasScript.canvasScript.AddEnteringAnimal();
+
+                        CanvasScript.canvasScript.enteringAnimalList[0].edad = Animal.EDAD.CACHORRO;
+                        CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
+                        CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
+                        CanvasScript.canvasScript.enteringAnimalList[0].hambre = 15;
+
+                        CanvasScript.canvasScript.enteringAnimalList[1].edad = Animal.EDAD.CACHORRO;
+                        CanvasScript.canvasScript.enteringAnimalList[1].estado = Animal.ESTADO.ENFERMO;
+                        CanvasScript.canvasScript.enteringAnimalList[1].salud = 35;
+                        CanvasScript.canvasScript.enteringAnimalList[1].hambre = 15;
+
                     } else {
                         //Resaltar botón entrada animales
                         PressEnterOrSpace(false);
@@ -883,11 +940,12 @@ IEnumerator ShowBubble() {
                     break;
                 case 39:
                     if (!displayingText) {
-                        HighlightElement(ElementToHighlight.ALL_ENTRANCES);
+
+                        HighlightElement(ElementToHighlight.ACCEPT_BUTTON);
                         currentText = "Vaya! Mira cuantos nuevos amigos! Vamos a prepararles unas camas y dejarles entrar";
                         StartCoroutine(DisplayText());
                     } else {
-                        PressEnterOrSpace(true);
+                        PressEnterOrSpace(false);
                     }
                     break;
                 //case 40:
@@ -901,6 +959,27 @@ IEnumerator ShowBubble() {
                 //    break;
                 case 40:
                     if (!displayingText) {
+
+                        HighlightElement(ElementToHighlight.ACCEPT_BUTTON);
+                        textDisplayer.text = currentText;
+                        currentText = "Menos mal que por ahora nos caben todos!";
+                        StartCoroutine(DisplayText());
+                    } else {
+                        PressEnterOrSpace(false);
+                    }
+                    break;
+                case 41:
+                    if (!displayingText) {
+
+                        if (GameLogic.instance.shelterAnimals[1].transform.localPosition.x != 989 || GameLogic.instance.shelterAnimals[1].transform.localPosition.y != 282) {
+                            GameLogic.instance.shelterAnimals[1].transform.localPosition = new Vector2(989, 282);
+                        }
+
+                        if (GameLogic.instance.shelterAnimals[2].transform.localPosition.x != 532 || GameLogic.instance.shelterAnimals[2].transform.localPosition.y != 527) {
+                            GameLogic.instance.shelterAnimals[2].transform.localPosition = new Vector2(532, 527);
+                        }
+
+
                         HighlightElement(ElementToHighlight.SICK_ANIMAL);
                         currentText = "Oh! Resulta que uno de ellos está algo enfermo, veamos qué podemos hacer…";
                         StartCoroutine(DisplayText());
@@ -910,7 +989,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 41:
+                case 42:
 
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.HEAL_BUTTON);
@@ -925,7 +1004,7 @@ IEnumerator ShowBubble() {
                     break;
 
 
-                case 42:
+                case 43:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Bien hecho! Está como una rosa";
@@ -934,23 +1013,40 @@ IEnumerator ShowBubble() {
                         PressEnterOrSpace(true);
                     }
                     break;
-                case 43:
+                case 44:
                     if (!displayingText) {
+
+                        adoptanteObject = new GameObject();
+                        adoptanteObject.AddComponent<RectTransform>();
+                        adoptante = adoptanteObject.AddComponent<Adoptante>();
+                        adoptante.transform.SetParent(CanvasScript.canvasScript.gameObject.transform);
+                        //adoptante.GetComponent<MovementAdoptante>().enabled = false;
+                        adoptanteObject.transform.localPosition = new Vector3(-205, 396);
+
                         HighlightElement(ElementToHighlight.ADOPTER);
                         currentText = "Oh vaya! Parece que tenemos visita!";
                         StartCoroutine(DisplayText());
                     } else {
+                        if(adoptanteObject.transform.localPosition != new Vector3(-205, 396)) {
+                            adoptante.transform.localPosition = new Vector3(-205, 396);
+                        }
+
+                        if (adoptante.GetComponentInChildren<MovementAdoptante>() != null) {
+                            if(adoptante.GetComponentInChildren<MovementAdoptante>().enabled){
+                                adoptante.GetComponentInChildren<MovementAdoptante>().enabled = false;
+                            }
+                        }
                         //Generar adoptante
                         //Resaltar adoptante
                         PressEnterOrSpace(false);
 
                     }
                     break;
-                case 44:
+                case 45:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.GIVE_AWAY);
 
-                        currentText = "Le echaremos de menos, pero al fin y al cabo es nuestra función, debemos cuidar de ellos hasta que encuentren un hogar mejor.Despídete de él, seguro que será muy feliz";
+                        currentText = "Parece que "+adoptante.adopterName + " es un buen cantidato para llevarse a " + GameLogic.instance.shelterAnimals[0].nombre;
                         StartCoroutine(DisplayText());
                     } else {
                         //Resaltar botón entregar
@@ -958,7 +1054,35 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 45:
+                case 46:
+
+                    if (!displayingText) {
+                        HighlightElement(ElementToHighlight.GIVE_AWAY_ACCEPT);
+
+                        currentText = "Le echaremos de menos, pero al fin y al cabo es nuestra función, debemos cuidar de ellos hasta que encuentren un hogar mejor.";
+                        StartCoroutine(DisplayText());
+                    } else {
+                        //Resaltar botón entregar
+                        PressEnterOrSpace(false);
+
+                    }
+
+                    break;
+                case 47:
+
+                    if (!displayingText) {
+                        HighlightElement(ElementToHighlight.GIVE_AWAY_CONFIRM);
+
+                        currentText = "Despídete de " + GameLogic.instance.shelterAnimals[0].nombre + ", seguro que será muy feliz";
+                        StartCoroutine(DisplayText());
+                    } else {
+                        //Resaltar botón entregar
+                        PressEnterOrSpace(false);
+
+                    }
+
+                    break;
+                case 48:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "No te pongas triste, él estaba muy agradecido por lo que has hecho por él, has hecho feliz a un animal y has hecho feliz a un humano.";
@@ -968,7 +1092,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 46:
+                case 49:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.REPUTATION);
                         currentText = "Vaya! Además, parece que el adoptante ha recomendado el refugio a algunos conocidos, nuestra reputación ha aumentado.";
@@ -979,7 +1103,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 47:
+                case 50:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Esto nos ayudará, haciendo que venga más gente.";
@@ -989,7 +1113,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 48:
+                case 51:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "¡Ahora que lo recuerdo! Podemos hacer algo más para hacer que venga gente";
@@ -999,7 +1123,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 49:
+                case 52:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.MANAGEMENT_BUTTON);
 
@@ -1010,7 +1134,7 @@ IEnumerator ShowBubble() {
                         //Resaltar boton gastos
                     }
                     break;
-                case 50:
+                case 53:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.SMALL_TOGGLE_PUBLICITY);
                         currentText = "Vamos a hacer algo de publicidad";
@@ -1020,9 +1144,9 @@ IEnumerator ShowBubble() {
                         //Resaltar gasto mínimo de publicidad
                     }
                     break;
-                case 51:
+                case 54:
                     if (!displayingText) {
-                        HighlightElement(ElementToHighlight.SMALL_TOGGLE_PUBLICITY);
+                        HighlightElement(ElementToHighlight.NONE);
 
                         currentText = "Nos aseguraremos de que vengan más adoptantes durante la semana que viene";
                         StartCoroutine(DisplayText());
@@ -1030,29 +1154,31 @@ IEnumerator ShowBubble() {
                         PressEnterOrSpace(true);
                     }
                     break;
-                case 52:
+                case 55:
                     if (!displayingText) {
+                        resourceManagementWindow.SetActive(true);
                         HighlightElement(ElementToHighlight.TOTAL_EXPENSE);
 
                         currentText = "Ten en cuenta que cuantos más inquilinos tengas, más gastos básicos tendrás durante cada semana, esto incluye cosas como la limpieza, el agua, comprar juguetes, etc";
                         StartCoroutine(DisplayText());
                     } else {
-                        PressEnterOrSpace(false);
+                        PressEnterOrSpace(true);
                         //Resaltar gasto fijo
                     }
                     break;
-                case 53:
+                case 56:
                     if (!displayingText) {
+                        resourceManagementWindow.SetActive(false);
                         HighlightElement(ElementToHighlight.MONEY_ICON);
 
                         currentText = "Por lo que deberás tener cuidado en la forma que gastas el dinero";
                         StartCoroutine(DisplayText());
                     } else {
-                        PressEnterOrSpace(false);
+                        PressEnterOrSpace(true);
                         //Resaltar indicador dineros
                     }
                     break;
-                case 54:
+                case 57:
                     if (!displayingText) {
                         //HighlightElement(ElementToHighlight.);
                         HighlightElement(ElementToHighlight.NONE);
@@ -1060,10 +1186,10 @@ IEnumerator ShowBubble() {
                         StartCoroutine(DisplayText());
                     } else {
                         //Resaltar toggle gasolina
-                        PressEnterOrSpace(false);
+                        PressEnterOrSpace(true);
                     }
                     break;
-                case 55:
+                case 58:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Aunque decidas no salir a buscar animales, de vez en cuando aparecerá alguno en la puerta del refugio";
@@ -1073,7 +1199,7 @@ IEnumerator ShowBubble() {
 
                     }
                     break;
-                case 56:
+                case 59:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Pero es posible que haya un momento que necesitemos tener una entrada frecuente de inquilinos para poder satisfacer a los adoptantes";
@@ -1083,20 +1209,17 @@ IEnumerator ShowBubble() {
                         PressEnterOrSpace(true);
                     }
                     break;
-                case 57:
+                case 60:
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Ahora que ya sabes como funciona el refugio, te dejo al mando y me voy a dormir, Buena suerte!";
+                        SceneManager.LoadScene(2);
                         StartCoroutine(DisplayText());
                     } else {
                         PressEnterOrSpace(true);
                         //Resaltar indicador dineros
                     }
                     break;
-
-
-
-
 
             }
         }
