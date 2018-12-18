@@ -84,12 +84,7 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void ResolveAnimalRequest(bool accepted) {
-        if (accepted) {
             CanvasScript.canvasScript.ResolveAnimalRequest(accepted);
-        } else {
-            CanvasScript.canvasScript.ResolveAnimalRequest(accepted);
-
-        }
     }
 
     void Pause() {

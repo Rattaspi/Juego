@@ -282,10 +282,20 @@ public class Animal : MonoBehaviour {
         } else {
             estado = ESTADO.SALUDABLE;
         }
+
+        if (salud <= 0){
+            Die();
+        }
+
     }
 
 
-    
+    void Die() {
+        CanvasScript.canvasScript.PopUpNoSpaceMessage(nombre + " ha muerto!");
+        GameLogic.instance.reputation -= 0.3f;
+        GameLogic.instance.RemoveAnimal(this);
+
+    }
 
     public static GameObject MakeARandomAnimal() {
         GameObject animalObject = new GameObject();

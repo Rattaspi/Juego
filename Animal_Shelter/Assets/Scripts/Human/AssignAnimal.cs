@@ -77,7 +77,7 @@ public class AssignAnimal : MonoBehaviour {
     }
 
     private void OnDisable() {
-        this.transform.parent = graphics.transform;
+        //this.transform.parent = graphics.transform;
     }
 
     void UpdateAnimalDisplayedInfo() {
@@ -168,6 +168,8 @@ public class AssignAnimal : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         graphicRaycaster.enabled = true;
         GameLogic.instance.RemoveAnimal(currentAnimal);
+        GameLogic.instance.money += 50;
+        GameLogic.instance.reputation += 0.1f;
         Destroy(adoptante.gameObject);
         Destroy(this.gameObject);
     }

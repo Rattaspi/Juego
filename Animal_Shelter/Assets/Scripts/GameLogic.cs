@@ -57,7 +57,7 @@ public class GameLogic : MonoBehaviour {
     public float currentGasExpense;
     public float currentPublicityExpense;
     public float currentInstalationsExpense;
-
+    float timeForNextAdopter;
 
     public ToggleScript.ToggleType foodToBuy;
     public ToggleScript.ToggleType expensesToPay;
@@ -84,6 +84,15 @@ public class GameLogic : MonoBehaviour {
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
+    }
+
+    void AddAdopter() {
+        GameObject adoptanteObject = new GameObject();
+        Adoptante adoptante;
+        adoptanteObject.AddComponent<RectTransform>();
+        adoptante = adoptanteObject.AddComponent<Adoptante>();
+        adoptante.transform.SetParent(CanvasScript.canvasScript.gameObject.transform);
+        //adoptante.GetComponent<MovementAdoptante>().enabled = false;
     }
 
     void Awake() {
@@ -191,8 +200,13 @@ public class GameLogic : MonoBehaviour {
         maxTimeForNewAdopter = 15;
         timeOfEntry = 0;
         timeForNextAnimal = 0;
+        
         int timeToAdd = Random.Range(3, 9);
         timeForNextAnimal += timeToAdd;
+        timeToAdd = Random.Range(6, 15);
+
+        timeForNextAdopter = timeToAdd;
+
         Instalation baseInstalation = new Instalation(100, "Base");
         instalations.Add(baseInstalation);
         cleanupToDo = ToggleScript.ToggleType.BIG;
@@ -202,7 +216,8 @@ public class GameLogic : MonoBehaviour {
         if (SceneManager.GetActiveScene().buildIndex == 2) {
             FaderScript.instance.unFade = true;
         }
-        
+        reputation = 10.0f;
+
 
     }
 
@@ -275,6 +290,8 @@ public class GameLogic : MonoBehaviour {
                             GameTime.Pause();
                         }
 
+
+
                         if (timeOfEntry < maxTimeOfEntry) {
                             timeOfEntry += GameTime.deltaTime;
                             if (timeOfEntry > timeForNextAnimal) {
@@ -282,6 +299,14 @@ public class GameLogic : MonoBehaviour {
                                 timeForNextAnimal += timeToAdd;
                                 CanvasScript.canvasScript.AddEnteringAnimal();
                             }
+
+
+                            if (timeOfEntry > timeForNextAdopter&&TutorialOverrider.instance==null) {
+                                int timeToAdd = Random.Range(5, maxTimeForNewAdopter);
+                                timeForNextAdopter += timeToAdd;
+                                AddAdopter();
+                            }
+
                             if (timeOfEntry > maxTimeOfEntry) {
                                 timeOfEntry = maxTimeOfEntry;
                             }
@@ -315,6 +340,15 @@ public class GameLogic : MonoBehaviour {
                     break;
             }
         }
+
+        if (reputation <= 0) {
+            GameOver();
+        }
+
+    }
+
+    public void GameOver() {
+        SceneManager.LoadScene(0);
     }
 
     void ApplyAnimalUpdates(){
