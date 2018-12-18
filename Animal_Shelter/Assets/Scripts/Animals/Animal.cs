@@ -137,7 +137,7 @@ public class Animal : MonoBehaviour {
     }
 
     private void Start() {
-        //StartStats();
+        StartStats();
         this.gameObject.tag = "animal";
         if (TutorialOverrider.instance == null) {
             this.gameObject.AddComponent<AnimalMovement>();
@@ -158,6 +158,10 @@ public class Animal : MonoBehaviour {
         //print(s);
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) DisableOnClickingAway(true);
+    }
+
     void CreateBody() {
         //CREATE THE BODY ELEMENTS
         transform.localPosition = Vector3.zero;
@@ -173,7 +177,6 @@ public class Animal : MonoBehaviour {
     }
 
     public void DisableOnClickingAway(bool b) {
-        print("CALLED");
         animalGraphics.clickAwayDisables = b;
     }
 }
