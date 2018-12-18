@@ -723,7 +723,13 @@ public class GameLogic : MonoBehaviour {
                 CanvasScript.canvasScript.PopUpNoSpaceMessage("Has de esperar un poco");
             }
         } else{
-            CanvasScript.canvasScript.PopUpNoSpaceMessage("Hay animales esperando");
+            if (CanEndWeek()) {
+                gameState = GameState.ENDWEEK;
+                CanvasScript.canvasScript.PopUpNoSpaceMessage( CanvasScript.canvasScript.enteringAnimalList.Count + " animales que esperaban se fueron");
+                CanvasScript.canvasScript.KickAnimals();
+            } else {
+                CanvasScript.canvasScript.PopUpNoSpaceMessage("Has de esperar un poco");
+            }
         }
     }
 

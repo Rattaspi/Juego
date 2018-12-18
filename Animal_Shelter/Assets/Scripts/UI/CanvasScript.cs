@@ -82,6 +82,14 @@ public class CanvasScript : MonoBehaviour {
         }
     }
 
+    public void KickAnimals() {
+        foreach (Animal a in enteringAnimalList) {
+            GameLogic.instance.reputation -= 0.5f;
+            Destroy(a.gameObject);
+        }
+        enteringAnimalList.Clear();
+    }
+
     void UpdateMedals() {
 
 
