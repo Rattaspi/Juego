@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SacrificeLogic : MonoBehaviour {
     [SerializeField] Transform animalPosition;
-    [SerializeField] FaderScript fader;
+    //[SerializeField] FaderScript fader;
     [SerializeField] GameObject mouseSyringe;
     [SerializeField] GraphicRaycaster graphicRaycaster;
     GameObject animalDisplayed;
@@ -22,7 +22,7 @@ public class SacrificeLogic : MonoBehaviour {
             i.ForcePaint(animalSacr.color);
         }
 
-        StartCoroutine(fader.UnFade());
+        StartCoroutine(FaderScript.instance.UnFade());
     }
 
     public void SacrificeClick() {
@@ -41,8 +41,8 @@ public class SacrificeLogic : MonoBehaviour {
             yield return null;
         }
         group.alpha = 0.0f;
-        StartCoroutine(fader.Fade());
-        while (fader.doing) {
+        StartCoroutine(FaderScript.instance.Fade());
+        while (FaderScript.instance.doing) {
             yield return null;
         }
         Destroy(animalDisplayed);
@@ -50,6 +50,8 @@ public class SacrificeLogic : MonoBehaviour {
         GameLogic.instance.animalToSacrifice = null;
         graphicRaycaster.enabled = true;
         yield return new WaitForSeconds(1.0f);
+        FaderScript.instance.unFade = true;
         this.gameObject.SetActive(false);
+
     }
 }
