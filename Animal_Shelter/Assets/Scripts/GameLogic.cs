@@ -67,11 +67,7 @@ public class GameLogic : MonoBehaviour {
     //Stores all the animal prefabs to avoid loading from resources every time.
     [HideInInspector] public GameObject[] animalGraphics;
 
-    //It has to be stored in playerprefs
-    //  0 = true
-    //  1 = false
-    bool firstTimePlayed = true;
-    string firstTimePlayedKey = "firstTimePlayed";
+    [HideInInspector] public Animal animalToSacrifice;
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
@@ -85,39 +81,6 @@ public class GameLogic : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
-    }
-
-    IEnumerator SetAnimalObjectParentToCanvas() {
-        while (CanvasScript.canvasScript == null) {
-            yield return null;
-        }
-        animalObjectParent = new GameObject();
-        animalObjectParent.name = "Animals";
-        animalObjectParent.transform.parent = CanvasScript.canvasScript.mainGameGroup.transform;
-        animalObjectParent.transform.SetSiblingIndex(2);
-        //animalObjectParent.transform.();
-    }
-
-    void Start() {
-        //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
-        StartVariables();
-        medicinePrice = 20.0f;
-        currentEventIndex = 0;
-        foodPrice = 1.0f;
-        gasPrice = 1.0f;
-        publictyPrice = 1.0f;
-        cleanUpCost = 100.0f;
-        maxTimeOfEntry = 60;
-        timeOfEntry = 0;
-        timeForNextAnimal = 0;
-        int timeToAdd = Random.Range(3, 9);
-        timeForNextAnimal += timeToAdd;
-        Instalation baseInstalation = new Instalation(100, "Base");
-        instalations.Add(baseInstalation);
-        cleanupToDo = ToggleScript.ToggleType.BIG;
-        expensesToPay = ToggleScript.ToggleType.BIG;
-        StartCoroutine(GameTime.unBlockPause());
-        //GameTime.pauseBlocked = false;
 
         //Array which stores all the animal graphics prefabs
         //They are stored in the enum order so you can access it using the enum integer
@@ -167,8 +130,40 @@ public class GameLogic : MonoBehaviour {
             }
 
         }
+    }
 
-        firstTimePlayed = PlayerPrefs.GetInt(firstTimePlayedKey) == 0;
+    IEnumerator SetAnimalObjectParentToCanvas() {
+        while (CanvasScript.canvasScript == null) {
+            yield return null;
+        }
+        animalObjectParent = new GameObject();
+        animalObjectParent.name = "Animals";
+        animalObjectParent.transform.parent = CanvasScript.canvasScript.mainGameGroup.transform;
+        animalObjectParent.transform.SetSiblingIndex(2);
+        //animalObjectParent.transform.();
+    }
+
+    void Start() {
+        //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
+        StartVariables();
+        medicinePrice = 20.0f;
+        currentEventIndex = 0;
+        foodPrice = 1.0f;
+        gasPrice = 1.0f;
+        publictyPrice = 1.0f;
+        cleanUpCost = 100.0f;
+        maxTimeOfEntry = 60;
+        timeOfEntry = 0;
+        timeForNextAnimal = 0;
+        int timeToAdd = Random.Range(3, 9);
+        timeForNextAnimal += timeToAdd;
+        Instalation baseInstalation = new Instalation(100, "Base");
+        instalations.Add(baseInstalation);
+        cleanupToDo = ToggleScript.ToggleType.BIG;
+        expensesToPay = ToggleScript.ToggleType.BIG;
+        StartCoroutine(GameTime.unBlockPause());
+        //GameTime.pauseBlocked = false;
+
     }
 
     public void RemoveAnimal(Animal animal) {

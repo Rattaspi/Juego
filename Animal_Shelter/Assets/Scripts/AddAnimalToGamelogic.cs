@@ -7,9 +7,7 @@ public class AddAnimalToGamelogic : MonoBehaviour {
 
     private void Awake() {
         a = GetComponent<Animal>();
-    }
-
-    void Start () {
         GameLogic.instance.shelterAnimals.Add(a);
-	}
+        GameLogic.instance.animalToSacrifice = a;
+    }
 }

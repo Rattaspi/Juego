@@ -185,6 +185,10 @@ public class Animal : MonoBehaviour {
         return animalObject;
     }
 
+    private void Awake() {
+        StartStats();
+    }
+
     private void Start() {
         //StartStats();
         this.gameObject.tag = "animal";
@@ -199,12 +203,15 @@ public class Animal : MonoBehaviour {
         b.size = new Vector2(100, 200);
         b.isTrigger = true;
 
-
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
         //ME DABA PEREZA HACERLO A MANO :D
         //string s = ""
         //s = s.Replace(" ", "\",\"");
         //print(s);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) DisableOnClickingAway(true);
     }
 
     void CreateBody() {
@@ -222,7 +229,6 @@ public class Animal : MonoBehaviour {
     }
 
     public void DisableOnClickingAway(bool b) {
-        print("CALLED");
         animalGraphics.clickAwayDisables = b;
     }
 }
