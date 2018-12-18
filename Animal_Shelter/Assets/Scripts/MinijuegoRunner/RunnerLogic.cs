@@ -26,7 +26,6 @@ public class RunnerLogic : MonoBehaviour {
 
         if (om == null) Debug.LogError("Obstacle manager from the runner is not referenced");
         if (rac == null) Debug.LogError("RunnerAvatarController not referenced in RunnerLogic");
-
         //Play(difficulty);
 	}
 	
@@ -46,12 +45,17 @@ public class RunnerLogic : MonoBehaviour {
 
             case STATE.GAME:
                 timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
-                if (gameTimer > maxTime) Stop();
-
                 gameTimer += (GameTime.deltaTime / Time.timeScale);
+
+                if (gameTimer > maxTime) {
+                    state = STATE.END;
+                }
+
                 break;
 
             case STATE.END:
+                GameLogic.instance.money += gameTimer * 2;
+                Stop();
                 break;
         }
 	}
@@ -81,6 +85,10 @@ public class RunnerLogic : MonoBehaviour {
         run = false;
         om.Stop();
         rac.SetInputBlocked(true);
+        state = STATE.START;
+        gameObject.SetActive(false);
+        GameLogic.instance.gameState = GameLogic.GameState.WEEKSTART;
+
     }
 
     public void Restart() {

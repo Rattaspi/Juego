@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public static class GameTime {
     public static bool isPaused;
@@ -31,7 +32,7 @@ public class GameLogic : MonoBehaviour {
     //Singleton
     public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME, MAINMENU };
     public bool miniGameStarted;
-    public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN};
+    public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN, NULL};
     public MINIGAME miniGameToPlay;
     public RunnerLogic.DIFFICULTY dificultyToUse;
     public static GameLogic instance;
@@ -88,12 +89,19 @@ public class GameLogic : MonoBehaviour {
             StartCoroutine(SetAnimalObjectParentToCanvas());
             pouLogic = FindObjectOfType<PouLogic>();
             runnerLogic = FindObjectOfType<RunnerLogic>();
-            templeRunLogic = FindObjectOfType<TempleRunLogic>();
+            //templeRunLogic = FindObjectOfType<TempleRunLogic>();
+            //templeRunLogic.gameObject.SetActive(false);
+            pouLogic.gameObject.SetActive(false);
+            runnerLogic.gameObject.SetActive(false);
+
             DontDestroyOnLoad(gameObject);
         } else {
             instance.pouLogic = FindObjectOfType<PouLogic>();
             instance.runnerLogic = FindObjectOfType<RunnerLogic>();
             instance.templeRunLogic = FindObjectOfType<TempleRunLogic>();
+            instance.templeRunLogic.gameObject.SetActive(false);
+            instance.pouLogic.gameObject.SetActive(false);
+            instance.runnerLogic.gameObject.SetActive(false);
             Destroy(gameObject);
         }
 
@@ -160,6 +168,7 @@ public class GameLogic : MonoBehaviour {
 
     void Start() {
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
+        miniGameToPlay = MINIGAME.NULL;
         StartVariables();
         medicinePrice = 20.0f;
         currentEventIndex = 0;
@@ -178,6 +187,10 @@ public class GameLogic : MonoBehaviour {
         expensesToPay = ToggleScript.ToggleType.BIG;
         StartCoroutine(GameTime.unBlockPause());
         //GameTime.pauseBlocked = false;
+        if (SceneManager.GetActiveScene().buildIndex == 2) {
+            FaderScript.instance.unFade = true;
+        }
+        
 
     }
 
@@ -213,17 +226,21 @@ public class GameLogic : MonoBehaviour {
                                 break;
                             case MINIGAME.POU:
                                 if (pouLogic != null) {
+                                    pouLogic.gameObject.SetActive(true);
                                     pouLogic.Play(dificultyToUse);
                                 }
                                 break;
                             case MINIGAME.RUNNER:
                                 if (runnerLogic != null) {
-                                    pouLogic.Play(dificultyToUse);
+                                    runnerLogic.gameObject.SetActive(true);
+                                    runnerLogic.Play(dificultyToUse);
+
                                 }
                                 break;
                             case MINIGAME.TEMPLERUN:
                                 if (templeRunLogic != null) {
-                                    pouLogic.Play(dificultyToUse);
+                                    templeRunLogic.gameObject.SetActive(true);
+                                    templeRunLogic.Play(dificultyToUse);
                                 }
                                 break;
                         }
@@ -260,16 +277,20 @@ public class GameLogic : MonoBehaviour {
                         break;
                     }
                 case GameState.EVENT:
-                    if (currentEventIndex < incomingEvents.Count) {
-                        if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
-                            DisplayCurrentEvent();
+                    if (miniGameToPlay == MINIGAME.NULL) {
+                        if (currentEventIndex < incomingEvents.Count) {
+                            if (!IsDisplayingCurrentEvent(incomingEvents[currentEventIndex])) {
+                                DisplayCurrentEvent();
+                            } else {
+                            }
                         } else {
+                            CanvasScript.canvasScript.StopEvent();
+                            gameState = GameState.WEEKSTART;
+                            currentEventIndex = 0;
+                            incomingEvents.Clear();
                         }
                     } else {
-                        CanvasScript.canvasScript.StopEvent();
-                        gameState = GameState.WEEKSTART;
-                        currentEventIndex = 0;
-                        incomingEvents.Clear();
+                        gameState = GameState.MINIGAME;
                     }
 
                     break;
@@ -287,7 +308,8 @@ public class GameLogic : MonoBehaviour {
     void NewEvents() {
         //Event random = new PuppyBagEvent();
         //instance.incomingEvents.Add(random);
-
+        miniGameToPlay = MINIGAME.NULL;
+        miniGameStarted = false;
 
         switch (currentWeek) {
             case -3:
@@ -312,9 +334,13 @@ public class GameLogic : MonoBehaviour {
             case 4:
                 miniGameToPlay = MINIGAME.CARDS;
                 gameState = GameState.MINIGAME;
+                dificultyToUse = RunnerLogic.DIFFICULTY.EASY;
                 //CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.EASY);
                 break;
             case 5:
+                //miniGameToPlay = MINIGAME.CARDS;
+                //gameState = GameState.MINIGAME;
+                //dificultyToUse = RunnerLogic.DIFFICULTY.EASY;
                 //Evento Positivo
                 break;
             case 6:
@@ -323,6 +349,9 @@ public class GameLogic : MonoBehaviour {
                 break;
             case 8:
                 //RunnerPlay
+                miniGameToPlay = MINIGAME.RUNNER;
+                gameState = GameState.MINIGAME;
+                dificultyToUse = RunnerLogic.DIFFICULTY.EASY;
                 break;
             case 9:
                 //Evento aleatorio
@@ -559,8 +588,15 @@ public class GameLogic : MonoBehaviour {
 
     //This method changes the GameState
     public void EndWeek() {
-        gameState = GameState.ENDWEEK;
-        
+        if (CanvasScript.canvasScript.enteringAnimalList.Count == 0) {
+            if (CanEndWeek()) {
+                gameState = GameState.ENDWEEK;
+            } else {
+                CanvasScript.canvasScript.PopUpNoSpaceMessage("Has de esperar un poco");
+            }
+        } else{
+            CanvasScript.canvasScript.PopUpNoSpaceMessage("Hay animales esperando");
+        }
     }
 
     //This method calculates the expenses generated by instalations

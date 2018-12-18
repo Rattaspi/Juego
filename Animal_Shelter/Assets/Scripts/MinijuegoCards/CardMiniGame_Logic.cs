@@ -58,20 +58,24 @@ public class CardMiniGame_Logic : MonoBehaviour {
         }
     }
 
-
-    void SetUpCards() {
-
-        if ((cards)!= null){
+    void ClearCards() {
+        if ((cards) != null) {
             if (cards.Length > 0) {
-                for(int i = 0; i < cards.Length; i++) {
+                for (int i = 0; i < cards.Length; i++) {
                     if (cards[i] != null) {
-                        Destroy(cards[0].gameObject);
+                        Destroy(cards[i].gameObject);
                     }
                 }
             }
         }
 
         cards = new CardMiniGame_Card[numOfCards];
+    }
+
+
+    void SetUpCards() {
+
+        ClearCards();
 
         for (int i = 0; i < numOfCards; i++) {
             if (i < cardsPerRow) {
@@ -245,9 +249,12 @@ public class CardMiniGame_Logic : MonoBehaviour {
 
                     break;
                 case RunnerLogic.STATE.END:
+                    GameLogic.instance.money += score;
                     overallCanvas.gameObject.SetActive(true);
+                    ClearCards();
                     GameLogic.instance.gameState = GameLogic.GameState.WEEKSTART;
                     personalCanvas.gameObject.SetActive(false);
+                    play = false;
                     break;
             }
         }

@@ -31,6 +31,7 @@ public class CardMiniGame_Card : MonoBehaviour {
         sigma = 0;
         highlighted = clicked = false;
         rotated = false;
+        cardValue = Random.Range(30, 40);
     }
 	
 	// Update is called once per frame

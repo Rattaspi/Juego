@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TempleRunLogic : MonoBehaviour {
     bool run;
     float gameTimer;
-    public enum DIFFICULTY { EASY, NORMAL, HARD };
+    //public enum DIFFICULTY { EASY, NORMAL, HARD };
     public enum STATE { START, GAME, END };
     STATE state;
     public int monedas;
@@ -14,7 +14,7 @@ public class TempleRunLogic : MonoBehaviour {
     TempleRunAvatar avatar;
     TempleRunObstacleGen obstacleGen;
     [HideInInspector] public TempleRunPriceGenerator priceGen;
-    [SerializeField] DIFFICULTY difficulty;
+    [SerializeField] RunnerLogic.DIFFICULTY difficulty;
     [SerializeField] float maxTime;
     [SerializeField] Text timeText;
     [SerializeField] Text monedasText;
@@ -69,7 +69,7 @@ public class TempleRunLogic : MonoBehaviour {
         }
     }
 
-    public void Play(DIFFICULTY diff) {
+    public void Play(RunnerLogic.DIFFICULTY diff) {
         run = true;
         state = STATE.START;
         gameTimer = 0;
@@ -78,13 +78,13 @@ public class TempleRunLogic : MonoBehaviour {
         difficulty = diff;
 
         switch (difficulty) {
-            case DIFFICULTY.EASY:
+            case RunnerLogic.DIFFICULTY.EASY:
                 Time.timeScale = 1.0f;
                 break;
-            case DIFFICULTY.NORMAL:
+            case RunnerLogic.DIFFICULTY.NORMAL:
                 Time.timeScale = 2.0f;
                 break;
-            case DIFFICULTY.HARD:
+            case RunnerLogic.DIFFICULTY.HARD:
                 Time.timeScale = 3.0f;
                 break;
         }

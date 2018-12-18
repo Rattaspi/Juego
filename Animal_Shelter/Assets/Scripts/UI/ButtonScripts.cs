@@ -104,9 +104,7 @@ public class ButtonScripts : MonoBehaviour {
 
     void EndWeek() {
         if (GameLogic.instance != null) {
-            if (GameLogic.instance.CanEndWeek()) {
                 GameLogic.instance.EndWeek();
-            }
         }
     }
     void FeedAnimal() {
