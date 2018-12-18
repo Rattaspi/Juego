@@ -62,7 +62,6 @@ public class AnimalGraphics : MonoBehaviour {
 
         //when show info is active and click anyway but the info sprite it gets disabled
         else if (Input.GetKey(KeyCode.Mouse0) && showInfo.gameObject.activeInHierarchy && clickAwayDisables) {
-            print(clickAwayDisables);
             pointerEvent = new PointerEventData(eventSystem);
             pointerEvent.position = Input.mousePosition;
 

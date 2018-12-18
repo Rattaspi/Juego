@@ -76,6 +76,7 @@ public class GameLogic : MonoBehaviour {
     [HideInInspector] public GameObject[] animalGraphics;
 
     [HideInInspector] public Animal animalToSacrifice;
+    public GameObject sacrificeScreen;
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
