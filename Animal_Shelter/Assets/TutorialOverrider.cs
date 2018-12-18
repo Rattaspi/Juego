@@ -100,9 +100,9 @@ public class TutorialOverrider : MonoBehaviour {
                 break;
             case ElementToHighlight.ANIMAL_ENTRANCE:
 
-                SetPosWidthHeight(leftImage, -705.0455f, 0, 0, 510.11f, 1080);
+                SetPosWidthHeight(leftImage, -704.6796f, 0, 0, 510.84f, 1080);
                 SetPosWidthHeight(rightImage, 704.9916f, 171.98f, 0, 510.08f, 735.95f);
-                SetPosWidthHeight(botImage, 255f, -368.02f, 0, 1410, 344.05f);
+                SetPosWidthHeight(botImage, 255.37f, -368.02f, 0, 1409.3f, 344.05f);
                 SetPosWidthHeight(topImage, 0.34628f, 261.8f, 0, 899.21f, 556.4f);
 
                 break;
@@ -338,11 +338,14 @@ IEnumerator ShowBubble() {
                 localLocalScale = bubbleObject.transform.localScale;
                 localLocalScale -= new Vector3(Time.deltaTime * 2, Time.deltaTime * 2, Time.deltaTime * 2);
                 bubbleObject.transform.localScale = localLocalScale;
+
+                if (bubbleObject.transform.localScale.x < 0) {
+                    bubbleObject.transform.localScale = new Vector3(0, 0, 0);
+                }
+
                 yield return null;
             }
-            if (bubbleObject.transform.localScale.x < 0) {
-                bubbleObject.transform.localScale = new Vector3(0, 0, 0);
-            }
+
         }
         Invoke("ModifyingBubbleIsFalse", 0.5f);
     }
@@ -543,21 +546,23 @@ IEnumerator ShowBubble() {
 
                     break;
                 case 7:
-                    if (!booleanOnce && !modifyingBubble) {
-                        booleanOnce = true;
-                        StartShowBubbleCoroutine();
-                        modifyingBubble = false;
+                    if (!modifyingBubble) {
+                        if (!booleanOnce) {
+                            booleanOnce = true;
+                            StartShowBubbleCoroutine();
+                            modifyingBubble = false;
+                            HighlightElement(ElementToHighlight.NONE);
+                        }
+
+
+                        if (!displayingText ) {
+                            HighlightElement(ElementToHighlight.NONE);
+                            currentText = "Hola, soy el inquilino más anciano de este refugio. Llevo aquí desde… Podríamos decir que desde el principio.";
+                            StartCoroutine(DisplayText());
+                        } else {
+                            PressEnterOrSpace(true);
+                        }
                     }
-
-                    if (!displayingText && !modifyingBubble) {
-                        HighlightElement(ElementToHighlight.NONE);
-                        currentText = "Hola, soy el inquilino más anciano de este refugio. Llevo aquí desde… Podríamos decir que desde el principio.";
-                        StartCoroutine(DisplayText());
-                    } else {
-                        PressEnterOrSpace(true);
-                    }
-
-
                     break;
                 case 8:
 
@@ -630,9 +635,10 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 5;
+                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(true);
                         //CanvasScaler
                         HighlightElement(ElementToHighlight.ENTRANCE_BUTTON);
-                        currentText = "Mira!Parece que un pequeñajo te ha seguido hasta aquí";
+                        currentText = "Mira! Parece que un pequeñajo te ha seguido hasta aquí";
                         StartCoroutine(DisplayText());
                     } else {
                         if (textDisplayer.text.Length == currentText.Length) {
@@ -803,6 +809,8 @@ IEnumerator ShowBubble() {
                     break;
                 case 27:
                     if (!displayingText) {
+                        GameLogic.instance.shelterAnimals[0].DisableOnClickingAway(false);
+
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Seguramente no lo hubiera conseguido sin ti";
                         StartCoroutine(DisplayText());
@@ -926,11 +934,14 @@ IEnumerator ShowBubble() {
                         CanvasScript.canvasScript.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
                         CanvasScript.canvasScript.enteringAnimalList[0].salud = 80;
                         CanvasScript.canvasScript.enteringAnimalList[0].hambre = 15;
+                        CanvasScript.canvasScript.enteringAnimalList[0].DisableOnClickingAway(true);
+
 
                         CanvasScript.canvasScript.enteringAnimalList[1].edad = Animal.EDAD.CACHORRO;
                         CanvasScript.canvasScript.enteringAnimalList[1].estado = Animal.ESTADO.ENFERMO;
                         CanvasScript.canvasScript.enteringAnimalList[1].salud = 35;
                         CanvasScript.canvasScript.enteringAnimalList[1].hambre = 15;
+                        //CanvasScript.canvasScript.enteringAnimalList[1].DisableOnClickingAway(true);
 
                     } else {
                         //Resaltar botón entrada animales
@@ -1026,6 +1037,7 @@ IEnumerator ShowBubble() {
                         HighlightElement(ElementToHighlight.ADOPTER);
                         currentText = "Oh vaya! Parece que tenemos visita!";
                         StartCoroutine(DisplayText());
+                        GameLogic.instance.shelterAnimals[1].DisableOnClickingAway(false);
                     } else {
                         if(adoptanteObject.transform.localPosition != new Vector3(-205, 396)) {
                             adoptante.transform.localPosition = new Vector3(-205, 396);
@@ -1213,12 +1225,14 @@ IEnumerator ShowBubble() {
                     if (!displayingText) {
                         HighlightElement(ElementToHighlight.NONE);
                         currentText = "Ahora que ya sabes como funciona el refugio, te dejo al mando y me voy a dormir, Buena suerte!";
-                        SceneManager.LoadScene(2);
                         StartCoroutine(DisplayText());
                     } else {
                         PressEnterOrSpace(true);
                         //Resaltar indicador dineros
                     }
+                    break;
+                case 61:
+                    SceneManager.LoadScene(2);
                     break;
 
             }

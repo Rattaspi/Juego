@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX,STOP_DISPLAY_ANIMALS, STOP_DISPLAY_EXPENSES };
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX,STOP_DISPLAY_ANIMALS, STOP_DISPLAY_EXPENSES,TUTORIAL_OVERRIDER_NEXTEVENT };
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -61,6 +61,9 @@ public class ButtonScripts : MonoBehaviour {
                 break;
             case ButtonFunction.STOP_DISPLAY_EXPENSES:
                 myselfButton.onClick.AddListener(() => DisplayExpenses(false));
+                break;
+            case ButtonFunction.TUTORIAL_OVERRIDER_NEXTEVENT:
+                myselfButton.onClick.AddListener(() => SetNameForShelter());
                 break;
             default:
                 break;
@@ -144,4 +147,15 @@ public class ButtonScripts : MonoBehaviour {
             CanvasScript.canvasScript.DisplayShelterAnimals(should);
         }
     }
+
+    void SetNameForShelter() {
+        if (TutorialOverrider.instance != null) {
+            if (TutorialOverrider.instance.textoEntradaNombre.text.Length >= 4) {
+                TutorialOverrider.instance.GoToNextEvent();
+                TutorialOverrider.instance.objetoEntradaNombre.SetActive(false);
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
 }
