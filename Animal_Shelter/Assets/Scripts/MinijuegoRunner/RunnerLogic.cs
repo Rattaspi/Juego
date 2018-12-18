@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class RunnerLogic : MonoBehaviour {
 
-    bool run;
+public class RunnerLogic : MonoBehaviour {
+    bool run = false;
     float gameTimer;
     public enum DIFFICULTY { EASY, NORMAL, HARD};
     public enum STATE { START, GAME, END};
@@ -18,7 +18,6 @@ public class RunnerLogic : MonoBehaviour {
     [SerializeField] GameObject startCanvas;
 
 	void Start () {
-        run = false;
         gameTimer = 0;
         state = STATE.START;
         om = GetComponentInChildren<ObstaclesManager>();
