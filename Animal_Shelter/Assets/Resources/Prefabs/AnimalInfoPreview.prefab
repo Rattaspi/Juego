@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 222374533429953692}
   - component: {fileID: 114544798019490956}
   - component: {fileID: 114144438688367180}
-  - component: {fileID: 114425960508094612}
   m_Layer: 0
   m_Name: Sacrificar
   m_TagString: animal_info
@@ -638,7 +637,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114544798019490956}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114504452241752658}
+        m_MethodName: Sacrifice
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114222214255606042
@@ -733,18 +743,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114425960508094612
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1075169657745390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2569676eb275ef14f881f965aea989e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonFunction: 2
 --- !u!114 &114434412453520574
 MonoBehaviour:
   m_ObjectHideFlags: 1

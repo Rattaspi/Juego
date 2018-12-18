@@ -52,4 +52,18 @@ public class ShowInfoAnimal : MonoBehaviour {
     public void ActivateChangeName() {
         graphics.changeName.SetActive(true);
     }
+
+    public void Sacrifice() {
+        GameLogic.instance.animalToSacrifice = animalInfo;
+        StartCoroutine(GameLogic.instance.fader.Fade());
+        StartCoroutine(InitSacrifice());        
+    }
+
+    IEnumerator InitSacrifice() {
+        while (GameLogic.instance.fader.doing) {
+            yield return null;
+        }
+        GameLogic.instance.sacrificeScreen.SetActive(true);
+        StartCoroutine(GameLogic.instance.fader.UnFade());
+    }
 }

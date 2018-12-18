@@ -68,6 +68,8 @@ public class GameLogic : MonoBehaviour {
     [HideInInspector] public GameObject[] animalGraphics;
 
     [HideInInspector] public Animal animalToSacrifice;
+    [HideInInspector] public FaderScript fader;
+    public GameObject sacrificeScreen;
 
     public bool CanEndWeek() {
         return timeOfEntry >= maxTimeOfEntry;
@@ -81,6 +83,7 @@ public class GameLogic : MonoBehaviour {
         } else {
             Destroy(gameObject);
         }
+        fader = FindObjectOfType<FaderScript>();
 
         //Array which stores all the animal graphics prefabs
         //They are stored in the enum order so you can access it using the enum integer

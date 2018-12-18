@@ -20,10 +20,6 @@ public class ButtonScripts : MonoBehaviour {
                 myselfButton.onClick.AddListener(() => Pause());
                 break;
 
-            case ButtonFunction.SACRIFICE:
-                myselfButton.onClick.AddListener(() => SacrificeAnimal());
-                break;
-
             case ButtonFunction.FEED:
                 myselfButton.onClick.AddListener(() => FeedAnimal());
                 break;
@@ -113,11 +109,6 @@ public class ButtonScripts : MonoBehaviour {
             }
         }
     }
-
-    void SacrificeAnimal() {
-        throw new NotImplementedException();
-    }
-
     void FeedAnimal() {
 
         if (TutorialOverrider.instance != null){
