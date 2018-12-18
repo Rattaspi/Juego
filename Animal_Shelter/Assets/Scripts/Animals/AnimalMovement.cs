@@ -18,7 +18,7 @@ public class AnimalMovement : MonoBehaviour {
     }
 
     void Update() {
-        this.transform.position += (direction.normalized * speed * Time.deltaTime);
+        this.transform.position += (direction.normalized * speed * GameTime.deltaTime);
     }
 
     IEnumerator NewHeading() {

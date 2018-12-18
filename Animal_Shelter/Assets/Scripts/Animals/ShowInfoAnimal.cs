@@ -37,6 +37,8 @@ public class ShowInfoAnimal : MonoBehaviour {
     }
 
     void OnEnable () {
+
+
         name.text = animalInfo.nombre;
         cara.sprite = faces[(int)animalInfo.confort];
         salud.fillAmount =  1 - Mathf.InverseLerp(0, (int)Animal.ESTADO.LENGTH - 1, (int)animalInfo.estado);
@@ -45,7 +47,7 @@ public class ShowInfoAnimal : MonoBehaviour {
     }
 
     public void UpdateInfo() {
-        print("update");
+        //print("update");
         OnEnable();
     }
 

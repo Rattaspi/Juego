@@ -8,7 +8,7 @@ public class PreviewInfoAnimal : MonoBehaviour {
     [SerializeField] Text displayName;
     [SerializeField] Image happiness;
     [SerializeField] Image injured;
-    Sprite[] faces;
+    [SerializeField] Sprite[] faces;
 
     void Awake () {
         animalInfo = GetComponentInParent<Animal>();

@@ -92,11 +92,18 @@ public class GameLogic : MonoBehaviour {
             StartCoroutine(SetAnimalObjectParentToCanvas());
             pouLogic = FindObjectOfType<PouLogic>();
             runnerLogic = FindObjectOfType<RunnerLogic>();
-            //templeRunLogic = FindObjectOfType<TempleRunLogic>();
-            //templeRunLogic.gameObject.SetActive(false);
-            pouLogic.gameObject.SetActive(false);
-            runnerLogic.gameObject.SetActive(false);
+            templeRunLogic = FindObjectOfType<TempleRunLogic>();
 
+            if (templeRunLogic != null) {
+                templeRunLogic.gameObject.SetActive(false);
+            }
+
+            if (pouLogic != null) {
+                pouLogic.gameObject.SetActive(false);
+            }
+            if (runnerLogic != null) {
+                runnerLogic.gameObject.SetActive(false);
+            }
             DontDestroyOnLoad(gameObject);
         } else {
             instance.pouLogic = FindObjectOfType<PouLogic>();
@@ -180,6 +187,8 @@ public class GameLogic : MonoBehaviour {
         publictyPrice = 1.0f;
         cleanUpCost = 100.0f;
         maxTimeOfEntry = 60;
+        maxTimeForNewAnimal = 15;
+        maxTimeForNewAdopter = 15;
         timeOfEntry = 0;
         timeForNextAnimal = 0;
         int timeToAdd = Random.Range(3, 9);
@@ -576,18 +585,15 @@ public class GameLogic : MonoBehaviour {
                 break;
             case ToggleScript.ToggleType.SMALL:
                 currentFoodExpense = foodPrice * 50.0f;
-                amountOfFood += 50;
                 //totalExpense += foodPrice * 50.0f;
                 break;
             case ToggleScript.ToggleType.MEDIUM:
                 currentFoodExpense = foodPrice * 100.0f;
-                amountOfFood += 100;
 
                 //totalExpense += foodPrice * 100.0f;
                 break;
             case ToggleScript.ToggleType.BIG:
                 currentFoodExpense = foodPrice * 150.0f;
-                amountOfFood += 150;
 
                 //totalExpense += foodPrice * 150.0f;
                 break;

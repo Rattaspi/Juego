@@ -37,7 +37,7 @@ public class RunnerAvatarController : MonoBehaviour {
         if(collision.gameObject.tag == "ground") {
             ground = true;
         }else if(collision.gameObject.tag == "kill") {
-            rl.Restart();
+            rl.Close();
             transform.position = spawn.position;
         }
     }

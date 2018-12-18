@@ -97,9 +97,10 @@ public class RunnerLogic : MonoBehaviour {
     }
 
     public void Close() {
-        Stop();
-        this.gameObject.SetActive(false);
-        Time.timeScale = 1.0f;
+        state = STATE.END;
+        //Stop();
+        //this.gameObject.SetActive(false);
+        //Time.timeScale = 1.0f;
     }
 
     private void OnDisable() {

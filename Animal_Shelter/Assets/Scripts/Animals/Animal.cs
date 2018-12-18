@@ -191,21 +191,29 @@ public class Animal : MonoBehaviour {
         int variacionSalud = 4;
         int variacionConfort = 2;
 
+        if (hambre < 10) {
+            hambriento = true;
+        } else {
+            hambriento = false;
+        }
+
         if (hambriento) {
-            confortValue -= variacionConfort;
+            confortValue -= variacionConfort*3;
             salud -= variacionSalud;
+        } else {
+            confortValue += variacionConfort*2;
         }
         if (estado != ESTADO.SALUDABLE) {
             int randomChanceToGetWorse = Random.Range(1, 100);
             switch (estado) {
                 case ESTADO.SALUDABLE:
-                    if (randomChanceToGetWorse < confortValue/20*100) {
+                    if (randomChanceToGetWorse < confortValue / 20 * 100) {
                         GetWorse();
                     }
                     break;
                 case ESTADO.ENFERMO:
                     salud -= variacionSalud;
-                    if(confort != CONFORT.COMODO) {
+                    if (confort != CONFORT.COMODO) {
                         if (randomChanceToGetWorse < 40) {
                             GetWorse();
                         }
@@ -231,8 +239,9 @@ public class Animal : MonoBehaviour {
                     salud -= variacionSalud * 3;
                     break;
             }
-            confort -= variacionConfort * 2;
+            confortValue -= variacionConfort * 2;
         }
+
         if (estado == ESTADO.SALUDABLE && !hambriento) {
             confortValue += variacionConfort;
         }
@@ -243,15 +252,40 @@ public class Animal : MonoBehaviour {
         hambre -= gastoComida;
 
         if (!GameLogic.instance.cleanedUpThisWeek) {
-            confort -= confortValue*3;
+            confortValue -= variacionConfort * 3;
         }
 
         if (!GameLogic.instance.payedExpensesThisWeek) {
-            confort -= confortValue*2;
+            confortValue -= variacionConfort * 2;
         }
 
 
+
+        if (confortValue < 0) {
+            confortValue = 0;
+        }
+
+        if (confortValue < 5) {
+            confort = CONFORT.INCOMODO;
+        } else if (confortValue < 15) {
+            confort = CONFORT.NORMAL;
+        } else {
+            confort = CONFORT.COMODO;
+        }
+
+        if (salud < 11) {
+            estado = ESTADO.TERMINAL;
+        }else if (salud < 21) {
+            estado = ESTADO.MUY_ENFERMO;
+        }else if (salud < 46) {
+            estado = ESTADO.ENFERMO;
+        } else {
+            estado = ESTADO.SALUDABLE;
+        }
     }
+
+
+    
 
     public static GameObject MakeARandomAnimal() {
         GameObject animalObject = new GameObject();
