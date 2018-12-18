@@ -63,6 +63,13 @@ public class Animal : MonoBehaviour {
         hambre = hambriento ? Random.Range(0, 9) : Random.Range(10, 20);
     }
 
+    public void FeedAnimal() {
+        hambre += 10;
+        if (hambre > 30) {
+            hambre = 30;
+        }
+    }
+
     public void TryHealing() {
         int randomChance = Random.Range(1, 100);
         switch (estado) {

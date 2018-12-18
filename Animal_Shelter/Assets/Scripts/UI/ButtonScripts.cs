@@ -124,8 +124,23 @@ public class ButtonScripts : MonoBehaviour {
             TutorialOverrider.instance.GoToNextEvent();
         }
 
-        //throw new NotImplementedException();
-    }
+        Animal animal = GetComponentInParent<Animal>();
+        if (animal != null) {
+            if (GameLogic.instance.amountOfFood > animal.gastoComida) {
+                if (animal.hambre < 30) {
+                    GameLogic.instance.amountOfFood -= animal.gastoComida;
+                    animal.FeedAnimal();
+                } else {
+                    CanvasScript.canvasScript.PopUpNoSpaceMessage(animal.nombre += " no tiene hambre");
+                }
+            } else {
+                CanvasScript.canvasScript.PopUpNoSpaceMessage("No queda comida para alimentar a " + animal.nombre);
+            }
+        }
+
+
+            //throw new NotImplementedException();
+        }
 
     void HealAnimal() {
 
@@ -139,8 +154,9 @@ public class ButtonScripts : MonoBehaviour {
                 if (GameLogic.instance.money > GameLogic.instance.medicinePrice) {
                     GameLogic.instance.money -= GameLogic.instance.medicinePrice;
                     animal.TryHealing();
+                    animal.UpdateDisplayedAnimalInfo();
                 } else {
-                    CanvasScript.canvasScript.PopUpNoSpaceMessage("No puedes permitirte a este animal");
+                    CanvasScript.canvasScript.PopUpNoSpaceMessage("No puedes permitirte curar a este animal");
                 }
             } else {
                 CanvasScript.canvasScript.PopUpNoSpaceMessage("Este animal está perfectamente");

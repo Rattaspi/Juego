@@ -37,7 +37,7 @@ public class CanvasScript : MonoBehaviour {
     public bool debugBool;
     public TextMeshProUGUI totalExpensesText;
     public TextMeshProUGUI moneyText;
-
+    public TextMeshProUGUI foodDisplayText;
     public TextMeshProUGUI enteringAnimalsNumber;
 
     public TextMeshProUGUI foodText;
@@ -258,6 +258,7 @@ public class CanvasScript : MonoBehaviour {
                 truckText.text = "Gastos en furgoneta (busca animales) (" + GameLogic.instance.currentGasExpense.ToString() + "€)";
 
                 moneyText.text = CommonMethods.GetNumberWithDots((int)GameLogic.instance.money) + "€";
+                foodDisplayText.text = GameLogic.instance.amountOfFood.ToString() + "/" + GameLogic.instance.foodCapacity.ToString();
                 break;
             default:
                 break;
