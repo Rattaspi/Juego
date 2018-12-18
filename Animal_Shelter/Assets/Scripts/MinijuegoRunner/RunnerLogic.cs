@@ -34,7 +34,9 @@ public class RunnerLogic : MonoBehaviour {
 
         switch (state) {
             case STATE.START:
+                print("Start state");
                 if (Input.GetKeyUp(KeyCode.Space)) {
+                    print("Pressed space");
                     state = STATE.GAME;
                     rac.SetInputBlocked(false);
                     om.Play();
@@ -63,6 +65,7 @@ public class RunnerLogic : MonoBehaviour {
     public void Play(DIFFICULTY diff) {
         run = true;
         state = STATE.START;
+        print("RUNNERLOGIC: START");
         gameTimer = 0;
         timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
         startCanvas.SetActive(true);
