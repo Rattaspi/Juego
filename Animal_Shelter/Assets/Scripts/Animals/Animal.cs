@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Animal : MonoBehaviour {
     public GameObject graphics;
+    AnimalGraphics animalGraphics;
 
     public enum SIZE { SMALL, MEDIUM, BIG, LENGTH }
     public enum EDAD { CACHORRO, JOVEN, ADULTO, ANCIANO, LENGTH }
@@ -163,5 +164,15 @@ public class Animal : MonoBehaviour {
         graphics = Instantiate(graphics, this.transform);
         graphics.name = "Body";
         graphics.layer = 20;
+
+        animalGraphics = GetComponentInChildren<AnimalGraphics>();
+        if (animalGraphics == null) Debug.LogError("AnimalGraphics not found from " + this.name);
+
+        DisableOnClickingAway(false);
+    }
+
+    public void DisableOnClickingAway(bool b) {
+        print("CALLED");
+        animalGraphics.clickAwayDisables = b;
     }
 }

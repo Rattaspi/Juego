@@ -12,6 +12,7 @@ public class AnimalGraphics : MonoBehaviour {
 
     [SerializeField] PreviewInfoAnimal previewInfo;
     [SerializeField] ShowInfoAnimal showInfo;
+    [HideInInspector] public bool clickAwayDisables = true;
 
     GraphicRaycaster graphicRaycaster;
     EventSystem eventSystem;
@@ -36,6 +37,7 @@ public class AnimalGraphics : MonoBehaviour {
 
         info.SetActive(false);
         changeName.SetActive(false);
+
         GenerateAnimal();
     }
 
@@ -59,13 +61,13 @@ public class AnimalGraphics : MonoBehaviour {
         }
 
         //when show info is active and click anyway but the info sprite it gets disabled
-        else if (Input.GetKey(KeyCode.Mouse0) && showInfo.gameObject.activeInHierarchy) {
+        else if (Input.GetKey(KeyCode.Mouse0) && showInfo.gameObject.activeInHierarchy && clickAwayDisables) {
+            print(clickAwayDisables);
             pointerEvent = new PointerEventData(eventSystem);
             pointerEvent.position = Input.mousePosition;
 
             List<RaycastResult> results = new List<RaycastResult>();
             graphicRaycaster.Raycast(pointerEvent, results);
-            print(results.Count);
 
             if(results.Count == 0) {
                 info.SetActive(false);
