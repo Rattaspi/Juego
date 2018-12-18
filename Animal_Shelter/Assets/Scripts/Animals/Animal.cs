@@ -136,8 +136,12 @@ public class Animal : MonoBehaviour {
         return animalObject;
     }
 
-    private void Start() {
+    private void Awake() {
         StartStats();
+    }
+
+    private void Start() {
+        //StartStats();
         this.gameObject.tag = "animal";
         if (TutorialOverrider.instance == null) {
             this.gameObject.AddComponent<AnimalMovement>();
@@ -149,7 +153,6 @@ public class Animal : MonoBehaviour {
         BoxCollider2D b = this.gameObject.AddComponent<BoxCollider2D>();
         b.size = new Vector2(100, 200);
         b.isTrigger = true;
-
 
         //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
         //ME DABA PEREZA HACERLO A MANO :D
