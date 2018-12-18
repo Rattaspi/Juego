@@ -30,6 +30,10 @@ public class GameLogic : MonoBehaviour {
 
     //Singleton
     public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME, MAINMENU };
+    public bool miniGameStarted;
+    public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN};
+    public MINIGAME miniGameToPlay;
+    public RunnerLogic.DIFFICULTY dificultyToUse;
     public static GameLogic instance;
     public GameState gameState;
     public float money, reputation;
@@ -58,6 +62,10 @@ public class GameLogic : MonoBehaviour {
     public ToggleScript.ToggleType searchAmount;
     public OriginDataBase originDataBase;
 
+    PouLogic pouLogic;
+    RunnerLogic runnerLogic;
+    TempleRunLogic templeRunLogic;    
+
     [SerializeField]
     List<Instalation> instalations;
     public float maxTimeOfEntry;
@@ -78,8 +86,14 @@ public class GameLogic : MonoBehaviour {
         if (instance == null) {
             instance = this;
             StartCoroutine(SetAnimalObjectParentToCanvas());
+            pouLogic = FindObjectOfType<PouLogic>();
+            runnerLogic = FindObjectOfType<RunnerLogic>();
+            templeRunLogic = FindObjectOfType<TempleRunLogic>();
             DontDestroyOnLoad(gameObject);
         } else {
+            instance.pouLogic = FindObjectOfType<PouLogic>();
+            instance.runnerLogic = FindObjectOfType<RunnerLogic>();
+            instance.templeRunLogic = FindObjectOfType<TempleRunLogic>();
             Destroy(gameObject);
         }
 
@@ -186,6 +200,37 @@ public class GameLogic : MonoBehaviour {
 
             switch (gameState) {
                 case GameState.MAINMENU:
+                    miniGameStarted = false;
+                    break;
+                case GameState.MINIGAME:
+                    if (!miniGameStarted) {
+                        miniGameStarted = true;
+                        switch (miniGameToPlay) {
+                            case MINIGAME.CARDS:
+                                if (CardMiniGame_Logic.cardLogic!=null) {
+                                    CardMiniGame_Logic.cardLogic.Play(dificultyToUse);
+                                }
+                                break;
+                            case MINIGAME.POU:
+                                if (pouLogic != null) {
+                                    pouLogic.Play(dificultyToUse);
+                                }
+                                break;
+                            case MINIGAME.RUNNER:
+                                if (runnerLogic != null) {
+                                    pouLogic.Play(dificultyToUse);
+                                }
+                                break;
+                            case MINIGAME.TEMPLERUN:
+                                if (templeRunLogic != null) {
+                                    pouLogic.Play(dificultyToUse);
+                                }
+                                break;
+                        }
+                    }
+
+
+
                     break;
 
                 case GameState.WEEKSTART:
@@ -265,7 +310,9 @@ public class GameLogic : MonoBehaviour {
             case 3:
                 break;
             case 4:
-                CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.EASY);
+                miniGameToPlay = MINIGAME.CARDS;
+                gameState = GameState.MINIGAME;
+                //CardMiniGame_Logic.cardLogic.Play(RunnerLogic.DIFFICULTY.EASY);
                 break;
             case 5:
                 //Evento Positivo

@@ -1501,6 +1501,19 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1368102085812420, guid: ded1ee3f267f92b4e84e75572cbf9cbb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1001430048949370, guid: ded1ee3f267f92b4e84e75572cbf9cbb, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114299640075680134, guid: ded1ee3f267f92b4e84e75572cbf9cbb,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ded1ee3f267f92b4e84e75572cbf9cbb, type: 2}
   m_IsPrefabAsset: 0
@@ -1935,6 +1948,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f69e566dd71f884a8d11558b74ae925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameStarted: 0
+  miniGameToPlay: 0
   gameState: 0
   money: 0
   reputation: 0
