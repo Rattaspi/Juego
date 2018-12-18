@@ -37,13 +37,17 @@ public class ShowInfoAnimal : MonoBehaviour {
     }
 
     void OnEnable () {
-
-
         name.text = animalInfo.nombre;
         cara.sprite = faces[(int)animalInfo.confort];
         salud.fillAmount =  1 - Mathf.InverseLerp(0, (int)Animal.ESTADO.LENGTH - 1, (int)animalInfo.estado);
         comida.fillAmount = Mathf.InverseLerp(0, 10, animalInfo.hambre);
         edad.fillAmount = 0.1f + Mathf.InverseLerp(0, (int)Animal.EDAD.LENGTH - 1, (int)animalInfo.edad);
+
+        animalInfo.AnimalClicked();
+    }
+
+    private void OnDisable() {
+        animalInfo.ResetAnimalPosition();
     }
 
     public void UpdateInfo() {

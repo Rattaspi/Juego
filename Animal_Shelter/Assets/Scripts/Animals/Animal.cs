@@ -29,6 +29,11 @@ public class Animal : MonoBehaviour {
     public ESPECIE especie;
     public bool hambriento;
 
+    Vector3 prevPosition;
+    Transform initialParent;
+    Canvas canvas;
+    AnimalMovement animalMov;
+
     public void StartStats() {
         size = (SIZE)Random.Range(0, (int)SIZE.LENGTH);
         edad = (EDAD)Random.Range(0, (int)EDAD.LENGTH);
@@ -284,9 +289,6 @@ public class Animal : MonoBehaviour {
         }
     }
 
-
-    
-
     public static GameObject MakeARandomAnimal() {
         GameObject animalObject = new GameObject();
         animalObject.transform.SetParent(CanvasScript.canvasScript.tempAnimalParent.transform);
@@ -303,7 +305,9 @@ public class Animal : MonoBehaviour {
     }
 
     private void Awake() {
-        //StartStats();
+        StartStats(); //TO DEBUG
+        canvas = GetComponentInParent<Canvas>();
+        initialParent = this.transform.parent;
     }
 
     private void Start() {
@@ -327,10 +331,6 @@ public class Animal : MonoBehaviour {
         //print(s);
     }
 
-    private void Update() {
-        //if (Input.GetKeyDown(KeyCode.Space)) DisableOnClickingAway(true);
-    }
-
     void CreateBody() {
         //CREATE THE BODY ELEMENTS
         transform.localPosition = Vector3.zero;
@@ -343,6 +343,31 @@ public class Animal : MonoBehaviour {
         if (animalGraphics == null) Debug.LogError("AnimalGraphics not found from " + this.name);
 
         DisableOnClickingAway(true);
+    }
+
+    public void AnimalClicked() {
+        prevPosition = this.transform.localPosition;
+        this.transform.parent = canvas.gameObject.transform;
+        this.transform.localPosition = Vector3.zero;
+        if(animalMov == null) {
+            animalMov = GetComponent<AnimalMovement>();
+            animalMov.enabled = false;
+        }
+        else {
+            animalMov.enabled = false;
+        }
+    }
+
+    public void ResetAnimalPosition() {
+        this.transform.parent = initialParent;
+        this.transform.localPosition = prevPosition;
+        if (animalMov == null) {
+            animalMov = GetComponent<AnimalMovement>();
+            animalMov.enabled = true;
+        }
+        else {
+            animalMov.enabled = true;
+        }
     }
 
     public void DisableOnClickingAway(bool b) {
