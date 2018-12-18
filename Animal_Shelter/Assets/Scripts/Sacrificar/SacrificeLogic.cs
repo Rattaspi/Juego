@@ -50,7 +50,8 @@ public class SacrificeLogic : MonoBehaviour {
         GameLogic.instance.animalToSacrifice = null;
         graphicRaycaster.enabled = true;
         yield return new WaitForSeconds(1.0f);
+        FaderScript.instance.unFade = true;
         this.gameObject.SetActive(false);
-        StartCoroutine(FaderScript.instance.UnFade());
+
     }
 }
