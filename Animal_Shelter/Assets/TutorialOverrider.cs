@@ -1055,6 +1055,9 @@ IEnumerator ShowBubble() {
                         adoptante.transform.SetParent(CanvasScript.canvasScript.gameObject.transform);
                         //adoptante.GetComponent<MovementAdoptante>().enabled = false;
                         adoptanteObject.transform.localPosition = new Vector3(-205, 396);
+                        adoptante.speciePreferred = GameLogic.instance.shelterAnimals[0].especie;
+                        adoptante.sizePreferred = GameLogic.instance.shelterAnimals[0].size;
+                        adoptante.agePreferred = GameLogic.instance.shelterAnimals[0].edad;
 
                         HighlightElement(ElementToHighlight.ADOPTER);
                         currentText = "Oh vaya! Parece que tenemos visita!";
