@@ -143,7 +143,7 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue,int hambre) {
+    public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue, int hambre) {
         this.size = size;
         this.edad = edad;
         this.confort = confort;
@@ -163,30 +163,94 @@ public class Animal : MonoBehaviour {
         int randomInt = Random.Range(0, Stories.inicio.Length - 1);
         descripcion = "" + Stories.inicio[randomInt];
         randomInt = Random.Range(0, Stories.nudo.Length - 1);
-        descripcion += Stories.nudo[randomInt]; 
+        descripcion += Stories.nudo[randomInt];
 
         randomInt = Random.Range(0, Stories.desenlace.Length - 1);
         descripcion += Stories.desenlace[randomInt];
 
     }
 
+    void GetWorse() {
+        int variacionSalud = 4;
+
+        switch (estado) {
+            case ESTADO.SALUDABLE:
+                salud -= variacionSalud;
+
+                break;
+            case ESTADO.ENFERMO:
+                salud -= variacionSalud * 2;
+                break;
+            case ESTADO.MUY_ENFERMO:
+                salud -= variacionSalud;
+                break;
+        }
+    }
+
     public void UpdateStats() {
-        int variacionSalud = 5;
+        int variacionSalud = 4;
         int variacionConfort = 2;
 
         if (hambriento) {
             confortValue -= variacionConfort;
             salud -= variacionSalud;
         }
-        if(estado != ESTADO.SALUDABLE) {
-            confort -= variacionConfort;
+        if (estado != ESTADO.SALUDABLE) {
+            int randomChanceToGetWorse = Random.Range(1, 100);
+            switch (estado) {
+                case ESTADO.SALUDABLE:
+                    if (randomChanceToGetWorse < confortValue/20*100) {
+                        GetWorse();
+                    }
+                    break;
+                case ESTADO.ENFERMO:
+                    salud -= variacionSalud;
+                    if(confort != CONFORT.COMODO) {
+                        if (randomChanceToGetWorse < 40) {
+                            GetWorse();
+                        }
+                    } else {
+                        if (randomChanceToGetWorse < 20) {
+                            GetWorse();
+                        }
+                    }
+                    break;
+                case ESTADO.MUY_ENFERMO:
+                    salud -= variacionSalud * 2;
+                    if (confort != CONFORT.COMODO) {
+                        if (randomChanceToGetWorse < 50) {
+                            GetWorse();
+                        }
+                    } else {
+                        if (randomChanceToGetWorse < 30) {
+                            GetWorse();
+                        }
+                    }
+                    break;
+                case ESTADO.TERMINAL:
+                    salud -= variacionSalud * 3;
+                    break;
+            }
+            confort -= variacionConfort * 2;
         }
-        if(estado == ESTADO.SALUDABLE && !hambriento) {
+        if (estado == ESTADO.SALUDABLE && !hambriento) {
             confortValue += variacionConfort;
         }
-        if(confort == CONFORT.INCOMODO) {
+        if (confort == CONFORT.INCOMODO) {
             salud -= variacionSalud;
         }
+
+        hambre -= gastoComida;
+
+        if (!GameLogic.instance.cleanedUpThisWeek) {
+            confort -= confortValue*3;
+        }
+
+        if (!GameLogic.instance.payedExpensesThisWeek) {
+            confort -= confortValue*2;
+        }
+
+
     }
 
     public static GameObject MakeARandomAnimal() {

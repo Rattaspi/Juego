@@ -120,7 +120,7 @@ public class ButtonScripts : MonoBehaviour {
                     GameLogic.instance.amountOfFood -= animal.gastoComida;
                     animal.FeedAnimal();
                 } else {
-                    CanvasScript.canvasScript.PopUpNoSpaceMessage(animal.nombre += " no tiene hambre");
+                    CanvasScript.canvasScript.PopUpNoSpaceMessage(animal.nombre + " no tiene hambre");
                 }
             } else {
                 CanvasScript.canvasScript.PopUpNoSpaceMessage("No queda comida para alimentar a " + animal.nombre);
