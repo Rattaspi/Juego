@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class RunnerLogic : MonoBehaviour {
 
-    bool run;
+public class RunnerLogic : MonoBehaviour {
+    bool run = false;
     float gameTimer;
     public enum DIFFICULTY { EASY, NORMAL, HARD};
     public enum STATE { START, GAME, END};
@@ -18,7 +18,6 @@ public class RunnerLogic : MonoBehaviour {
     [SerializeField] GameObject startCanvas;
 
 	void Start () {
-        run = false;
         gameTimer = 0;
         state = STATE.START;
         om = GetComponentInChildren<ObstaclesManager>();
@@ -34,9 +33,7 @@ public class RunnerLogic : MonoBehaviour {
 
         switch (state) {
             case STATE.START:
-                print("Start state");
                 if (Input.GetKeyUp(KeyCode.Space)) {
-                    print("Pressed space");
                     state = STATE.GAME;
                     rac.SetInputBlocked(false);
                     om.Play();
@@ -65,7 +62,6 @@ public class RunnerLogic : MonoBehaviour {
     public void Play(DIFFICULTY diff) {
         run = true;
         state = STATE.START;
-        print("RUNNERLOGIC: START");
         gameTimer = 0;
         timeText.text = "" + Mathf.Clamp(Mathf.Floor(maxTime - gameTimer), 0.0f, Mathf.Infinity);
         startCanvas.SetActive(true);
