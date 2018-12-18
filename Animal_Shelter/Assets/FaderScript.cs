@@ -39,6 +39,14 @@ public class FaderScript : MonoBehaviour {
             StartCoroutine(UnFade());
             unFade = false;
         }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.I)) {
+            print("FADE");
+            fade = true;
+        } else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.U)){ 
+            unFade = true;
+            print("UNFADE");
+        }
     }
 
     public void Pause() {
