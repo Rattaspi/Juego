@@ -20,7 +20,7 @@ public class Adoptante : MonoBehaviour {
     void Start () {
         this.transform.position = new Vector2(Random.Range(450, Screen.width - 250), -150);
 
-        this.gameObject.AddComponent(typeof(MovementAdoptante));
+        this.gameObject.AddComponent<MovementAdoptante>();
 
         CircleCollider2D circleCol = (CircleCollider2D) this.gameObject.AddComponent(typeof(CircleCollider2D));
         circleCol.radius = 150.0f;

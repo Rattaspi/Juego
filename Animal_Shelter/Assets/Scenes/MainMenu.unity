@@ -683,6 +683,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f69e566dd71f884a8d11558b74ae925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniGameStarted: 0
+  miniGameToPlay: 0
+  dificultyToUse: 0
   gameState: 5
   money: 0
   reputation: 0
@@ -699,6 +702,8 @@ MonoBehaviour:
   publictyPrice: 0
   cleanUpCost: 0
   medicinePrice: 0
+  cleanedUpThisWeek: 0
+  payedExpensesThisWeek: 0
   currentFoodExpense: 0
   currentCleanUpExpense: 0
   currentGasExpense: 0
@@ -1276,7 +1281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fader: {fileID: 2047792548}
-  firstGameScene: MainScene
+  firstGameScene: TutorialScene
 --- !u!4 &1673339845
 Transform:
   m_ObjectHideFlags: 0
