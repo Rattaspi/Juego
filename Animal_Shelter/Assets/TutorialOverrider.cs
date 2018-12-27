@@ -50,7 +50,6 @@ public class TutorialOverrider : MonoBehaviour {
         }
 
         Invoke("SetWeekNegative", 1);
-
     }
 
     public void SetPosWidthHeight(GameObject g, float x, float y, float z, float w, float h) {

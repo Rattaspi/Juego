@@ -358,6 +358,7 @@ public class Animal : MonoBehaviour {
     }
 
     public void AnimalClicked() {
+        if (TutorialOverrider.instance != null) return;
         prevPosition = this.transform.localPosition;
         initialParent = this.transform.parent;
         this.transform.parent = canvas.gameObject.transform;
@@ -372,6 +373,7 @@ public class Animal : MonoBehaviour {
     }
 
     public void ResetAnimalPosition() {
+        if (TutorialOverrider.instance != null) return;
         this.transform.parent = initialParent;
         this.transform.localPosition = prevPosition;
         if (animalMov == null) {

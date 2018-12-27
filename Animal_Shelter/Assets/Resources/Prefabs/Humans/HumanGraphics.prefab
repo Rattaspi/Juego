@@ -800,6 +800,7 @@ GameObject:
   - component: {fileID: 114191351796393710}
   - component: {fileID: 114090999916047668}
   - component: {fileID: 114811272112502950}
+  - component: {fileID: 225083773397501632}
   m_Layer: 5
   m_Name: HumanGraphics
   m_TagString: Untagged
@@ -2353,6 +2354,7 @@ MonoBehaviour:
   animalSize: {fileID: 114388845909439080}
   animalAge: {fileID: 114745927495462070}
   animalDisplayPosition: {fileID: 1099964303890314}
+  buttons: []
 --- !u!114 &114442993058035600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4188,6 +4190,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Delegates:
   - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1122471781471770}
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 16
     callback:
       m_PersistentCalls:
         m_Calls:
@@ -6526,3 +6545,14 @@ RectTransform:
   m_AnchoredPosition: {x: -594, y: 376}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225083773397501632
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836761054901798}
+  m_Enabled: 1
+  m_Alpha: 0.8
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
