@@ -77,7 +77,7 @@ public class AnimalElementList : MonoBehaviour {
 
             if (results.Count > 0) {
                 if (results[0].gameObject.tag == "animalElementList") {
-                    CanvasScript.canvasScript.SelectAnimal(results[0].gameObject.GetComponent<AnimalElementList>());
+                    CanvasScript.instance.SelectAnimal(results[0].gameObject.GetComponent<AnimalElementList>());
                     //Debug.Log(results[0].gameObject.GetComponentInParent<AnimalElementList>());
                     //Debug.Log(results[0].gameObject);
                 }

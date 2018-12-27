@@ -24,7 +24,7 @@ public class PressEscToClose : MonoBehaviour {
             //StartCoroutine(GameTime.unBlockPause());
             GameTime.pauseBlocked = false;
             if (setsCanvasState) {
-                CanvasScript.canvasScript.canvasState = stateToSet;
+                CanvasScript.instance.canvasState = stateToSet;
             }
             gameObject.SetActive(false);
             blocked = false;

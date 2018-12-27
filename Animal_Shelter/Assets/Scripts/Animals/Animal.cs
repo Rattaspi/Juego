@@ -295,7 +295,7 @@ public class Animal : MonoBehaviour {
     }
 
     void Die() {
-        CanvasScript.canvasScript.PopUpNoSpaceMessage(nombre + " ha muerto!");
+        CanvasScript.instance.PopUpNoSpaceMessage(nombre + " ha muerto!");
         GameLogic.instance.reputation -= 0.3f;
         GameLogic.instance.RemoveAnimal(this);
 
@@ -303,7 +303,7 @@ public class Animal : MonoBehaviour {
 
     public static GameObject MakeARandomAnimal() {
         GameObject animalObject = new GameObject();
-        animalObject.transform.SetParent(CanvasScript.canvasScript.tempAnimalParent.transform);
+        animalObject.transform.SetParent(CanvasScript.instance.tempAnimalParent.transform);
         Animal temp2;
         temp2 = animalObject.AddComponent<Animal>();
         temp2.StartStats();

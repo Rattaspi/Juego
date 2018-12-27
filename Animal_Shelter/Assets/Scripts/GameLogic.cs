@@ -91,8 +91,7 @@ public class GameLogic : MonoBehaviour {
         Adoptante adoptante;
         adoptanteObject.AddComponent<RectTransform>();
         adoptante = adoptanteObject.AddComponent<Adoptante>();
-        adoptante.transform.SetParent(CanvasScript.canvasScript.gameObject.transform);
-        //adoptante.GetComponent<MovementAdoptante>().enabled = false;
+        adoptanteObject.transform.SetParent(CanvasScript.instance.adopterParent);
     }
 
     void Awake() {
@@ -175,12 +174,12 @@ public class GameLogic : MonoBehaviour {
     }
 
     IEnumerator SetAnimalObjectParentToCanvas() {
-        while (CanvasScript.canvasScript == null) {
+        while (CanvasScript.instance == null) {
             yield return null;
         }
         animalObjectParent = new GameObject();
         animalObjectParent.name = "Animals";
-        animalObjectParent.transform.parent = CanvasScript.canvasScript.mainGameGroup.transform;
+        animalObjectParent.transform.parent = CanvasScript.instance.mainGameGroup.transform;
         animalObjectParent.transform.SetSiblingIndex(2);
         //animalObjectParent.transform.();
     }
@@ -236,7 +235,7 @@ public class GameLogic : MonoBehaviour {
             RemoveAnimal(shelterAnimals[0]);
         }
 
-        if (CanvasScript.canvasScript != null) {
+        if (CanvasScript.instance != null) {
 
             switch (gameState) {
                 case GameState.MAINMENU:
@@ -297,7 +296,7 @@ public class GameLogic : MonoBehaviour {
                             if (timeOfEntry > timeForNextAnimal) {
                                 int timeToAdd = Random.Range(3, maxTimeForNewAnimal);
                                 timeForNextAnimal += timeToAdd;
-                                CanvasScript.canvasScript.AddEnteringAnimal();
+                                CanvasScript.instance.AddEnteringAnimal();
                             }
 
 
@@ -321,7 +320,7 @@ public class GameLogic : MonoBehaviour {
                             } else {
                             }
                         } else {
-                            CanvasScript.canvasScript.StopEvent();
+                            CanvasScript.instance.StopEvent();
                             gameState = GameState.WEEKSTART;
                             currentEventIndex = 0;
                             incomingEvents.Clear();
@@ -531,12 +530,12 @@ public class GameLogic : MonoBehaviour {
 
     void DisplayCurrentEvent() {
         //Here we need a reference to the CanvasScript, to set the current event to incomingEvents[currentIndex]
-        CanvasScript.canvasScript.DisplayEvent(incomingEvents[currentEventIndex]);
+        CanvasScript.instance.DisplayEvent(incomingEvents[currentEventIndex]);
     }
 
     bool IsDisplayingCurrentEvent(Event e) {
         //Here we need a reference to the CanvasScript, to check wether the current event is the one in the parameter
-        return CanvasScript.canvasScript.currentDisplayedEvent == e;
+        return CanvasScript.instance.currentDisplayedEvent == e;
     }
 
     float CalculateTotalCleanUpCost() {
@@ -716,19 +715,19 @@ public class GameLogic : MonoBehaviour {
 
     //This method changes the GameState
     public void EndWeek() {
-        if (CanvasScript.canvasScript.enteringAnimalList.Count == 0) {
+        if (CanvasScript.instance.enteringAnimalList.Count == 0) {
             if (CanEndWeek()) {
                 gameState = GameState.ENDWEEK;
             } else {
-                CanvasScript.canvasScript.PopUpNoSpaceMessage("Has de esperar un poco");
+                CanvasScript.instance.PopUpNoSpaceMessage("Has de esperar un poco");
             }
         } else{
             if (CanEndWeek()) {
                 gameState = GameState.ENDWEEK;
-                CanvasScript.canvasScript.PopUpNoSpaceMessage( CanvasScript.canvasScript.enteringAnimalList.Count + " animales que esperaban se fueron");
-                CanvasScript.canvasScript.KickAnimals();
+                CanvasScript.instance.PopUpNoSpaceMessage( CanvasScript.instance.enteringAnimalList.Count + " animales que esperaban se fueron");
+                CanvasScript.instance.KickAnimals();
             } else {
-                CanvasScript.canvasScript.PopUpNoSpaceMessage("Has de esperar un poco");
+                CanvasScript.instance.PopUpNoSpaceMessage("Has de esperar un poco");
             }
         }
     }

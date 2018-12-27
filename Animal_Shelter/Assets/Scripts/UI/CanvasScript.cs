@@ -3,7 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class CanvasScript : MonoBehaviour {
-    public static CanvasScript canvasScript;
+    public static CanvasScript instance;
+    public Transform adopterParent;
     public SelectedAnimalDisplayer selectedAnimalDisplayer;
     public GameObject UIManagementGameObject;
     public GameObject eventHandlerObject;
@@ -55,10 +56,11 @@ public class CanvasScript : MonoBehaviour {
     public GameObject reputationMedalsHolder;
     public Image[] medals;
     public  int indexAnimalToDisplay;
+
     // Use this for initialization
     void Start() {
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
-        canvasScript = this;
+        instance = this;
         UIManagementGameObject.SetActive(true);
         eventHandlerObject.SetActive(false);
         //incomingAnimalListObject.SetActive(false);
@@ -292,9 +294,9 @@ public class CanvasScript : MonoBehaviour {
 
         if (debugBool) {
             debugBool = false;
-            canvasScript.AddEnteringAnimal();
+            instance.AddEnteringAnimal();
         }
-        enteringAnimalsNumber.text = canvasScript.enteringAnimalList.Count.ToString();
+        enteringAnimalsNumber.text = instance.enteringAnimalList.Count.ToString();
         switch (canvasState) {
             case CanvasState.DISPLAYANIMALLIST:
                 if (selectedAnimalDisplayer != null) {
@@ -323,16 +325,16 @@ public class CanvasScript : MonoBehaviour {
 
 
     protected virtual void OnDestroy() {
-        canvasScript = null;
+        instance = null;
     }
 
     public virtual void DisplayShelterAnimals(bool should) {
         CreateAnimalList();
-        canvasScript.canvasState = CanvasState.DISPLAYANIMALLIST;
+        instance.canvasState = CanvasState.DISPLAYANIMALLIST;
         animalsWindow.SetActive(should);
 
         if (!should) {
-            canvasScript.canvasState = CanvasState.IDLE;
+            instance.canvasState = CanvasState.IDLE;
             //animalsWindow.SetActive(false);
         }
 
@@ -341,7 +343,7 @@ public class CanvasScript : MonoBehaviour {
     public virtual void DisplayExpenses(bool should) {
         expensesWindow.SetActive(should);
         if (!should) {
-            canvasScript.canvasState = CanvasState.IDLE;
+            instance.canvasState = CanvasState.IDLE;
         }
     }
 

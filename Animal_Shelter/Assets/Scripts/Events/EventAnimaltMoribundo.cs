@@ -19,7 +19,7 @@ public class EventAnimaltMoribundo : Event {
     }
 
     public override void OnAccept() {
-        CanvasScript.canvasScript.AcceptAnimalInShelter(randomNewAnimal.GetComponent<Animal>());
+        CanvasScript.instance.AcceptAnimalInShelter(randomNewAnimal.GetComponent<Animal>());
         GameLogic.instance.reputation += reputationAtStake;
         base.OnAccept();
     }

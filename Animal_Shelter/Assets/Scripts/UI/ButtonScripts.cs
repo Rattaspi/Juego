@@ -68,7 +68,7 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void IncreaseAnimalIndex(int increase) {
-        CanvasScript.canvasScript.IncreaseDisplayIndex(increase);
+        CanvasScript.instance.IncreaseDisplayIndex(increase);
     }
 
     IEnumerator SetEntryInfoCoroutine() {
@@ -76,7 +76,7 @@ public class ButtonScripts : MonoBehaviour {
 
         //CanvasScript.canvasScript.enteringAnimalDisplayer.SetInfo(CanvasScript.canvasScript.enteringAnimalDisplayer.selectedAnimalInList);
         //CanvasScript.canvasScript.IncreaseDisplayIndex(0);
-        CanvasScript.canvasScript.SetDisplayIndex(0);
+        CanvasScript.instance.SetDisplayIndex(0);
     }
 
     void SetEntryInfo() {
@@ -84,7 +84,7 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void ResolveAnimalRequest(bool accepted) {
-            CanvasScript.canvasScript.ResolveAnimalRequest(accepted);
+            CanvasScript.instance.ResolveAnimalRequest(accepted);
     }
 
     void Pause() {
@@ -92,8 +92,8 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void DisplayEnteringAnimal() {
-        if (CanvasScript.canvasScript != null) {
-            CanvasScript.canvasScript.DisplayEnteringAnimal();
+        if (CanvasScript.instance != null) {
+            CanvasScript.instance.DisplayEnteringAnimal();
         }
     }
 
@@ -116,10 +116,10 @@ public class ButtonScripts : MonoBehaviour {
                     animal.FeedAnimal();
                     animal.UpdateDisplayedAnimalInfo();
                 } else {
-                    CanvasScript.canvasScript.PopUpNoSpaceMessage(animal.nombre + " no tiene hambre");
+                    CanvasScript.instance.PopUpNoSpaceMessage(animal.nombre + " no tiene hambre");
                 }
             } else {
-                CanvasScript.canvasScript.PopUpNoSpaceMessage("No queda comida para alimentar a " + animal.nombre);
+                CanvasScript.instance.PopUpNoSpaceMessage("No queda comida para alimentar a " + animal.nombre);
             }
         }
 
@@ -141,10 +141,10 @@ public class ButtonScripts : MonoBehaviour {
                     animal.TryHealing();
                     animal.UpdateDisplayedAnimalInfo();
                 } else {
-                    CanvasScript.canvasScript.PopUpNoSpaceMessage("No puedes permitirte curar a este animal");
+                    CanvasScript.instance.PopUpNoSpaceMessage("No puedes permitirte curar a este animal");
                 }
             } else {
-                CanvasScript.canvasScript.PopUpNoSpaceMessage("Este animal está perfectamente");
+                CanvasScript.instance.PopUpNoSpaceMessage("Este animal está perfectamente");
             }
         } else {
             Debug.Log("Null");
@@ -154,14 +154,14 @@ public class ButtonScripts : MonoBehaviour {
     }
 
     void DisplayExpenses(bool should) {
-        if (CanvasScript.canvasScript != null) {
-            CanvasScript.canvasScript.DisplayExpenses(should);
+        if (CanvasScript.instance != null) {
+            CanvasScript.instance.DisplayExpenses(should);
         }
     }
 
     void DisplayAnimals(bool should) {
-        if (CanvasScript.canvasScript != null) {
-            CanvasScript.canvasScript.DisplayShelterAnimals(should);
+        if (CanvasScript.instance != null) {
+            CanvasScript.instance.DisplayShelterAnimals(should);
         }
     }
 

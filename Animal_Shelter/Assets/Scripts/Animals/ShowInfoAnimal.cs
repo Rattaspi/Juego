@@ -61,6 +61,7 @@ public class ShowInfoAnimal : MonoBehaviour {
 
     public void Sacrifice() {
         GameLogic.instance.animalToSacrifice = animalInfo;
+        animalInfo.ResetAnimalPosition();
         StartCoroutine(FaderScript.instance.Fade());
         StartCoroutine(InitSacrifice());        
     }

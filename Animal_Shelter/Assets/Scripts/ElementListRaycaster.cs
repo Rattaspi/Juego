@@ -30,7 +30,7 @@ public class ElementListRaycaster : MonoBehaviour {
 
             if (results.Count > 0) {
                 if (results[0].gameObject.tag == "animalElementList") {
-                    CanvasScript.canvasScript.SelectAnimal(results[0].gameObject.GetComponentInParent<AnimalElementList>());
+                    CanvasScript.instance.SelectAnimal(results[0].gameObject.GetComponentInParent<AnimalElementList>());
                     //Debug.Log(results[0].gameObject.GetComponentInParent<AnimalElementList>());
                     Debug.Log(results[0].gameObject);
                 }

@@ -39,10 +39,10 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
 
 
 
-        while (CanvasScript.canvasScript == null) {
+        while (CanvasScript.instance == null) {
             yield return null;
         }
-        CanvasScript.canvasScript.enteringAnimalDisplayer = this;
+        CanvasScript.instance.enteringAnimalDisplayer = this;
         backgroundObject.SetActive(false);
     }
 
@@ -146,11 +146,11 @@ public class EnteringAnimalDisplayer : MonoBehaviour {
     void Update() {
         float horizontalAxis = Input.GetAxisRaw("Horizontal");
 
-        if (CanvasScript.canvasScript.enteringAnimalList.Count > 0) {
+        if (CanvasScript.instance.enteringAnimalList.Count > 0) {
             if (horizontalAxis > 0 && horizontalAxis != prevHorizontalAxis) {
-                CanvasScript.canvasScript.IncreaseDisplayIndex(1);
+                CanvasScript.instance.IncreaseDisplayIndex(1);
             } else if (horizontalAxis < 0 && horizontalAxis != prevHorizontalAxis) {
-                CanvasScript.canvasScript.IncreaseDisplayIndex(-1);
+                CanvasScript.instance.IncreaseDisplayIndex(-1);
             }
         }
 

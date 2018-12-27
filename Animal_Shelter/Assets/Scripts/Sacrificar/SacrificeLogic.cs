@@ -33,7 +33,6 @@ public class SacrificeLogic : MonoBehaviour {
     }
 
     public void SacrificeClick() {
-        print(mouseSyringe.activeInHierarchy);
         if (mouseSyringe.activeInHierarchy) {
             StartCoroutine(Sacrifice());
         }
