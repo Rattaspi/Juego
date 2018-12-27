@@ -9,6 +9,7 @@ public class AnimalGraphics : MonoBehaviour {
     GameObject info; //object containing preview info and complete info
     public GameObject changeName;
     Animal animalInfo;
+    RectTransform rTransform;
 
     [SerializeField] PreviewInfoAnimal previewInfo;
     [HideInInspector] public ShowInfoAnimal showInfo;
@@ -35,10 +36,25 @@ public class AnimalGraphics : MonoBehaviour {
         animalInfo = GetComponentInParent<Animal>();
         if (animalInfo == null) Debug.LogError("Animal.cs not found from AnimalGraphics.cs");
 
+        rTransform = GetComponent<RectTransform>();
+
         info.SetActive(false);
         changeName.SetActive(false);
 
         GenerateAnimal();
+
+        //Change display size depending on the animal size.
+        switch (animalInfo.size) {
+            case Animal.SIZE.SMALL:
+                rTransform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                break;
+            case Animal.SIZE.MEDIUM:
+                rTransform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                break;
+            case Animal.SIZE.BIG:
+                rTransform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                break;
+        }
     }
 
     private void GenerateAnimal() {

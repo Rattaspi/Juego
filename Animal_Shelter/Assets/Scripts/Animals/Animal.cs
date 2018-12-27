@@ -34,6 +34,33 @@ public class Animal : MonoBehaviour {
     public Canvas canvas;
     public AnimalMovement animalMov;
 
+    private void Awake() {
+        //StartStats(); //TO DEBUG
+        canvas = GetComponentInParent<Canvas>();
+        initialParent = this.transform.parent;
+    }
+
+    private void Start() {
+        //StartStats();
+        this.gameObject.tag = "animal";
+        if (TutorialOverrider.instance == null) {
+            this.gameObject.AddComponent<AnimalMovement>();
+        }
+        Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.freezeRotation = true;
+
+        BoxCollider2D b = this.gameObject.AddComponent<BoxCollider2D>();
+        b.size = new Vector2(100, 200);
+        b.isTrigger = true;
+
+        //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
+        //ME DABA PEREZA HACERLO A MANO :D
+        //string s = ""
+        //s = s.Replace(" ", "\",\"");
+        //print(s);
+    }
+
     public void StartStats() {
         size = (SIZE)Random.Range(0, (int)SIZE.LENGTH);
         edad = (EDAD)Random.Range(0, (int)EDAD.LENGTH);
@@ -78,6 +105,22 @@ public class Animal : MonoBehaviour {
                 break;
         }
         hambre = hambriento ? Random.Range(0, 9) : Random.Range(10, 20);
+    }
+
+    public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue, int hambre) {
+        this.size = size;
+        this.edad = edad;
+        this.confort = confort;
+        this.estado = estado;
+        this.especie = especie;
+        this.hambriento = hambriento;
+        this.nombre = nombre;
+        this.color = color;
+        CreateBody();
+        this.descripcion = origin;
+        this.salud = salud;
+        this.confortValue = confortValue;
+        this.hambre = hambre;
     }
 
     public void FeedAnimal() {
@@ -148,21 +191,6 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    public void StartStats(SIZE size, EDAD edad, CONFORT confort, ESTADO estado, ESPECIE especie, bool hambriento, string nombre, Color color, string origin, int salud, int confortValue, int hambre) {
-        this.size = size;
-        this.edad = edad;
-        this.confort = confort;
-        this.estado = estado;
-        this.especie = especie;
-        this.hambriento = hambriento;
-        this.nombre = nombre;
-        this.color = color;
-        CreateBody();
-        this.descripcion = origin;
-        this.salud = salud;
-        this.confortValue = confortValue;
-        this.hambre = hambre;
-    }
 
     public void CreateOrigin() {
         int randomInt = Random.Range(0, Stories.inicio.Length - 1);
@@ -314,33 +342,6 @@ public class Animal : MonoBehaviour {
 
         //animalObject.transform.position 
         return animalObject;
-    }
-
-    private void Awake() {
-        //StartStats(); //TO DEBUG
-        canvas = GetComponentInParent<Canvas>();
-        initialParent = this.transform.parent;
-    }
-
-    private void Start() {
-        //StartStats();
-        this.gameObject.tag = "animal";
-        if (TutorialOverrider.instance == null) {
-            this.gameObject.AddComponent<AnimalMovement>();
-        }
-        Rigidbody2D rb = this.gameObject.AddComponent<Rigidbody2D>();
-        rb.gravityScale = 0;
-        rb.freezeRotation = true;
-
-        BoxCollider2D b = this.gameObject.AddComponent<BoxCollider2D>();
-        b.size = new Vector2(100, 200);
-        b.isTrigger = true;
-
-        //ESTO ES PARA CONVERTIR EL STRING DE NOMBRES EN LA FORMA QUE NECESITA EL ARRAY
-        //ME DABA PEREZA HACERLO A MANO :D
-        //string s = ""
-        //s = s.Replace(" ", "\",\"");
-        //print(s);
     }
 
     void CreateBody() {
