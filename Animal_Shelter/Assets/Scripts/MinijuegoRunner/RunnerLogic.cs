@@ -53,7 +53,7 @@ public class RunnerLogic : MonoBehaviour {
                 break;
 
             case STATE.END:
-                GameLogic.instance.money += gameTimer * 2;
+                GameLogic.instance.AddMoney(gameTimer * 2);
                 Stop();
                 break;
         }

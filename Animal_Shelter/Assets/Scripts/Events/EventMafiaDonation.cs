@@ -21,7 +21,7 @@ public class EventMafiaDonation : Event
         base.OnAccept();
         if (GameLogic.instance != null)
         {
-            GameLogic.instance.money += randomAmountOfMoney;
+            GameLogic.instance.AddMoney(randomAmountOfMoney);
             GameLogic.instance.reputation -= 1;
         }
     }

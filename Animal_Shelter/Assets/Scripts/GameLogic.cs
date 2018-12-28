@@ -30,6 +30,7 @@ public static class GameTime {
 public class GameLogic : MonoBehaviour {
 
     //Singleton
+    public bool gameOverFlag;
     public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME, MAINMENU };
     public bool miniGameStarted;
     public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN, NULL};
@@ -66,6 +67,16 @@ public class GameLogic : MonoBehaviour {
     public ToggleScript.ToggleType searchAmount;
     public OriginDataBase originDataBase;
 
+    public int adoptedAnimalCounter=0;
+    public int leftOutAnimalCounter=0;
+    public int sacrificedAnimalCounter=0;
+    public int deadAnimalCounter=0;
+    public List<string> leftOutAnimalNames;
+    public List<string> sacrificedAnimalNames;
+    public List<string> deadAnimalNames;
+    public List<string> adoptedAnimalNames;
+    public float totalObtainedMoney;
+
     PouLogic pouLogic;
     RunnerLogic runnerLogic;
     TempleRunLogic templeRunLogic;    
@@ -97,6 +108,7 @@ public class GameLogic : MonoBehaviour {
     void Awake() {
         if (instance == null) {
             instance = this;
+            gameOverFlag = false;
             StartCoroutine(SetAnimalObjectParentToCanvas());
             pouLogic = FindObjectOfType<PouLogic>();
             runnerLogic = FindObjectOfType<RunnerLogic>();
@@ -117,7 +129,7 @@ public class GameLogic : MonoBehaviour {
             instance.pouLogic = FindObjectOfType<PouLogic>();
             instance.runnerLogic = FindObjectOfType<RunnerLogic>();
             instance.templeRunLogic = FindObjectOfType<TempleRunLogic>();
-
+            instance.gameOverFlag = false;
             if (instance.templeRunLogic != null) {
                 instance.templeRunLogic.gameObject.SetActive(false);
             }
@@ -352,15 +364,25 @@ public class GameLogic : MonoBehaviour {
                     break;
             }
         }
-
-        if (reputation <= 0) {
+        if (reputation <= 0&&SceneManager.GetActiveScene().buildIndex==2) {
             GameOver();
         }
 
     }
 
     public void GameOver() {
-        SceneManager.LoadScene(0);
+        if (FaderScript.instance!=null&!gameOverFlag) {
+            FaderScript.instance.StartFade();
+            gameOverFlag = true;
+        }
+        if (FaderScript.instance.finishFlag) {
+            Debug.Log("GameOver");
+            SceneManager.LoadScene("Lose",LoadSceneMode.Single);
+            //SceneManager.SetActiveScene()
+        } else {
+            Debug.Log("GamingOver");
+
+        }
     }
 
     void ApplyAnimalUpdates(){
@@ -529,6 +551,9 @@ public class GameLogic : MonoBehaviour {
             case 48:
                 //3 Carriles III
                 break;
+            case 49:
+                WinGame();
+                break;
             default:
                 int randomInt = Random.Range(0, 10);
                 switch (randomInt) {
@@ -539,6 +564,10 @@ public class GameLogic : MonoBehaviour {
                 }
                 break;
         }
+    }
+
+    void WinGame() {
+
     }
 
     void DisplayCurrentEvent() {
@@ -715,6 +744,11 @@ public class GameLogic : MonoBehaviour {
         totalExpense = currentGasExpense + CalculateTotalCleanUpCost() + currentFoodExpense + currentPublicityExpense + currentInstalationsExpense;
 
         return totalExpense;
+    }
+
+    public void AddMoney(float moneyToAdd) {
+        totalObtainedMoney += moneyToAdd;
+        money += moneyToAdd;
     }
 
     //This method apply the total amount of food and money expenses to the resources

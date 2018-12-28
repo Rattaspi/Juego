@@ -167,9 +167,11 @@ public class AssignAnimal : MonoBehaviour {
         graphicRaycaster.enabled = false;
         yield return new WaitForSeconds(3.0f);
         graphicRaycaster.enabled = true;
-        GameLogic.instance.RemoveAnimal(currentAnimal);
-        GameLogic.instance.money += 50;
+        GameLogic.instance.AddMoney(50);
         GameLogic.instance.reputation += 0.1f;
+        GameLogic.instance.adoptedAnimalNames.Add(currentAnimal.name);
+        GameLogic.instance.RemoveAnimal(currentAnimal);
+        GameLogic.instance.adoptedAnimalCounter++;
         Destroy(adoptante.gameObject);
         Destroy(this.gameObject);
     }

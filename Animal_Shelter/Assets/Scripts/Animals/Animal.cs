@@ -337,6 +337,8 @@ public class Animal : MonoBehaviour {
     void Die() {
         CanvasScript.instance.PopUpNoSpaceMessage(nombre + " ha muerto!");
         GameLogic.instance.reputation -= 0.3f;
+        GameLogic.instance.deadAnimalCounter++;
+        GameLogic.instance.deadAnimalNames.Add(nombre);
         GameLogic.instance.RemoveAnimal(this);
 
     }

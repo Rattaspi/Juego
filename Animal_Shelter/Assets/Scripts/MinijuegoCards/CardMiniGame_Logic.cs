@@ -249,7 +249,7 @@ public class CardMiniGame_Logic : MonoBehaviour {
 
                     break;
                 case RunnerLogic.STATE.END:
-                    GameLogic.instance.money += score;
+                    GameLogic.instance.AddMoney(score);
                     overallCanvas.gameObject.SetActive(true);
                     ClearCards();
                     GameLogic.instance.gameState = GameLogic.GameState.WEEKSTART;

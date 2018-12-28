@@ -15,7 +15,7 @@ public class TownHallMoneyEvent : Event {
     public override void OnAccept() {
         base.OnAccept();
         if (GameLogic.instance != null) {
-            GameLogic.instance.money += randomAmountOfMoney;
+            GameLogic.instance.AddMoney(randomAmountOfMoney);
         }
     }
 

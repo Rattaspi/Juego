@@ -9,6 +9,8 @@ public class FaderScript : MonoBehaviour {
     public RawImage image;
     public bool fade;
     public bool unFade;
+    public bool finishFlag;
+    public bool mustSetFinishFlag;
     //[ExecuteInEditMode]
     //private void OnValidate() {
     //    Debug.Log(image.color);
@@ -30,13 +32,25 @@ public class FaderScript : MonoBehaviour {
         //StartCoroutine(UnFade());
     }
 
+    public void StartFade(bool mustSetFinishFlag = true) {
+        fade = true;
+        instance.finishFlag = false;
+        instance.mustSetFinishFlag = mustSetFinishFlag;
+    }
+
+    public void StartUnfade(bool mustSetFinishFlag = true) {
+        unFade = true;
+        instance.finishFlag = false;
+        instance.mustSetFinishFlag = mustSetFinishFlag;
+    }
+
     private void Update() {
         if (fade) {
-            StartCoroutine(Fade());
+            StartCoroutine(Fade(mustSetFinishFlag));
             fade = false;
         }
         if (unFade) {
-            StartCoroutine(UnFade());
+            StartCoroutine(UnFade(mustSetFinishFlag));
             unFade = false;
         }
 
@@ -53,7 +67,7 @@ public class FaderScript : MonoBehaviour {
         }
     }
 
-    public IEnumerator Fade() {
+    public IEnumerator Fade(bool setFlag = true) {
         image.raycastTarget = true;
         if (doing) {
             yield return null;
@@ -69,10 +83,12 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
+            if(setFlag)
+            instance.finishFlag = true;
         }
     }
 
-    public IEnumerator UnFade() {
+    public IEnumerator UnFade(bool setFlag = true) {
         if (doing) {
             yield return null;
         } else {
@@ -87,6 +103,8 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
+            if(setFlag)
+            instance.finishFlag = true;
             image.raycastTarget = false;
         }
     }
