@@ -649,12 +649,12 @@ IEnumerator ShowBubble() {
 
                     if (!displayingText) {
 
-                        CanvasScript.instance.AddEnteringAnimal();
+                        CanvasScript.instance.AddEnteringAnimal(Animal.SIZE.MEDIUM, Animal.EDAD.CACHORRO, Animal.ESTADO.SALUDABLE,80,5);
 
-                        CanvasScript.instance.enteringAnimalList[0].edad = Animal.EDAD.CACHORRO;
-                        CanvasScript.instance.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
-                        CanvasScript.instance.enteringAnimalList[0].salud = 80;
-                        CanvasScript.instance.enteringAnimalList[0].hambre = 5;
+                        //CanvasScript.instance.enteringAnimalList[0].edad = Animal.EDAD.CACHORRO;
+                        //CanvasScript.instance.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
+                        //CanvasScript.instance.enteringAnimalList[0].salud = 80;
+                        //CanvasScript.instance.enteringAnimalList[0].hambre = 5;
                         CanvasScript.instance.enteringAnimalList[0].DisableOnClickingAway(false);
                         Debug.Log("CLICK AWAY CAN DO " + CanvasScript.instance.enteringAnimalList[0].animalGraphics.clickAwayDisables);
                         //CanvasScaler
@@ -948,20 +948,27 @@ IEnumerator ShowBubble() {
                         currentText = "Recuerda que los animales que rescatamos de las calles todavía están en la furgoneta! Vamos a echarles un vistazo";
                         StartCoroutine(DisplayText());
 
-                        CanvasScript.instance.AddEnteringAnimal();
-                        CanvasScript.instance.AddEnteringAnimal();
+                        //CanvasScript.instance.AddEnteringAnimal();
+                        //CanvasScript.instance.AddEnteringAnimal();
 
-                        CanvasScript.instance.enteringAnimalList[0].edad = Animal.EDAD.CACHORRO;
-                        CanvasScript.instance.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
-                        CanvasScript.instance.enteringAnimalList[0].salud = 80;
-                        CanvasScript.instance.enteringAnimalList[0].hambre = 15;
+                        //CanvasScript.instance.enteringAnimalList[0].edad = Animal.EDAD.CACHORRO;
+                        //CanvasScript.instance.enteringAnimalList[0].estado = Animal.ESTADO.SALUDABLE;
+                        //CanvasScript.instance.enteringAnimalList[0].salud = 80;
+                        //CanvasScript.instance.enteringAnimalList[0].hambre = 15;
+                        //CanvasScript.instance.enteringAnimalList[0].DisableOnClickingAway(false);
+
+
+                        //CanvasScript.instance.enteringAnimalList[1].edad = Animal.EDAD.CACHORRO;
+                        //CanvasScript.instance.enteringAnimalList[1].estado = Animal.ESTADO.ENFERMO;
+                        //CanvasScript.instance.enteringAnimalList[1].salud = 35;
+                        //CanvasScript.instance.enteringAnimalList[1].hambre = 15;
+
+                        CanvasScript.instance.AddEnteringAnimal(Animal.SIZE.MEDIUM, Animal.EDAD.CACHORRO, Animal.ESTADO.SALUDABLE, 80, 15);
                         CanvasScript.instance.enteringAnimalList[0].DisableOnClickingAway(false);
+                        CanvasScript.instance.AddEnteringAnimal(Animal.SIZE.MEDIUM, Animal.EDAD.CACHORRO, Animal.ESTADO.ENFERMO, 35, 15);
 
 
-                        CanvasScript.instance.enteringAnimalList[1].edad = Animal.EDAD.CACHORRO;
-                        CanvasScript.instance.enteringAnimalList[1].estado = Animal.ESTADO.ENFERMO;
-                        CanvasScript.instance.enteringAnimalList[1].salud = 35;
-                        CanvasScript.instance.enteringAnimalList[1].hambre = 15;
+
                         //CanvasScript.canvasScript.enteringAnimalList[1].DisableOnClickingAway(true);
 
                     } else {

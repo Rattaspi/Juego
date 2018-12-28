@@ -191,6 +191,18 @@ public class Animal : MonoBehaviour {
         }
     }
 
+    public static string GetRandomOrigin() {
+        string descripcion;
+        int randomInt = Random.Range(0, Stories.inicio.Length - 1);
+        descripcion = "" + Stories.inicio[randomInt];
+        randomInt = Random.Range(0, Stories.nudo.Length - 1);
+        descripcion += Stories.nudo[randomInt];
+
+        randomInt = Random.Range(0, Stories.desenlace.Length - 1);
+        descripcion += Stories.desenlace[randomInt];
+
+        return descripcion;
+    }
 
     public void CreateOrigin() {
         int randomInt = Random.Range(0, Stories.inicio.Length - 1);
@@ -327,6 +339,76 @@ public class Animal : MonoBehaviour {
         GameLogic.instance.reputation -= 0.3f;
         GameLogic.instance.RemoveAnimal(this);
 
+    }
+
+    //From 0 to smallChances, it's a small animal
+    //From smallChances to mediumChances, it's a medium animal
+    //All other numbers return a big animal
+    //Default values are set so it's not a MUST to pass chancesValues
+    public static SIZE GetRandomSize(float smallChances = 45,float mediumChances = 30) {
+        //float bigChances = 100 - smallChances - mediumChances;
+        
+        //smallChances = (int)Random.Range(0, 100);
+        //mediumChances = Random.Range(0, 100-(int)smallChances);
+
+        SIZE randomSize = SIZE.LENGTH;
+        int randomInt = Random.Range(1, 100);
+
+        if(randomInt < smallChances) {
+            randomSize = SIZE.SMALL;
+        } else if (randomInt < (smallChances + mediumChances)) {
+            randomSize = SIZE.MEDIUM;
+        } else {
+            randomSize = SIZE.BIG;
+        }
+
+        //Debug.Log("RandomInt = " + randomInt);
+        //Debug.Log("SmallChances = " + smallChances);
+        //Debug.Log("MediumChances = " + mediumChances);
+        //Debug.Log("Result = " + randomSize.ToString());
+
+        return randomSize;
+    }
+
+    public static EDAD GetRandomAge(float puppyChances = 35, float youngChances = 15, float adultChances = 30) {
+        EDAD edad = EDAD.LENGTH;
+
+        int randomInt = Random.Range(1, 100);
+
+        if (randomInt < puppyChances) {
+            edad = EDAD.CACHORRO;
+        } else if (randomInt < (puppyChances + youngChances)) {
+            edad = EDAD.JOVEN;
+        } else if(randomInt < (puppyChances + youngChances + adultChances)) {
+            edad = EDAD.ADULTO;
+        }else {
+            edad = EDAD.ANCIANO;
+        }
+
+        return edad;
+    }
+
+    public static GameObject MakeSpecificAnimal(SIZE size =SIZE.LENGTH, EDAD edad = EDAD.LENGTH, ESTADO estado = ESTADO.LENGTH, float salud = -1, float hambre=-1) {
+        GameObject animalObject = new GameObject();
+        animalObject.transform.SetParent(CanvasScript.instance.tempAnimalParent.transform);
+        Animal temp2;
+        temp2 = animalObject.AddComponent<Animal>();
+
+        if (size == SIZE.LENGTH) {
+            size = GetRandomSize(); 
+        }
+
+        if (edad == EDAD.LENGTH) {
+            edad = GetRandomAge();
+        }
+
+        string nombre = AnimalCommonInfo.names[Mathf.FloorToInt(Random.Range(0, AnimalCommonInfo.names.Length))];
+
+
+        temp2.StartStats(size, edad, CONFORT.COMODO,estado,(ESPECIE)Random.Range(0,(int)ESPECIE.LENGTH), true, nombre, Color.white, GetRandomOrigin(), (int)salud, 80, (int)hambre);
+
+
+        return animalObject;
     }
 
     public static GameObject MakeARandomAnimal() {

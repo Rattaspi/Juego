@@ -117,9 +117,18 @@ public class GameLogic : MonoBehaviour {
             instance.pouLogic = FindObjectOfType<PouLogic>();
             instance.runnerLogic = FindObjectOfType<RunnerLogic>();
             instance.templeRunLogic = FindObjectOfType<TempleRunLogic>();
-            instance.templeRunLogic.gameObject.SetActive(false);
-            instance.pouLogic.gameObject.SetActive(false);
-            instance.runnerLogic.gameObject.SetActive(false);
+
+            if (instance.templeRunLogic != null) {
+                instance.templeRunLogic.gameObject.SetActive(false);
+            }
+
+            if (instance.pouLogic != null) {
+                instance.pouLogic.gameObject.SetActive(false);
+            }
+            if (instance.runnerLogic != null) {
+                instance.runnerLogic.gameObject.SetActive(false);
+            }
+
             Destroy(gameObject);
         }
 
@@ -229,6 +238,10 @@ public class GameLogic : MonoBehaviour {
 
 
     void Update() {
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+            Animal.GetRandomSize();
+        }
 
         if (debugBool&&shelterAnimals.Count > 0) {
             debugBool = false;

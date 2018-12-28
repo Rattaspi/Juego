@@ -251,6 +251,15 @@ public class CanvasScript : MonoBehaviour {
         //Aqui hay que meter el código para que se añada un animal
     }
 
+    public virtual void AddEnteringAnimal(Animal.SIZE size, Animal.EDAD edad, Animal.ESTADO estado,float salud,float hambre) {
+        enteringAnimalButtonObject.SetActive(true);
+        Animal animal = Animal.MakeSpecificAnimal(size,edad,estado,salud,hambre).GetComponent<Animal>();
+
+        //canvasScript.enteringAnimalDisplayer.selectedAnimalInList = animal;
+        enteringAnimalList.Add(animal);
+    }
+
+
     public virtual void DisplayEnteringAnimal() {
         //enteringAnimalObject.SetActive(true);
     }
