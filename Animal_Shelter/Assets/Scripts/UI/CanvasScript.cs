@@ -50,6 +50,9 @@ public class CanvasScript : MonoBehaviour {
 
     public GameObject popUpMessageGroup;
     public TextMeshProUGUI popUpText;
+
+    public TextMeshProUGUI timeSpeedText;
+
     public float noSpaceAlphaValue;
     protected Image[] imageChildren;
     protected TextMeshProUGUI[] textChildren;
@@ -57,8 +60,11 @@ public class CanvasScript : MonoBehaviour {
     public Image[] medals;
     public  int indexAnimalToDisplay;
 
+
+
     // Use this for initialization
     void Start() {
+        timeSpeedText.text = "x" + 1;
         animalElementPrefab = Resources.Load<GameObject>("Prefabs/AnimalElementListPrefab");
         instance = this;
         UIManagementGameObject.SetActive(true);

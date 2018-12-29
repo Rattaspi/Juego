@@ -76,6 +76,7 @@ public class GameLogic : MonoBehaviour {
     public List<string> deadAnimalNames;
     public List<string> adoptedAnimalNames;
     public float totalObtainedMoney;
+    public bool firstExecution;
 
     PouLogic pouLogic;
     RunnerLogic runnerLogic;
@@ -87,6 +88,9 @@ public class GameLogic : MonoBehaviour {
     public float timeOfEntry;
     public float timeForNextAnimal;
     public bool debugBool;
+
+    [HideInInspector] public int timeScale;
+
     //Stores all the animal prefabs to avoid loading from resources every time.
     [HideInInspector] public GameObject[] animalGraphics;
 
@@ -97,6 +101,30 @@ public class GameLogic : MonoBehaviour {
         return timeOfEntry >= maxTimeOfEntry;
     }
 
+    void SetTimeScale(int newTimeScale) {
+        timeScale = newTimeScale;
+        Time.timeScale = timeScale;
+        CanvasScript.instance.timeSpeedText.text = "x" + timeScale;
+        Debug.Log("Bruh");
+    }
+
+    public static void IncreaseTimeScale() {
+        switch (instance.timeScale) {
+            case 1:
+                instance.SetTimeScale(2);
+                break;
+            case 2:
+                instance.SetTimeScale(3);
+                break;
+            case 3:
+                instance.SetTimeScale(4);
+                break;
+            case 4:
+                instance.SetTimeScale(1);
+                break;
+        }
+    }
+
     void AddAdopter() {
         GameObject adoptanteObject = new GameObject();
         Adoptante adoptante;
@@ -105,7 +133,9 @@ public class GameLogic : MonoBehaviour {
         adoptanteObject.transform.SetParent(CanvasScript.instance.adopterParent);
     }
 
+    bool pendingUnFade;
     void Awake() {
+        firstExecution = true;
         if (instance == null) {
             instance = this;
             gameOverFlag = false;
@@ -124,8 +154,13 @@ public class GameLogic : MonoBehaviour {
             if (runnerLogic != null) {
                 runnerLogic.gameObject.SetActive(false);
             }
+            if (SceneManager.GetActiveScene().buildIndex == 2) {
+                instance.pendingUnFade = true;
+            }
             DontDestroyOnLoad(gameObject);
         } else {
+            instance.timeScale = 1;
+            Time.timeScale = 1;
             instance.pouLogic = FindObjectOfType<PouLogic>();
             instance.runnerLogic = FindObjectOfType<RunnerLogic>();
             instance.templeRunLogic = FindObjectOfType<TempleRunLogic>();
@@ -139,6 +174,10 @@ public class GameLogic : MonoBehaviour {
             }
             if (instance.runnerLogic != null) {
                 instance.runnerLogic.gameObject.SetActive(false);
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 2) {
+                instance.pendingUnFade = true;
             }
 
             Destroy(gameObject);
@@ -206,6 +245,8 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Start() {
+        timeScale = 1;
+        
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
         miniGameToPlay = MINIGAME.NULL;
         StartVariables();
@@ -233,9 +274,7 @@ public class GameLogic : MonoBehaviour {
         expensesToPay = ToggleScript.ToggleType.BIG;
         StartCoroutine(GameTime.unBlockPause());
         //GameTime.pauseBlocked = false;
-        if (SceneManager.GetActiveScene().buildIndex == 2) {
-            FaderScript.instance.unFade = true;
-        }
+
         reputation = 10.0f;
 
 
@@ -250,7 +289,10 @@ public class GameLogic : MonoBehaviour {
 
 
     void Update() {
-
+        if (pendingUnFade) {
+            pendingUnFade = false;
+            FaderScript.instance.StartUnfade(false);
+        }
         if (Input.GetKeyDown(KeyCode.D)) {
             Animal.GetRandomSize();
         }

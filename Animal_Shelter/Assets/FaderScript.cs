@@ -56,7 +56,7 @@ public class FaderScript : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.F)) {
             fade = true;
-        } else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.U)){ 
+        } else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.U)) {
             unFade = true;
         }
     }
@@ -74,7 +74,7 @@ public class FaderScript : MonoBehaviour {
         } else {
             doing = true;
             while (image.color.a < 1) {
-                localColor.a += Time.deltaTime*2;
+                localColor.a += Time.deltaTime * 2;
                 image.color = localColor;
                 yield return null; //yield return new WaitForSeconds(0.1f);
             }
@@ -83,9 +83,11 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
-            if (setFlag) {
-                instance.finishFlag = true;
-                Debug.Log("finishFlagTrue");
+            if (instance != null) {
+                if (setFlag) {
+                    instance.finishFlag = true;
+                    Debug.Log("finishFlagTrue");
+                }
             }
         }
     }
@@ -96,7 +98,7 @@ public class FaderScript : MonoBehaviour {
         } else {
             doing = true;
             while (image.color.a > 0) {
-                localColor.a -= Time.deltaTime*2;
+                localColor.a -= Time.deltaTime * 2;
                 image.color = localColor;
                 yield return null;// new WaitForSeconds(0.1f);
             }
@@ -105,8 +107,11 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
-            if(setFlag)
-            instance.finishFlag = true;
+            if (instance != null) {
+                if (setFlag) {
+                    instance.finishFlag = true;
+                }
+            }
             image.raycastTarget = false;
         }
     }

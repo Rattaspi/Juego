@@ -6,14 +6,29 @@ using UnityEngine.SceneManagement;
 public class Menulogic : MonoBehaviour {
     [SerializeField] FaderScript fader;
     [SerializeField] string firstGameScene;
+    public GameObject confirmPopUp;
 
 	void Start () {
+        confirmPopUp.SetActive(false);
         StartCoroutine(fader.UnFade());
 	}
 	
     public void PlayButton() {
+        if (GameLogic.instance.firstExecution) {
+            confirmPopUp.SetActive(true);
+        } else {
+            ConfirmPlay();
+        }
+    }
+
+    public void ConfirmTutorial() {
         StartCoroutine(fader.Fade());
-        StartCoroutine(PlayGame());
+        StartCoroutine(PlayGame(true));
+    }
+
+    public void ConfirmPlay() {
+        StartCoroutine(fader.Fade());
+        StartCoroutine(PlayGame(false));
     }
 
     public void ExitButton() {
@@ -29,10 +44,14 @@ public class Menulogic : MonoBehaviour {
         yield return new WaitForSeconds(5.0f);
     }
 
-    IEnumerator PlayGame() {
+    IEnumerator PlayGame(bool tutorial) {
         while (fader.doing) {
             yield return null;
         }
-        SceneManager.LoadScene(firstGameScene);
+        if (tutorial) {
+            SceneManager.LoadScene("TutorialScene");
+        } else {
+            SceneManager.LoadScene("MainScene");
+        }
     }
 }

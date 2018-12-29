@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ButtonScripts : MonoBehaviour {
 
-    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX,STOP_DISPLAY_ANIMALS, STOP_DISPLAY_EXPENSES,TUTORIAL_OVERRIDER_NEXTEVENT };
+    public enum ButtonFunction { ENDWEEK, PAUSE, SACRIFICE, FEED, HEAL, DISPLAYEXPENSES, DISPLAYANIMALS,ACCEPTANIMAL,REJECTANIMAL,SET_ENTRY_INFO, INCREASE_ANIMAL_INDEX,DECREASE_ANIMAL_INDEX,STOP_DISPLAY_ANIMALS, STOP_DISPLAY_EXPENSES,TUTORIAL_OVERRIDER_NEXTEVENT,INCREASE_TIMESCALE };
     public ButtonFunction buttonFunction;
     private Button myselfButton;
 
@@ -60,6 +60,9 @@ public class ButtonScripts : MonoBehaviour {
                 break;
             case ButtonFunction.TUTORIAL_OVERRIDER_NEXTEVENT:
                 myselfButton.onClick.AddListener(() => SetNameForShelter());
+                break;
+            case ButtonFunction.INCREASE_TIMESCALE:
+                myselfButton.onClick.AddListener(() => GameLogic.IncreaseTimeScale()); 
                 break;
             default:
                 break;
