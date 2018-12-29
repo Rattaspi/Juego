@@ -14,16 +14,17 @@ public class WinScreen : MonoBehaviour {
     //};
     bool calledFinish;
     public string[] arr2;
-
-
+    bool namesFlag;
+    GameObject dramaticNamePrefab;
 
     // Use this for initialization
     void Start() {
-
-        string msg1 = "Has asignado a " + GameLogic.instance.adoptedAnimalCounter.ToString() + " mascotas a nuevos hogares...";
-        string msg2 = "Dejando fuera a " + GameLogic.instance.leftOutAnimalCounter.ToString() + " animales, de los cuales no supiste más...";
-        string msg3 = "Sacrificaste a " + GameLogic.instance.sacrificedAnimalCounter.ToString() + " seres vivos...";
-        string msg4 = "En el proceso obtuviste " + GameLogic.instance.totalObtainedMoney.ToString() + "euros, de formas más o menos lícitas...";
+        dramaticNamePrefab = Resources.Load<GameObject>("Prefabs/WinScreenName");
+        FaderScript.instance.StartUnfade(false);
+        string msg1 = "Has asignado a " + GameLogic.instance.adoptedAnimalNames.Count.ToString() + " mascotas a nuevos hogares...";
+        string msg2 = "Dejando fuera a " + GameLogic.instance.leftOutAnimalNames.Count.ToString() + " animales, de los cuales no supiste más...";
+        string msg3 = "Sacrificaste a " + GameLogic.instance.sacrificedAnimalNames.Count.ToString() + " seres vivos...";
+        string msg4 = "En el proceso obtuviste " + GameLogic.instance.totalObtainedMoney.ToString() + " euros, de formas más o menos lícitas...";
 
         arr2 = new string[] {
         "Has ganado...",
@@ -43,7 +44,6 @@ public class WinScreen : MonoBehaviour {
         "Solo un 44% de ellos son adoptados...",
         "Al resto les esperan destinos distintos...",
         "Los animales no son juguetes...",
-        "Los animales son dependientes...",
         "Adopta, no compres"
         };
 
@@ -53,18 +53,69 @@ public class WinScreen : MonoBehaviour {
         SetNextMessage();
     }
 
+    IEnumerator DisplaySomeNames(List<string> listOfNames) {
+        int counter = 0;
+        while (namesFlag && counter < listOfNames.Count) {
+            GameObject aName = Instantiate<GameObject>(dramaticNamePrefab, gameObject.transform);
+            WinScreenName winScreenName = aName.GetComponent<WinScreenName>();
+            winScreenName.StartUp(listOfNames[counter]);
+            float randomX, randomY;
+            randomX = Random.Range(100, Screen.width - 100);
+
+            int up = Random.Range(0, 2);
+            if (up == 0) {
+                randomY = Random.Range(100, Screen.height / 2 - 200);
+            } else {
+                randomY = Random.Range(Screen.height - 100, Screen.height / 2 + 200);
+            }
+            aName.GetComponent<RectTransform>().position = new Vector3(randomX, randomY, 0);
+            aName.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 1), Random.Range(-90, 90));
+            counter++;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     // Update is called once per frame
     void Update() {
+        if (!namesFlag) {
+            switch (currentMessage) {
+                case 2:
+                    if (timer >= nextMaxTime / 4) {
+                        namesFlag = true;
+                        StartCoroutine(DisplaySomeNames(GameLogic.instance.adoptedAnimalNames));
+                    }
+                    break;
+                case 3:
+                    if (timer >= nextMaxTime / 4) {
+                        namesFlag = true;
+                        StartCoroutine(DisplaySomeNames(GameLogic.instance.leftOutAnimalNames));
+                    }
+                    break;
+                case 4:
+                    if (timer >= nextMaxTime / 4) {
+                        namesFlag = true;
+                        StartCoroutine(DisplaySomeNames(GameLogic.instance.sacrificedAnimalNames));
+                    }
+                    break;
+                case 5:
+                    if (timer >= nextMaxTime / 4) {
+                        namesFlag = true;
+                        StartCoroutine(DisplaySomeNames(GameLogic.instance.deadAnimalNames));
+                    }
+                    break;
+            }
+        }
 
         if (currentMessage < arr2.Length) {
-
             timer += Time.unscaledDeltaTime;
 
-            if (timer > nextMaxTime) {
+            if (timer > nextMaxTime && !FaderScript.instance.doing) {
+                timer = 0;
                 FaderScript.instance.StartFade(true);
             }
 
             if (FaderScript.instance.finishFlag) {
+
                 FaderScript.instance.finishFlag = false;
                 SetNextMessage();
             }
@@ -78,7 +129,9 @@ public class WinScreen : MonoBehaviour {
         currentMessage++;
         nextMaxTime = (float)arr2[currentMessage].Length / 10 + 3;
         mensaje.text = arr2[currentMessage];
-        FaderScript.instance.UnFade(false);
+        FaderScript.instance.StartUnfade(false);
+        Debug.Log("UnfadeStart");
+        namesFlag = false;
     }
 
     IEnumerator LoadSceneAndWait() {

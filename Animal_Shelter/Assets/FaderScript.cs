@@ -83,8 +83,10 @@ public class FaderScript : MonoBehaviour {
                 image.color = localColor;
             }
             doing = false;
-            if(setFlag)
-            instance.finishFlag = true;
+            if (setFlag) {
+                instance.finishFlag = true;
+                Debug.Log("finishFlagTrue");
+            }
         }
     }
 
