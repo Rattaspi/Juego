@@ -275,14 +275,22 @@ MonoBehaviour:
   - 1812
   - ora
   - ora
-  sacrificedAnimalNames: []
+  sacrificedAnimalNames:
+  - satan
+  - kara
+  - lisa
+  - toby
+  - chiqui
+  - momo
   deadAnimalNames: []
   adoptedAnimalNames: []
   totalObtainedMoney: 0
+  firstExecution: 0
   maxTimeOfEntry: 0
   timeOfEntry: 0
   timeForNextAnimal: 0
   debugBool: 0
+  timeScale: 0
   animalGraphics: []
   animalToSacrifice: {fileID: 0}
   sacrificeScreen: {fileID: 0}

@@ -12,7 +12,7 @@ public class MovingToPlace : MonoBehaviour {
         myRectTransform = GetComponent<RectTransform>();
         destinedPosition = new Vector3(myRectTransform.position.x, myRectTransform.position.y, myRectTransform.position.z);
         myRectTransform.position -= new Vector3(2500, 0, 0);
-        velocity = new Vector3(600, 0, 0);
+        velocity = new Vector3(1300, 0, 0);
 	}
 	
 	// Update is called once per frame

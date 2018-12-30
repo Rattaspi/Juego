@@ -21,13 +21,13 @@ public class WinScreen : MonoBehaviour {
     void Start() {
         dramaticNamePrefab = Resources.Load<GameObject>("Prefabs/WinScreenName");
         FaderScript.instance.StartUnfade(false);
-        string msg1 = "Has asignado a " + GameLogic.instance.adoptedAnimalNames.Count.ToString() + " mascotas a nuevos hogares...";
-        string msg2 = "Dejando fuera a " + GameLogic.instance.leftOutAnimalNames.Count.ToString() + " animales, de los cuales no supiste más...";
-        string msg3 = "Sacrificaste a " + GameLogic.instance.sacrificedAnimalNames.Count.ToString() + " seres vivos...";
-        string msg4 = "En el proceso obtuviste " + GameLogic.instance.totalObtainedMoney.ToString() + " euros, de formas más o menos lícitas...";
+        string msg1 = "Has asignado a " + GameLogic.instance.adoptedAnimalNames.Count.ToString() + " mascotas a nuevos hogares";
+        string msg2 = "Dejando fuera a " + GameLogic.instance.leftOutAnimalNames.Count.ToString() + " animales, de los cuales no supiste más";
+        string msg3 = "Sacrificaste a " + GameLogic.instance.sacrificedAnimalNames.Count.ToString() + " seres vivos";
+        string msg4 = "En el proceso obtuviste " + GameLogic.instance.totalObtainedMoney.ToString() + " euros, de formas más o menos lícitas";
 
         arr2 = new string[] {
-        "Has ganado...",
+        "Has ganado",
         "Pero, ¿a qué precio?",
         msg1,
         msg2,
@@ -39,11 +39,11 @@ public class WinScreen : MonoBehaviour {
         //"En el proceso obtuviste " + GameLogic.instance.totalObtainedMoney.ToString() + "euros, de formas más o menos lícitas...",
         "¿Podrías haberlo invertido mejor?",
         "¿Te habrían ayudado más donaciones?",
-        "A las protectoras de animales del mundo real tambien...",
-        "Cada año aparecen 137.000 animales nuevos en los refugios...",
-        "Solo un 44% de ellos son adoptados...",
-        "Al resto les esperan destinos distintos...",
-        "Los animales no son juguetes...",
+        "A las protectoras de animales del mundo real tambien",
+        "Cada año aparecen 137.000 animales nuevos en los refugios",
+        "Solo un 44% de ellos son adoptados",
+        "Al resto les esperan destinos distintos",
+        "Los animales no son juguetes",
         "Adopta, no compres"
         };
 
@@ -69,7 +69,7 @@ public class WinScreen : MonoBehaviour {
                 randomY = Random.Range(Screen.height - 100, Screen.height / 2 + 200);
             }
             aName.GetComponent<RectTransform>().position = new Vector3(randomX, randomY, 0);
-            aName.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 1), Random.Range(-90, 90));
+            aName.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 1), Random.Range(-70, 70));
             counter++;
             yield return new WaitForSeconds(0.2f);
         }
