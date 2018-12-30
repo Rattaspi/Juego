@@ -49,7 +49,7 @@ public class WinScreen : MonoBehaviour {
 
 
 
-        currentMessage = -1;
+        currentMessage = 0;
         SetNextMessage();
     }
 
@@ -126,12 +126,12 @@ public class WinScreen : MonoBehaviour {
     }
 
     void SetNextMessage() {
-        currentMessage++;
         nextMaxTime = (float)arr2[currentMessage].Length / 10 + 3;
         mensaje.text = arr2[currentMessage];
         FaderScript.instance.StartUnfade(false);
         Debug.Log("UnfadeStart");
         namesFlag = false;
+        currentMessage++;
     }
 
     IEnumerator LoadSceneAndWait() {
