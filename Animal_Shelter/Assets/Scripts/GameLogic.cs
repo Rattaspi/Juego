@@ -30,10 +30,11 @@ public static class GameTime {
 public class GameLogic : MonoBehaviour {
 
     //Singleton
+    bool saved;
     public bool gameOverFlag;
     public enum GameState { EVENT, WEEK, ENDWEEK, WEEKSTART, MINIGAME, MAINMENU };
     public bool miniGameStarted;
-    public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN, NULL};
+    public enum MINIGAME { RUNNER, POU, CARDS, TEMPLERUN, NULL };
     public MINIGAME miniGameToPlay;
     public RunnerLogic.DIFFICULTY dificultyToUse;
     public static GameLogic instance;
@@ -67,10 +68,10 @@ public class GameLogic : MonoBehaviour {
     public ToggleScript.ToggleType searchAmount;
     public OriginDataBase originDataBase;
 
-    public int adoptedAnimalCounter=0;
-    public int leftOutAnimalCounter=0;
-    public int sacrificedAnimalCounter=0;
-    public int deadAnimalCounter=0;
+    //public int adoptedAnimalCounter=0;
+    //public int leftOutAnimalCounter=0;
+    //public int sacrificedAnimalCounter=0;
+    //public int deadAnimalCounter=0;
     public List<string> leftOutAnimalNames;
     public List<string> sacrificedAnimalNames;
     public List<string> deadAnimalNames;
@@ -80,7 +81,7 @@ public class GameLogic : MonoBehaviour {
 
     PouLogic pouLogic;
     RunnerLogic runnerLogic;
-    TempleRunLogic templeRunLogic;    
+    TempleRunLogic templeRunLogic;
 
     [SerializeField]
     List<Instalation> instalations;
@@ -135,7 +136,7 @@ public class GameLogic : MonoBehaviour {
 
     bool pendingUnFade;
     void Awake() {
-        firstExecution = true;
+        //firstExecution = true;
         if (instance == null) {
             instance = this;
             gameOverFlag = false;
@@ -157,6 +158,7 @@ public class GameLogic : MonoBehaviour {
             if (SceneManager.GetActiveScene().buildIndex == 2) {
                 instance.pendingUnFade = true;
             }
+            Load();
             DontDestroyOnLoad(gameObject);
         } else {
             instance.timeScale = 1;
@@ -179,7 +181,7 @@ public class GameLogic : MonoBehaviour {
             if (SceneManager.GetActiveScene().buildIndex == 2) {
                 instance.pendingUnFade = true;
             }
-
+            instance.Load();
             Destroy(gameObject);
         }
 
@@ -246,10 +248,9 @@ public class GameLogic : MonoBehaviour {
 
     void Start() {
         timeScale = 1;
-        
+
         //Until we start saving/loading file (it is coded, but not doing it yet) we start variable here
         miniGameToPlay = MINIGAME.NULL;
-        StartVariables();
         medicinePrice = 20.0f;
         currentEventIndex = 0;
         foodPrice = 1.0f;
@@ -261,20 +262,22 @@ public class GameLogic : MonoBehaviour {
         maxTimeForNewAdopter = 15;
         timeOfEntry = 0;
         timeForNextAnimal = 0;
-        
+        gameState = GameState.WEEK;
+        //StartVariables();
+
+
         int timeToAdd = Random.Range(3, 9);
         timeForNextAnimal += timeToAdd;
         timeToAdd = Random.Range(6, 15);
 
         timeForNextAdopter = timeToAdd;
 
-        Instalation baseInstalation = new Instalation(100, "Base");
-        instalations.Add(baseInstalation);
+
         cleanupToDo = ToggleScript.ToggleType.BIG;
         expensesToPay = ToggleScript.ToggleType.BIG;
         StartCoroutine(GameTime.unBlockPause());
         //GameTime.pauseBlocked = false;
-
+        incomingEvents = new List<Event>();
         reputation = 10.0f;
 
 
@@ -297,7 +300,7 @@ public class GameLogic : MonoBehaviour {
             Animal.GetRandomSize();
         }
 
-        if (debugBool&&shelterAnimals.Count > 0) {
+        if (debugBool && shelterAnimals.Count > 0) {
             debugBool = false;
             RemoveAnimal(shelterAnimals[0]);
         }
@@ -313,7 +316,7 @@ public class GameLogic : MonoBehaviour {
                         miniGameStarted = true;
                         switch (miniGameToPlay) {
                             case MINIGAME.CARDS:
-                                if (CardMiniGame_Logic.cardLogic!=null) {
+                                if (CardMiniGame_Logic.cardLogic != null) {
                                     CardMiniGame_Logic.cardLogic.Play(dificultyToUse);
                                 }
                                 break;
@@ -344,6 +347,10 @@ public class GameLogic : MonoBehaviour {
                     break;
 
                 case GameState.WEEKSTART:
+                    if (!saved) {
+                        Save();
+                        saved = true;
+                    }
                     //CanvasScript.canvasScript.DisplayIncomingAnimals();
                     gameState = GameState.WEEK;
                     timeOfEntry = 0;
@@ -367,7 +374,7 @@ public class GameLogic : MonoBehaviour {
                             }
 
 
-                            if (timeOfEntry > timeForNextAdopter&&TutorialOverrider.instance==null) {
+                            if (timeOfEntry > timeForNextAdopter && TutorialOverrider.instance == null) {
                                 int timeToAdd = Random.Range(5, maxTimeForNewAdopter);
                                 timeForNextAdopter += timeToAdd;
                                 AddAdopter();
@@ -398,6 +405,7 @@ public class GameLogic : MonoBehaviour {
 
                     break;
                 case GameState.ENDWEEK:
+                    saved = false;
                     currentWeek++;
                     ApplyWeekExpenses();
                     ApplyAnimalUpdates();
@@ -406,20 +414,20 @@ public class GameLogic : MonoBehaviour {
                     break;
             }
         }
-        if (reputation <= 0&&SceneManager.GetActiveScene().buildIndex==2) {
+        if (reputation <= 0 && SceneManager.GetActiveScene().buildIndex == 2) {
             GameOver();
         }
 
     }
 
     public void GameOver() {
-        if (FaderScript.instance!=null&!gameOverFlag) {
+        if (FaderScript.instance != null & !gameOverFlag) {
             FaderScript.instance.StartFade();
             gameOverFlag = true;
         }
         if (FaderScript.instance.finishFlag) {
             Debug.Log("GameOver");
-            SceneManager.LoadScene("Lose",LoadSceneMode.Single);
+            SceneManager.LoadScene("Lose", LoadSceneMode.Single);
             //SceneManager.SetActiveScene()
         } else {
             Debug.Log("GamingOver");
@@ -427,8 +435,8 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
-    void ApplyAnimalUpdates(){
-        foreach(Animal a in shelterAnimals) {
+    void ApplyAnimalUpdates() {
+        foreach (Animal a in shelterAnimals) {
             a.UpdateStats();
         }
     }
@@ -695,7 +703,7 @@ public class GameLogic : MonoBehaviour {
 
     public float GetToggleOptionsMoney() {
         float totalExpense = 0;
-        
+
         switch (foodToBuy) {
             case ToggleScript.ToggleType.NONE:
                 currentFoodExpense = 0;
@@ -810,10 +818,10 @@ public class GameLogic : MonoBehaviour {
             } else {
                 CanvasScript.instance.PopUpNoSpaceMessage("Has de esperar un poco");
             }
-        } else{
+        } else {
             if (CanEndWeek()) {
                 gameState = GameState.ENDWEEK;
-                CanvasScript.instance.PopUpNoSpaceMessage( CanvasScript.instance.enteringAnimalList.Count + " animales que esperaban se fueron");
+                CanvasScript.instance.PopUpNoSpaceMessage(CanvasScript.instance.enteringAnimalList.Count + " animales que esperaban se fueron");
                 CanvasScript.instance.KickAnimals();
             } else {
                 CanvasScript.instance.PopUpNoSpaceMessage("Has de esperar un poco");
@@ -830,13 +838,28 @@ public class GameLogic : MonoBehaviour {
         return temp;
     }
 
+    IEnumerator CreateAnimal(Animal.AnimalSaveData a) {
+        while (animalObjectParent == null || CanvasScript.instance == null) {
+            yield return null;
+        }
 
+        GameObject animalObject = new GameObject(a.nombre);
+        animalObject.transform.SetParent(animalObjectParent.transform);
+
+        Animal animal = animalObject.AddComponent<Animal>();
+        animal.StartStats(a.size, a.edad, a.confort, a.estado, a.especie, a.hambriento, a.nombre, new Color(a.color[0], a.color[1], a.color[2], a.color[3]), a.descripcion, a.salud, a.confortValue, a.hambre);
+
+        float randomX = Random.Range(300, 1300);
+        float randomY = Random.Range(0, 460);
+
+        animalObject.transform.localPosition = new Vector3(randomX, randomY, 0);
+
+    }
 
     #region File Permanency
 
     public void Save() {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
         PlayerData data = new PlayerData();
         data.money = money;
         data.reputation = reputation;
@@ -847,58 +870,114 @@ public class GameLogic : MonoBehaviour {
         data.maxAnimalCapacity = maxAnimalCapacity;
         data.currentAnimalCapacity = currentAnimalCapacity;
         data.instalations = instalations;
-        data.animals = shelterAnimals;
-        data.gameState = gameState;
+
+        List<Animal.AnimalSaveData> animalSavedDataList = new List<Animal.AnimalSaveData>();
+        foreach (Animal a in shelterAnimals) {
+            Animal.AnimalSaveData animalSaveData = new Animal.AnimalSaveData(a);
+
+            if (!animalSavedDataList.Contains(animalSaveData))
+                animalSavedDataList.Add(animalSaveData);
+
+        }
+        data.animalSavedDataList = animalSavedDataList;
+
+        data.leftOutAnimalNames = leftOutAnimalNames;
+        data.sacrificedAnimalNames = sacrificedAnimalNames;
+        data.deadAnimalNames = deadAnimalNames;
+        data.adoptedAnimalNames = adoptedAnimalNames;
+        data.totalObtainedMoney = totalObtainedMoney;
+
+        Debug.Log("Saved to " + Application.persistentDataPath);
+
+        //data.gameState = gameState;
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
         bf.Serialize(file, data);
+
         file.Close();
     }
 
     public void Load() {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            PlayerData data = (PlayerData)bf.Deserialize(file);
-            file.Close();
-            money = data.money;
-            reputation = data.reputation;
-            //publicityInversion = data.publicityInversion;
-            currentWeek = data.currentWeek;
-            amountOfFood = data.amountOfFood;
-            foodCapacity = data.foodCapacity;
-            maxAnimalCapacity = data.maxAnimalCapacity;
-            currentAnimalCapacity = data.currentAnimalCapacity;
-            instalations = data.instalations;
-            shelterAnimals = data.animals;
-            gameState = data.gameState;
+        if (SceneManager.GetActiveScene().buildIndex == 2) {
+            if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+                PlayerData data = (PlayerData)bf.Deserialize(file);
+                file.Close();
+                money = data.money;
+                reputation = data.reputation;
+                //publicityInversion = data.publicityInversion;
+                currentWeek = data.currentWeek;
+                amountOfFood = data.amountOfFood;
+                foodCapacity = data.foodCapacity;
+                maxAnimalCapacity = data.maxAnimalCapacity;
+                currentAnimalCapacity = data.currentAnimalCapacity;
+                instalations = data.instalations;
+                leftOutAnimalNames = data.leftOutAnimalNames;
+
+                sacrificedAnimalNames = data.sacrificedAnimalNames;
+                deadAnimalNames = data.deadAnimalNames;
+                adoptedAnimalNames = data.adoptedAnimalNames;
+                totalObtainedMoney = data.totalObtainedMoney;
+                foreach (Animal.AnimalSaveData a in data.animalSavedDataList) {
+                    StartCoroutine(CreateAnimal(a));
+                    //animalObject.transform.SetParent(animalObjectParent.transform);
+                }
+            } else {
+                StartVariables();
+                Save();
+            }
+            //shelterAnimals = data.animals;
+            //gameState = data.gameState;
         } else {
-            StartVariables();
-            Save();
+            if (File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
+                firstExecution = false;
+                Debug.Log("Loaded from " + Application.persistentDataPath);
+
+            } else {
+                StartVariables();
+                Save();
+                firstExecution = true;
+                Debug.Log("Created SaveFile");
+
+            }
         }
     }
 
     void StartVariables() {
         money = 1000;
-        reputation = 0;
+        reputation = 10;
         //publicityInversion = 0;
         currentWeek = 0;
-        amountOfFood = 100;
+        amountOfFood = 0;
         foodCapacity = 300;
         maxAnimalCapacity = 20;
         currentAnimalCapacity = 10;
         instalations = new List<Instalation>();
         gameState = GameState.WEEK;
         timeOfEntry = 0;
-        incomingEvents = new List<Event>();
         shelterAnimals = new List<Animal>();
+
+        leftOutAnimalNames = new List<string>();
+        sacrificedAnimalNames = new List<string>();
+        deadAnimalNames = new List<string>();
+        adoptedAnimalNames = new List<string>();
+
         currentEventIndex = 0;
+        Instalation baseInstalation = new Instalation(100, "Base");
+        instalations.Add(baseInstalation);
     }
 
+    [System.Serializable]
     public class PlayerData {
-        public float money, reputation, publicityInversion;
+        public float money, reputation;
         public int currentWeek, amountOfFood, foodCapacity, maxAnimalCapacity, currentAnimalCapacity;
         public List<Instalation> instalations;
-        public List<Animal> animals;
-        public GameState gameState;
+        public List<Animal.AnimalSaveData> animalSavedDataList;
+        public List<string> leftOutAnimalNames;
+        public List<string> sacrificedAnimalNames;
+        public List<string> deadAnimalNames;
+        public List<string> adoptedAnimalNames;
+        public float totalObtainedMoney;
     };
     #endregion
 }

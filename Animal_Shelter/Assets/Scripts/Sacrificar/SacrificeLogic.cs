@@ -39,7 +39,7 @@ public class SacrificeLogic : MonoBehaviour {
     }
 
     IEnumerator Sacrifice() {
-        GameLogic.instance.sacrificedAnimalCounter++;
+        //GameLogic.instance.sacrificedAnimalCounter++;
         GameLogic.instance.sacrificedAnimalNames.Add(GameLogic.instance.animalToSacrifice.name);
         graphicRaycaster.enabled = false;
         float animalFadeSpeed = 1.0f;

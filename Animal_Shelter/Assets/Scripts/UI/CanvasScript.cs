@@ -91,7 +91,7 @@ public class CanvasScript : MonoBehaviour {
     }
 
     public void KickAnimals() {
-        GameLogic.instance.leftOutAnimalCounter += enteringAnimalList.Count;
+        //GameLogic.instance.leftOutAnimalCounter += enteringAnimalList.Count;
         foreach (Animal a in enteringAnimalList) {
             GameLogic.instance.leftOutAnimalNames.Add(a.name);
             GameLogic.instance.reputation -= 0.5f;

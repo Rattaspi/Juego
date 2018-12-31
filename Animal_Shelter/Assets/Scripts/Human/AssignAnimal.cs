@@ -171,7 +171,7 @@ public class AssignAnimal : MonoBehaviour {
         GameLogic.instance.reputation += 0.1f;
         GameLogic.instance.adoptedAnimalNames.Add(currentAnimal.name);
         GameLogic.instance.RemoveAnimal(currentAnimal);
-        GameLogic.instance.adoptedAnimalCounter++;
+        //GameLogic.instance.adoptedAnimalCounter++;
         Destroy(adoptante.gameObject);
         Destroy(this.gameObject);
     }

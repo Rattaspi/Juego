@@ -3,7 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//[System.Serializable]
 public class Animal : MonoBehaviour {
+
+    [System.Serializable]
+    public class AnimalSaveData {
+
+        public AnimalSaveData(Animal a) {
+            salud = a.salud;
+            confortValue = a.confortValue;
+            hambre = a.hambre;
+            nombre = a.nombre;
+            descripcion = a.descripcion;
+            color = new float[] { a.color.r, a.color.g, a.color.b, a.color.a };
+            size = a.size;
+            edad = a.edad;
+            confort = a.confort;
+            estado = a.estado;
+            especie = a.especie;
+            hambriento = a.hambriento;
+        }
+
+        public int salud;
+        public int confortValue;
+        public int hambre;
+        public string nombre;
+        public string descripcion;
+        public float[] color;
+        public SIZE size;
+        public EDAD edad;
+        public CONFORT confort;
+        public ESTADO estado;
+        public ESPECIE especie;
+        public bool hambriento;
+    }
+
     public GameObject graphics;
     public AnimalGraphics animalGraphics;
 
@@ -243,10 +277,10 @@ public class Animal : MonoBehaviour {
         }
 
         if (hambriento) {
-            confortValue -= variacionConfort*3;
+            confortValue -= variacionConfort * 3;
             salud -= variacionSalud;
         } else {
-            confortValue += variacionConfort*2;
+            confortValue += variacionConfort * 2;
         }
         if (estado != ESTADO.SALUDABLE) {
             int randomChanceToGetWorse = Random.Range(1, 100);
@@ -320,24 +354,25 @@ public class Animal : MonoBehaviour {
 
         if (salud < 11) {
             estado = ESTADO.TERMINAL;
-        }else if (salud < 21) {
+        } else if (salud < 21) {
             estado = ESTADO.MUY_ENFERMO;
-        }else if (salud < 46) {
+        } else if (salud < 46) {
             estado = ESTADO.ENFERMO;
         } else {
             estado = ESTADO.SALUDABLE;
         }
 
-        if (salud <= 0){
-            Die();
+        if (salud <= 0) {
+            StartCoroutine(Die());
         }
 
     }
 
-    void Die() {
+    IEnumerator Die() {
+        yield return new WaitForEndOfFrame();
         CanvasScript.instance.PopUpNoSpaceMessage(nombre + " ha muerto!");
         GameLogic.instance.reputation -= 0.3f;
-        GameLogic.instance.deadAnimalCounter++;
+        //GameLogic.instance.deadAnimalCounter++;
         GameLogic.instance.deadAnimalNames.Add(nombre);
         GameLogic.instance.RemoveAnimal(this);
 
@@ -347,16 +382,16 @@ public class Animal : MonoBehaviour {
     //From smallChances to mediumChances, it's a medium animal
     //All other numbers return a big animal
     //Default values are set so it's not a MUST to pass chancesValues
-    public static SIZE GetRandomSize(float smallChances = 45,float mediumChances = 30) {
+    public static SIZE GetRandomSize(float smallChances = 45, float mediumChances = 30) {
         //float bigChances = 100 - smallChances - mediumChances;
-        
+
         //smallChances = (int)Random.Range(0, 100);
         //mediumChances = Random.Range(0, 100-(int)smallChances);
 
         SIZE randomSize = SIZE.LENGTH;
         int randomInt = Random.Range(1, 100);
 
-        if(randomInt < smallChances) {
+        if (randomInt < smallChances) {
             randomSize = SIZE.SMALL;
         } else if (randomInt < (smallChances + mediumChances)) {
             randomSize = SIZE.MEDIUM;
@@ -381,23 +416,23 @@ public class Animal : MonoBehaviour {
             edad = EDAD.CACHORRO;
         } else if (randomInt < (puppyChances + youngChances)) {
             edad = EDAD.JOVEN;
-        } else if(randomInt < (puppyChances + youngChances + adultChances)) {
+        } else if (randomInt < (puppyChances + youngChances + adultChances)) {
             edad = EDAD.ADULTO;
-        }else {
+        } else {
             edad = EDAD.ANCIANO;
         }
 
         return edad;
     }
 
-    public static GameObject MakeSpecificAnimal(SIZE size =SIZE.LENGTH, EDAD edad = EDAD.LENGTH, ESTADO estado = ESTADO.LENGTH, float salud = -1, float hambre=-1) {
+    public static GameObject MakeSpecificAnimal(SIZE size = SIZE.LENGTH, EDAD edad = EDAD.LENGTH, ESTADO estado = ESTADO.LENGTH, float salud = -1, float hambre = -1) {
         GameObject animalObject = new GameObject();
         animalObject.transform.SetParent(CanvasScript.instance.tempAnimalParent.transform);
         Animal temp2;
         temp2 = animalObject.AddComponent<Animal>();
 
         if (size == SIZE.LENGTH) {
-            size = GetRandomSize(); 
+            size = GetRandomSize();
         }
 
         if (edad == EDAD.LENGTH) {
@@ -407,7 +442,7 @@ public class Animal : MonoBehaviour {
         string nombre = AnimalCommonInfo.names[Mathf.FloorToInt(Random.Range(0, AnimalCommonInfo.names.Length))];
 
 
-        temp2.StartStats(size, edad, CONFORT.COMODO,estado,(ESPECIE)Random.Range(0,(int)ESPECIE.LENGTH), true, nombre, Color.white, GetRandomOrigin(), (int)salud, 80, (int)hambre);
+        temp2.StartStats(size, edad, CONFORT.COMODO, estado, (ESPECIE)Random.Range(0, (int)ESPECIE.LENGTH), true, nombre, Color.white, GetRandomOrigin(), (int)salud, 80, (int)hambre);
 
 
         return animalObject;
@@ -448,11 +483,10 @@ public class Animal : MonoBehaviour {
         initialParent = this.transform.parent;
         this.transform.parent = canvas.gameObject.transform;
         this.transform.localPosition = Vector3.zero;
-        if(animalMov == null) {
+        if (animalMov == null) {
             animalMov = GetComponent<AnimalMovement>();
             animalMov.enabled = false;
-        }
-        else {
+        } else {
             animalMov.enabled = false;
         }
     }
@@ -464,8 +498,7 @@ public class Animal : MonoBehaviour {
         if (animalMov == null) {
             animalMov = GetComponent<AnimalMovement>();
             animalMov.enabled = true;
-        }
-        else {
+        } else {
             animalMov.enabled = true;
         }
     }

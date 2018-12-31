@@ -62,6 +62,11 @@ public class AnimalGraphics : MonoBehaviour {
     }
 
     private void Update() {
+
+        //if(graphicRaycaster == null) {
+        //    graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
+        //}
+
         //IN CHANGE NAME SCREEN
         //when clicking outside change name screen it closes
         if (Input.GetKey(KeyCode.Mouse0) && changeName.activeInHierarchy) {
